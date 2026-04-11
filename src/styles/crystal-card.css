@@ -91,11 +91,12 @@
 
 .crystal-card__desc {
 	font-size: 10px;
-	color: rgba(80, 120, 180, 0.7);
+	color: rgba(34, 53, 82, 0.921);
 	text-align: center;
 	line-height: 1.5;
 	letter-spacing: 0.3px;
 	white-space: pre-wrap;
+	padding: 30px 30px 36px;
 }
 
 .crystal-card__tags {
@@ -104,6 +105,11 @@
 	gap: 3px;
 	justify-content: center;
 	margin-top: 4px;
+}
+
+.experience-page__crystals .crystal-card__tags {
+	margin-top: 0;
+	margin-bottom: 12px;
 }
 
 .crystal-card__tag {

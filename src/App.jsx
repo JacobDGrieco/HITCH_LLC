@@ -6,6 +6,7 @@ import SkillsPage from './pages/SkillsPage'
 import EducationPage from './pages/EducationPage'
 import ExperiencePage from './pages/ExperiencePage'
 import ContactPage from './pages/ContactPage'
+import AboutPage from './pages/AboutPage'
 
 export default function App() {
   return (
@@ -17,7 +18,7 @@ export default function App() {
         <Route path="/education"  element={<PageShell section="education"><EducationPage /></PageShell>} />
         <Route path="/experience" element={<PageShell section="experience"><ExperiencePage /></PageShell>} />
         <Route path="/contact"    element={<PageShell section="contact"><ContactPage /></PageShell>} />
-        <Route path="/about"      element={<PageShell section="about"><div /></PageShell>} />
+        <Route path="/about"      element={<PageShell section="about"><AboutPage /></PageShell>} />
       </Routes>
     </BrowserRouter>
   )

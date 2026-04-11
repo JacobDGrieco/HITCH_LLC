@@ -1,7 +1,4 @@
-import { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
 import '../styles/shared.css';
-import '../styles/experience-page.css';
 import CrystalCard from '../components/CrystalCard';
 
 const EXPERIENCE = [

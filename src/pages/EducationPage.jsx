@@ -7,29 +7,32 @@ import CrystalCard from '../components/CrystalCard';
 const EDUCATION_CRYSTALS = [
 	{
 		title: 'Articifical Intelligence',
+		desc: 'Gained interdisciplinary exposure to artificial intelligence, machine learning, and the ethical use of data-driven technologies. The certificate helps connect emerging AI concepts to practical and responsible real-world use.',
 		gemColor: 'rgba(80,130,200,0.8)',
 		iconImage: '/staffingtool.png',
-		size: 230,
+		size: 280,
 	},
 	{
 		title: 'B.S. Computer Science',
-		desc: 'University of Kentucky with a math minor and broad software systems coursework.',
+		desc: 'Built a strong foundation in software development, algorithms, systems, and problem-solving through broad computer science coursework. The program emphasizes both technical theory and practical application in designing real-world software.',
 		gemColor: 'rgba(175,220,255,0.92)',
 		iconImage: '/staffingtool.png',
-		size: 330,
+		size: 380,
 		featured: true,
 	},
 	{
 		title: 'Minor Mathematics',
+		desc: 'Strengthened quantitative reasoning and analytical problem-solving through advanced mathematics coursework. The minor complements technical work by reinforcing logic, precision, and structured thinking.',
 		gemColor: 'rgba(80,130,200,0.8)',
 		iconImage: '/staffingtool.png',
-		size: 270,
+		size: 320,
 	},
 	{
 		title: 'Cybersecurity',
+		desc: 'Built foundational knowledge in protecting systems, understanding cyber threats, and applying security principles across modern digital environments. The certificate supports practical awareness of security challenges in software, networks, and data protection.',
 		gemColor: 'rgba(150,80,190,0.8)',
 		iconImage: '/staffingtool.png',
-		size: 230,
+		size: 280,
 	},
 ];
 
