@@ -9,7 +9,7 @@ const CONTACTS = [
 		title: 'Email',
 		subtitle: 'contact@headinthecloudshaven.com',
 		href: 'mailto:contact@headinthecloudshaven.com',
-		icon: '✉',
+		icon: '\u2709',
 		hue: 'rgba(245,175,210,0.94)',
 		size: 218,
 		delay: 0,
@@ -113,7 +113,7 @@ export default function ContactPage() {
 							<div className="contact-page__message-content">
 								<div className="contact-page__eyebrow">Send a Message</div>
 								{status === 'sent' ? (
-									<div className="contact-page__success">Message sent — I&apos;ll be in touch soon</div>
+									<div className="contact-page__success">Message sent - I&apos;ll be in touch soon</div>
 								) : (
 									<form onSubmit={handleSubmit} className="contact-page__form">
 										<input name="name" value={form.name} onChange={handleChange} placeholder="Your name" required className="contact-page__input" />
@@ -143,4 +143,3 @@ export default function ContactPage() {
 		</div>
 	);
 }
-

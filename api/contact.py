@@ -1,8 +1,9 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import os
 import smtplib
 import ssl
+import traceback
 from email.message import EmailMessage
 
 app = FastAPI()
@@ -24,16 +25,21 @@ def contact_send(payload: ContactPayload):
         return {"ok": True}
 
     if "@" not in payload.email:
-        return {"ok": False, "error": "A valid email is required."}
+        raise HTTPException(status_code=400, detail="A valid email is required.")
 
-    smtp_host = os.environ["SMTP_HOST"]
-    smtp_port = int(os.environ.get("SMTP_PORT", "587"))
-    smtp_use_tls = os.environ.get("SMTP_USE_TLS", "true").lower() in {"1", "true", "yes", "on"}
-    smtp_username = os.environ["SMTP_USERNAME"]
-    smtp_password = os.environ["SMTP_PASSWORD"]
-    smtp_from_email = os.environ.get("SMTP_FROM_EMAIL", smtp_username)
-    smtp_from_name = os.environ.get("SMTP_FROM_NAME", "HITCH Contact Form")
-    smtp_to_email = os.environ["SMTP_TO_EMAIL"]
+    try:
+        smtp_host = os.environ["SMTP_HOST"]
+        smtp_port = int(os.environ.get("SMTP_PORT", "587"))
+        smtp_use_tls = os.environ.get("SMTP_USE_TLS", "true").lower() in {"1", "true", "yes", "on"}
+        smtp_username = os.environ["SMTP_USERNAME"]
+        smtp_password = os.environ["SMTP_PASSWORD"]
+        smtp_from_email = os.environ.get("SMTP_FROM_EMAIL", smtp_username)
+        smtp_from_name = os.environ.get("SMTP_FROM_NAME", "HITCH Contact Form")
+        smtp_to_email = os.environ["SMTP_TO_EMAIL"]
+    except KeyError as exc:
+        missing_key = str(exc).strip("'")
+        print(f"Contact form misconfiguration: missing env var {missing_key}")
+        raise HTTPException(status_code=500, detail=f"Server is missing required email configuration: {missing_key}")
 
     msg = EmailMessage()
     msg["Subject"] = f"HITCH Contact: {payload.subject or 'New Message'}"
@@ -62,6 +68,9 @@ def contact_send(payload: ContactPayload):
                 server.login(smtp_username, smtp_password)
                 server.send_message(msg)
 
+        print(f"Contact form email accepted by SMTP for {payload.email} -> {smtp_to_email}")
         return {"ok": True}
     except Exception as exc:
-        return {"ok": False, "error": str(exc)}
+        print(f"Contact form SMTP send failed: {exc}")
+        print(traceback.format_exc())
+        raise HTTPException(status_code=502, detail=f"Email delivery failed: {exc}")
