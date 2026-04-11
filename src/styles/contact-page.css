@@ -18,7 +18,7 @@
 
 .contact-page__orbit--top-left {
 	top: 0;
-	left: 0;
+	left: -25px;
 }
 
 .contact-page__orbit--top-right {

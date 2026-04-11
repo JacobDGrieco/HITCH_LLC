@@ -7,11 +7,11 @@ import ContactCrystal from '../components/ContactCrystal';
 const CONTACTS = [
 	{
 		title: 'Email',
-		subtitle: 'jacobdgrieco@gmail.com',
-		href: 'mailto:jacobdgrieco@gmail.com',
+		subtitle: 'contact@headinthecloudshaven.com',
+		href: 'mailto:contact@headinthecloudshaven.com',
 		icon: '✉',
 		hue: 'rgba(245,175,210,0.94)',
-		size: 168,
+		size: 218,
 		delay: 0,
 		position: 'top-left',
 	},
@@ -50,6 +50,7 @@ const CONTACTS = [
 export default function ContactPage() {
 	const [form, setForm] = useState({ name: '', email: '', subject: '', message: '', company: '' });
 	const [status, setStatus] = useState(null);
+	const [errorMessage, setErrorMessage] = useState('');
 
 	function handleChange(e) {
 		setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
@@ -58,14 +59,30 @@ export default function ContactPage() {
 	async function handleSubmit(e) {
 		e.preventDefault();
 		setStatus('sending');
+		setErrorMessage('');
 		try {
 			const res = await fetch('/api/contact', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(form),
 			});
-			setStatus(res.ok ? 'sent' : 'error');
-		} catch {
+
+			let payload = null;
+			try {
+				payload = await res.json();
+			} catch {
+				payload = null;
+			}
+
+			if (res.ok) {
+				setStatus('sent');
+				return;
+			}
+
+			setErrorMessage(payload?.error || 'Something went wrong — try emailing directly.');
+			setStatus('error');
+		} catch (error) {
+			setErrorMessage(error?.message || 'Something went wrong — try emailing directly.');
 			setStatus('error');
 		}
 	}
@@ -109,7 +126,7 @@ export default function ContactPage() {
 											className="contact-page__honeypot"
 											aria-hidden="true"
 										/>
-										{status === 'error' && <div className="contact-page__error">Something went wrong — try emailing directly.</div>}
+										{status === 'error' && <div className="contact-page__error">{errorMessage || 'Something went wrong — try emailing directly.'}</div>}
 										<button type="submit" disabled={status === 'sending'} className="contact-page__button">
 											{status === 'sending' ? 'Sending…' : 'Send Message'}
 										</button>

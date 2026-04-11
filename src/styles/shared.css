@@ -6,11 +6,6 @@
 	width: 100%;
 }
 
-.page-section--narrow {
-	width: 100%;
-	max-width: 680px;
-}
-
 .page-header {
 	text-align: center;
 }

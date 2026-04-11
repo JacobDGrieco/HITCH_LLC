@@ -1,106 +1,69 @@
-import { useEffect, useRef } from 'react'
-import { gsap } from 'gsap'
-import '../styles/shared.css'
-import '../styles/education-page.css'
-import CrystalCard from '../components/CrystalCard'
-
-const COURSEWORK = [
-  'Data Structures', 'Algorithms', 'Operating Systems', 'Computer Networks',
-  'Database Systems', 'Software Engineering', 'Cybersecurity Fundamentals',
-  'Machine Learning', 'Linear Algebra', 'Discrete Math',
-]
-
-const CERTIFICATIONS = [
-  { title: 'AI Fundamentals', issuer: 'Certificate Program', accent: 'rgba(80,130,200,0.8)', icon: '✦' },
-  { title: 'Cybersecurity', issuer: 'Certificate Program', accent: 'rgba(150,80,190,0.8)', icon: '⬡' },
-]
+import { useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
+import '../styles/shared.css';
+import '../styles/education-page.css';
+import CrystalCard from '../components/CrystalCard';
 
 const EDUCATION_CRYSTALS = [
-  {
-    title: 'B.S. Computer Science',
-    desc: 'University of Kentucky with a math minor and broad software systems coursework.',
-    tags: ['UK', 'CS', 'Math Minor'],
-    gemColor: 'rgba(175,220,255,0.92)',
-    icon: '✦',
-    featured: true,
-  },
-  {
-    title: 'Certificates',
-    desc: 'Focused study across AI fundamentals and cybersecurity topics.',
-    tags: ['AI', 'Cybersecurity'],
-    gemColor: 'rgba(205,188,255,0.92)',
-    icon: '⬢',
-  },
-]
+	{
+		title: 'Articifical Intelligence',
+		gemColor: 'rgba(80,130,200,0.8)',
+		iconImage: '/staffingtool.png',
+		size: 230,
+	},
+	{
+		title: 'B.S. Computer Science',
+		desc: 'University of Kentucky with a math minor and broad software systems coursework.',
+		gemColor: 'rgba(175,220,255,0.92)',
+		iconImage: '/staffingtool.png',
+		size: 330,
+		featured: true,
+	},
+	{
+		title: 'Minor Mathematics',
+		gemColor: 'rgba(80,130,200,0.8)',
+		iconImage: '/staffingtool.png',
+		size: 270,
+	},
+	{
+		title: 'Cybersecurity',
+		gemColor: 'rgba(150,80,190,0.8)',
+		iconImage: '/staffingtool.png',
+		size: 230,
+	},
+];
 
 function softAccent(accent) {
-  return accent.replace('0.8', '0.1')
+	return accent.replace('0.8', '0.1');
 }
 
 function borderAccent(accent) {
-  return accent.replace('0.8', '0.3')
+	return accent.replace('0.8', '0.3');
 }
 
 export default function EducationPage() {
-  const degreeRef = useRef(null)
-  const certsRef = useRef(null)
-  const courseRef = useRef(null)
+	const degreeRef = useRef(null);
+	const certsRef = useRef(null);
+	const courseRef = useRef(null);
 
-  useEffect(() => {
-    gsap.fromTo(degreeRef.current, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' })
-    gsap.fromTo(certsRef.current, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.5, delay: 0.15, ease: 'power2.out' })
-    gsap.fromTo(courseRef.current, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.5, delay: 0.28, ease: 'power2.out' })
-  }, [])
+	useEffect(() => {
+		gsap.fromTo(degreeRef.current, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' });
+		gsap.fromTo(certsRef.current, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.5, delay: 0.15, ease: 'power2.out' });
+		gsap.fromTo(courseRef.current, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.5, delay: 0.28, ease: 'power2.out' });
+	}, []);
 
-  return (
-    <div className="page-section page-section--narrow">
-      <div className="page-header">
-        <div className="page-title">Education</div>
-        <div className="page-subtitle">academic background</div>
-      </div>
+	return (
+		<div className="page-section">
+			<div className="page-header">
+				<div className="page-title">Education</div>
+				<div className="page-subtitle">academic background</div>
+			</div>
 
-      <div className="page-crystal-row education-page__crystals">
-        {EDUCATION_CRYSTALS.map((item) => (
-          <CrystalCard key={item.title} size={230} {...item} />
-        ))}
-      </div>
-
-      <div ref={degreeRef} className="education-page__degree glass-card">
-        <div className="education-page__degree-top">
-          <div>
-            <div className="education-page__school">University of Kentucky</div>
-            <div className="education-page__degree-name">B.S. Computer Science</div>
-            <div className="education-page__minor">Minor: Mathematics</div>
-          </div>
-          <div className="education-page__date">May 2026</div>
-        </div>
-      </div>
-
-      <div ref={certsRef} className="education-page__certs">
-        {CERTIFICATIONS.map((cert) => (
-          <div key={cert.title} className="education-page__cert glass-card">
-            <div
-              className="education-page__cert-icon"
-              style={{ '--accent': cert.accent, '--accent-soft-bg': softAccent(cert.accent), '--accent-border': borderAccent(cert.accent) }}
-            >
-              {cert.icon}
-            </div>
-            <div>
-              <div className="education-page__cert-title">{cert.title}</div>
-              <div className="education-page__cert-issuer">{cert.issuer}</div>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <div ref={courseRef} className="education-page__coursework glass-card">
-        <div className="education-page__coursework-title">Relevant Coursework</div>
-        <div className="education-page__coursework-list">
-          {COURSEWORK.map((course) => (
-            <span key={course} className="education-page__coursework-chip">{course}</span>
-          ))}
-        </div>
-      </div>
-    </div>
-  )
+			<div className="page-crystal-row education-page__crystals">
+				{EDUCATION_CRYSTALS.map((item) => (
+					<CrystalCard key={item.title} {...item} />
+				))}
+			</div>
+		</div>
+	);
 }
