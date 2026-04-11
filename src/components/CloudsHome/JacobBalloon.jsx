@@ -1,7 +1,7 @@
 export default function JacobBalloon() {
 	return (
 		<div className="jacob-balloon" aria-hidden="true">
-			<img src="/headshot.png" alt="" className="jacob-balloon__headshot" />
+			<img src="/bodyshot.png" alt="" className="jacob-balloon__headshot" />
 			<div className="jacob-balloon__balloon-wrap" style={{ rotate: "12deg" }}>
 				<div className="jacob-balloon__balloon" />
 				<svg width="24" height="120" viewBox="0 0 24 120" className="jacob-balloon__string" aria-hidden="true">

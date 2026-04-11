@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import '../styles/shared.css'
 import '../styles/education-page.css'
+import CrystalCard from '../components/CrystalCard'
 
 const COURSEWORK = [
   'Data Structures', 'Algorithms', 'Operating Systems', 'Computer Networks',
@@ -12,6 +13,24 @@ const COURSEWORK = [
 const CERTIFICATIONS = [
   { title: 'AI Fundamentals', issuer: 'Certificate Program', accent: 'rgba(80,130,200,0.8)', icon: '✦' },
   { title: 'Cybersecurity', issuer: 'Certificate Program', accent: 'rgba(150,80,190,0.8)', icon: '⬡' },
+]
+
+const EDUCATION_CRYSTALS = [
+  {
+    title: 'B.S. Computer Science',
+    desc: 'University of Kentucky with a math minor and broad software systems coursework.',
+    tags: ['UK', 'CS', 'Math Minor'],
+    gemColor: 'rgba(175,220,255,0.92)',
+    icon: '✦',
+    featured: true,
+  },
+  {
+    title: 'Certificates',
+    desc: 'Focused study across AI fundamentals and cybersecurity topics.',
+    tags: ['AI', 'Cybersecurity'],
+    gemColor: 'rgba(205,188,255,0.92)',
+    icon: '⬢',
+  },
 ]
 
 function softAccent(accent) {
@@ -38,6 +57,12 @@ export default function EducationPage() {
       <div className="page-header">
         <div className="page-title">Education</div>
         <div className="page-subtitle">academic background</div>
+      </div>
+
+      <div className="page-crystal-row education-page__crystals">
+        {EDUCATION_CRYSTALS.map((item) => (
+          <CrystalCard key={item.title} size={230} {...item} />
+        ))}
       </div>
 
       <div ref={degreeRef} className="education-page__degree glass-card">
@@ -68,7 +93,7 @@ export default function EducationPage() {
         ))}
       </div>
 
-      <div ref={courseRef} className="education-page__coursework">
+      <div ref={courseRef} className="education-page__coursework glass-card">
         <div className="education-page__coursework-title">Relevant Coursework</div>
         <div className="education-page__coursework-list">
           {COURSEWORK.map((course) => (
