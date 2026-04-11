@@ -356,6 +356,7 @@
 	.about-page__portrait-stage,
 	.about-page__scroll-shell {
 		min-height: auto;
+		margin-top: 10%;
 	}
 
 	.about-page__portrait-cloud {
@@ -364,6 +365,10 @@
 }
 
 @media (max-width: 768px) {
+	.about-page__portrait-stage {
+		scale: 1;
+	}
+
 	.about-page__scroll-content {
 		padding: 42px 24px 34px;
 	}
@@ -375,5 +380,59 @@
 
 	.about-page__headline {
 		max-width: 14ch;
+	}
+}
+
+@media (max-width: 640px) {
+	.about-page__hero {
+		gap: 18px;
+	}
+
+	.about-page__portrait-cloud {
+		width: min(88vw, 360px);
+	}
+
+	.about-page__portrait-caption {
+		bottom: -10px;
+		font-size: 10px;
+		letter-spacing: 1.8px;
+	}
+
+	.about-page__scroll {
+		width: 100%;
+	}
+
+	.about-page__scroll-rod {
+		width: 18px;
+	}
+
+	.about-page__scroll-rod--left {
+		left: -5px;
+	}
+
+	.about-page__scroll-rod--right {
+		right: -5px;
+	}
+
+	.about-page__scroll-content {
+		gap: 14px;
+		padding: 36px 18px 30px;
+	}
+
+	.about-page__copy {
+		font-size: 14px;
+		line-height: 1.62;
+	}
+
+	.about-page__list li {
+		font-size: 13px;
+	}
+
+	.about-page__actions {
+		flex-direction: column;
+	}
+
+	.about-page__button {
+		min-width: 0;
 	}
 }

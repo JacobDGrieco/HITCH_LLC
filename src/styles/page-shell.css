@@ -151,3 +151,32 @@
 		radial-gradient(ellipse 40% 20% at 80% 80%, rgba(255, 235, 245, 0.38) 0%, transparent 55%),
 		radial-gradient(ellipse 48% 24% at 50% 52%, rgba(255, 226, 238, 0.44) 0%, transparent 68%);
 }
+
+@media (max-width: 900px) {
+	.page-shell__back {
+		top: 18px;
+		left: 18px;
+		padding: 7px 14px;
+		font-size: 11px;
+		letter-spacing: 0.8px;
+	}
+
+	.page-shell__content {
+		padding: 78px 24px 28px;
+		justify-content: flex-start;
+	}
+}
+
+@media (max-width: 640px) {
+	.page-shell__back {
+		top: 14px;
+		left: 14px;
+		gap: 6px;
+		padding: 6px 12px;
+		font-size: 10px;
+	}
+
+	.page-shell__content {
+		padding: 72px 16px 24px;
+	}
+}

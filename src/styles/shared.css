@@ -34,3 +34,36 @@
 	border-radius: 16px;
 	box-shadow: var(--card-shadow);
 }
+
+@media (max-width: 900px) {
+	.page-section {
+		gap: 24px;
+	}
+
+	.page-title {
+		font-size: 32px;
+		letter-spacing: 2.2px;
+	}
+
+	.page-subtitle {
+		font-size: 11px;
+		letter-spacing: 2.3px;
+	}
+}
+
+@media (max-width: 640px) {
+	.page-section {
+		gap: 20px;
+	}
+
+	.page-title {
+		font-size: 28px;
+		letter-spacing: 1.8px;
+	}
+
+	.page-subtitle {
+		margin-top: 4px;
+		font-size: 10px;
+		letter-spacing: 1.9px;
+	}
+}

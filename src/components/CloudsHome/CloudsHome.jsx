@@ -6,10 +6,10 @@ import '../../styles/clouds-home.css';
 
 const PAGE_CLOUDS = [
 	{ id: 'projects', label: 'Projects', route: '/projects', style: { top: '9%', left: '13%', animation: 'cloudFloatA 7.5s ease-in-out infinite' } },
-	{ id: 'skills', label: 'Skills', route: '/skills', style: { top: '9%', right: '14%', animation: 'cloudFloatB 9s ease-in-out infinite' } },
 	{ id: 'about', label: 'About', route: '/about', style: { top: '38%', left: '10%', animation: 'cloudFloatF 8.5s ease-in-out infinite' } },
-	{ id: 'contact', label: 'Contact', route: '/contact', style: { top: '38%', right: '10%', animation: 'cloudFloatE 8s ease-in-out infinite' } },
+	{ id: 'skills', label: 'Skills', route: '/skills', style: { top: '9%', right: '14%', animation: 'cloudFloatB 9s ease-in-out infinite' } },
 	{ id: 'education', label: 'Education', route: '/education', style: { top: '66%', left: '13%', animation: 'cloudFloatC 6.5s ease-in-out infinite' } },
+	{ id: 'contact', label: 'Contact', route: '/contact', style: { top: '38%', right: '10%', animation: 'cloudFloatE 8s ease-in-out infinite' } },
 	{ id: 'experience', label: 'Experience', route: '/experience', style: { top: '66%', right: '14%', animation: 'cloudFloatD 10s ease-in-out infinite' } },
 ];
 
@@ -145,8 +145,9 @@ export default function CloudsHome() {
 		setTransitioning(true);
 
 		const rect = e.currentTarget.getBoundingClientRect();
-		const cx = rect.left + rect.width / 2;
-		const cy = rect.top + rect.height / 2;
+		const isMobile = window.innerWidth <= 640;
+		const cx = isMobile ? window.innerWidth / 2 : rect.left + rect.width / 2;
+		const cy = isMobile ? window.innerHeight * 0.46 : rect.top + rect.height / 2;
 
 		e.currentTarget.style.opacity = '0';
 		e.currentTarget.style.transition = 'opacity 0.2s';
@@ -215,15 +216,17 @@ export default function CloudsHome() {
 			<div className="clouds-home__horizon" />
 
 			<div className="clouds-home__stage">
-				{PAGE_CLOUDS.map((cloud, index) => (
-					<Cloud
-						key={cloud.id}
-						label={cloud.label}
-						style={cloud.style}
-						imageSrc={pageCloudImages[index]}
-						onClick={(e) => handleCloudClick(cloud.route, e)}
-					/>
-				))}
+				<div className="clouds-home__nav-grid">
+					{PAGE_CLOUDS.map((cloud, index) => (
+						<Cloud
+							key={cloud.id}
+							label={cloud.label}
+							style={cloud.style}
+							imageSrc={pageCloudImages[index]}
+							onClick={(e) => handleCloudClick(cloud.route, e)}
+						/>
+					))}
+				</div>
 
 				<div className="clouds-home__logo-cloud">
 					{SPARKLES.map((sparkle, i) => (
@@ -250,12 +253,15 @@ export default function CloudsHome() {
 
 			<JacobBalloon />
 
-			<div className="clouds-home__footer">
-				<div className="clouds-home__das"></div>
+			<div className="clouds-home__header">
 				<div className="clouds-home__hint">Click a cloud to explore</div>
 				<button type="button" className="clouds-home__replay" onClick={replayIntro}>
 					Replay Intro
 				</button>
+			</div>
+
+			<div className="clouds-home__footer">
+				<div className="clouds-home__das" />
 			</div>
 
 			<div ref={expandRef} className="clouds-home__expand">

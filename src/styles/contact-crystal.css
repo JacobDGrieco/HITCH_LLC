@@ -93,6 +93,9 @@
 	font-size: clamp(11px, 0.62vw, 10px);
 	line-height: 1.35;
 	color: rgb(107, 77, 126);
+	max-width: 100%;
+	overflow-wrap: anywhere;
+	word-break: break-word;
 }
 
 @keyframes contactCrystalFloat {
@@ -127,5 +130,24 @@
 	27%,
 	100% {
 		opacity: 0;
+	}
+}
+
+@media (max-width: 640px) {
+	.contact-crystal {
+		width: min(var(--contact-crystal-size), 160px);
+	}
+
+	.contact-crystal__content {
+		padding: 14% 10% 14%;
+	}
+
+	.contact-crystal__icon-image {
+		width: 58px;
+		height: 58px;
+	}
+
+	.contact-crystal__subtitle {
+		font-size: 10px;
 	}
 }

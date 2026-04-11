@@ -145,3 +145,15 @@
 	cursor: pointer;
 	text-decoration: none;
 }
+
+@media (max-width: 900px) {
+	.projects-page__grid {
+		gap: 40px 24px;
+	}
+}
+
+@media (max-width: 640px) {
+	.projects-page__grid {
+		gap: 28px;
+	}
+}

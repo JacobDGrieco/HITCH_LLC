@@ -53,7 +53,7 @@
 
 @media (max-width: 1000px) {
 	.skills-clusters {
-		grid-template-columns: 1fr;
+		flex-direction: column;
 		gap: 24px;
 	}
 
@@ -80,6 +80,7 @@
 
 	.skills-cluster {
 		gap: 12px;
+		width: 100%;
 	}
 
 	.skills-cluster__label {

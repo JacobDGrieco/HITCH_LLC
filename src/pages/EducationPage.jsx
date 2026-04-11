@@ -6,13 +6,6 @@ import CrystalCard from '../components/CrystalCard';
 
 const EDUCATION_CRYSTALS = [
 	{
-		title: 'Articifical Intelligence',
-		desc: 'Gained interdisciplinary exposure to artificial intelligence, machine learning, and the ethical use of data-driven technologies. The certificate helps connect emerging AI concepts to practical and responsible real-world use.',
-		gemColor: 'rgba(80,130,200,0.8)',
-		iconImage: '/staffingtool.png',
-		size: 280,
-	},
-	{
 		title: 'B.S. Computer Science',
 		desc: 'Built a strong foundation in software development, algorithms, systems, and problem-solving through broad computer science coursework. The program emphasizes both technical theory and practical application in designing real-world software.',
 		gemColor: 'rgba(175,220,255,0.92)',
@@ -26,6 +19,13 @@ const EDUCATION_CRYSTALS = [
 		gemColor: 'rgba(80,130,200,0.8)',
 		iconImage: '/staffingtool.png',
 		size: 320,
+	},
+	{
+		title: 'Articifical Intelligence',
+		desc: 'Gained interdisciplinary exposure to artificial intelligence, machine learning, and the ethical use of data-driven technologies. The certificate helps connect emerging AI concepts to practical and responsible real-world use.',
+		gemColor: 'rgba(80,130,200,0.8)',
+		iconImage: '/staffingtool.png',
+		size: 280,
 	},
 	{
 		title: 'Cybersecurity',

@@ -116,3 +116,32 @@
 	color: rgba(100, 70, 150, 0.8);
 	font-weight: 600;
 }
+
+@media (max-width: 640px) {
+	.education-page__degree {
+		padding: 18px 18px;
+	}
+
+	.education-page__degree-top {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	.education-page__date {
+		padding: 5px 12px;
+		font-size: 10px;
+	}
+
+	.education-page__certs {
+		gap: 12px;
+	}
+
+	.education-page__cert {
+		padding: 18px 18px;
+	}
+
+	.education-page__coursework-chip {
+		font-size: 11px;
+		padding: 5px 12px;
+	}
+}

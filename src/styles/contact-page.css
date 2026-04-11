@@ -242,9 +242,58 @@
 @media (max-width: 640px) {
 	.contact-page__cluster {
 		grid-template-columns: 1fr;
+		gap: 16px;
 	}
 
 	.contact-page__message-core {
-		width: min(100%, 400px);
+		width: min(100%, 420px);
+		aspect-ratio: auto;
+	}
+
+	.contact-page__message-shell {
+		min-height: 540px;
+		clip-path: none;
+		border-radius: 28px;
+	}
+}
+
+@media (max-width: 480px) {
+	.contact-page__cluster-shell {
+		padding: 4px 12px 8px;
+	}
+
+	.contact-page__message-core {
+		width: 100%;
+	}
+
+	.contact-page__message-content {
+		padding: 28px 20px 30px;
+	}
+
+	.contact-page__message-shell {
+		min-height: 500px;
+		clip-path: none;
+		border-radius: 24px;
+	}
+
+	.contact-page__eyebrow {
+		font-size: 10px;
+		letter-spacing: 2px;
+		margin-bottom: 10px;
+	}
+
+	.contact-page__input,
+	.contact-page__textarea {
+		padding: 11px 12px;
+		font-size: 13px;
+	}
+
+	.contact-page__textarea {
+		min-height: 110px;
+	}
+
+	.contact-page__button {
+		padding: 10px 16px;
+		font-size: 11px;
 	}
 }
