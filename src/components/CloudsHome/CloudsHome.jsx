@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Cloud from './Cloud';
 import JacobBalloon from './JacobBalloon';
@@ -42,11 +42,56 @@ const SPARKLES = [
 	{ top: '55px', right: '55px', delay: '0.4s' },
 ];
 
+const FLUID_STOPS = {
+	cloudScale: [[900, 0.55], [1200, 0.7], [1600, 0.8], [2000, 0.9], [2400, 1]],
+	logoTop: [[1200, 60], [1600, 58], [2000, 58], [2400, 65]],
+	logoWidthRem: [[900, 35], [1200, 45], [1600, 60], [2000, 80], [2400, 100]],
+	jacobLeft: [[900, 13], [1200, 20], [1600, 25], [2000, 29], [2400, 31]],
+	jacobTop: [[1200, 22], [1600, 15], [2000, 10], [2400, 15]],
+	jacobScale: [[900, 0.35], [1200, 0.45], [1600, 0.65], [2000, 0.85], [2400, 1]],
+};
+
+function interpolateStops(width, stops) {
+	if (width <= stops[0][0]) return stops[0][1];
+	if (width >= stops[stops.length - 1][0]) return stops[stops.length - 1][1];
+
+	for (let i = 0; i < stops.length - 1; i += 1) {
+		const [minWidth, minValue] = stops[i];
+		const [maxWidth, maxValue] = stops[i + 1];
+
+		if (width >= minWidth && width <= maxWidth) {
+			const progress = (width - minWidth) / (maxWidth - minWidth);
+			return minValue + (maxValue - minValue) * progress;
+		}
+	}
+
+	return stops[stops.length - 1][1];
+}
+
 export default function CloudsHome() {
 	const navigate = useNavigate();
 	const puffRefs = useRef([]);
 	const expandRef = useRef(null);
 	const [transitioning, setTransitioning] = useState(false);
+	const [viewportWidth, setViewportWidth] = useState(() => window.innerWidth);
+
+	useEffect(() => {
+		function handleResize() {
+			setViewportWidth(window.innerWidth);
+		}
+
+		window.addEventListener('resize', handleResize);
+		return () => window.removeEventListener('resize', handleResize);
+	}, []);
+
+	const fluidVars = useMemo(() => ({
+		'--home-cloud-scale': interpolateStops(viewportWidth, FLUID_STOPS.cloudScale),
+		'--home-logo-top': `${interpolateStops(viewportWidth, FLUID_STOPS.logoTop)}%`,
+		'--home-logo-width': `${interpolateStops(viewportWidth, FLUID_STOPS.logoWidthRem)}rem`,
+		'--home-jacob-left': `${interpolateStops(viewportWidth, FLUID_STOPS.jacobLeft)}%`,
+		'--home-jacob-top': `${interpolateStops(viewportWidth, FLUID_STOPS.jacobTop)}%`,
+		'--home-jacob-scale': interpolateStops(viewportWidth, FLUID_STOPS.jacobScale),
+	}), [viewportWidth]);
 
 	function handleCloudClick(route, e) {
 		if (transitioning) return;
@@ -88,7 +133,7 @@ export default function CloudsHome() {
 	}
 
 	return (
-		<>
+		<div className="clouds-home" style={fluidVars}>
 			<div className="clouds-home__sky" />
 			<div className="clouds-home__haze" />
 
@@ -141,7 +186,6 @@ export default function CloudsHome() {
 
 					<img src="/logo.png" alt="HeadInTheCloudsHaven" className="clouds-home__logo" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
 				</div>
-
 			</div>
 
 			<div ref={expandRef} className="clouds-home__expand">
@@ -152,7 +196,8 @@ export default function CloudsHome() {
 
 			<JacobBalloon />
 
-			<div className="clouds-home__hint">✦ Click a cloud to explore ✦</div>
-		</>
+			<div className="clouds-home__hint">Click a cloud to explore</div>
+		</div>
 	);
 }
+
