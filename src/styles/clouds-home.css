@@ -264,3 +264,33 @@
 	display: block;
 	overflow: visible;
 }
+
+@media (max-width: 1600px) {
+	.clouds-home__logo-cloud {
+		top: 68%;
+		width: 50rem;
+	}
+
+	.jacob-balloon {
+		top: 10%;
+		left: 37%;
+		scale: 80%;
+	}
+}
+
+@media (max-width: 1200px) {
+	.page-cloud {
+		scale: 70%;
+	}
+
+	.clouds-home__logo-cloud {
+		top: 60%;
+		width: 40rem;
+	}
+
+	.jacob-balloon {
+		top: 6%;
+		left: 34%;
+		scale: 67%;
+	}
+}

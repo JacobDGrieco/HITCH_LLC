@@ -21,7 +21,7 @@ const PROJECTS = [
 		tags: ['React 18', 'Vite', 'Prisma ORM', 'Node.js'],
 		iconImage: '/ppgc.png',
 		github: 'https://github.com/JacobDGrieco/PokemonPGC_v2',
-		live: 'https://rela-time-timeline-tool.vercel.app/',
+		live: 'https://ppgc-delta.vercel.app/',
 		gemColor: 'rgba(200,185,255,0.92)',
 	},
 	{
@@ -31,7 +31,7 @@ const PROJECTS = [
 		tags: ['React 19', 'Vite', 'Cytoscape.js', 'JSZip'],
 		iconImage: '/relatime.png',
 		github: 'https://github.com/JacobDGrieco/RelaTime',
-		live: 'https://ppgc-delta.vercel.app/',
+		live: 'https://rela-time-timeline-tool.vercel.app/',
 		featured: true,
 		gemColor: 'rgba(175,220,255,0.92)',
 	},
