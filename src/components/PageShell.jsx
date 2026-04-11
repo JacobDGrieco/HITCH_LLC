@@ -13,7 +13,7 @@ const PUFF_CFG = [
   { ox: 0, oy: -28, size: 58, delay: 100, dur: 650 },
 ]
 
-export default function PageShell({ children }) {
+export default function PageShell({ children, section = 'default' }) {
   const navigate = useNavigate()
   const puffRefs = useRef([])
   const expandRef = useRef(null)
@@ -65,7 +65,7 @@ export default function PageShell({ children }) {
 
   return (
     <>
-      <div className="page-shell__sky" />
+      <div className={`page-shell__sky page-shell__sky--${section}`} />
 
       <div ref={expandRef} className="page-shell__expand">
         {PUFF_CFG.map((_, i) => (
@@ -73,7 +73,7 @@ export default function PageShell({ children }) {
         ))}
       </div>
 
-      <div className={`page-shell__overlay ${visible ? 'page-shell__overlay--visible' : 'page-shell__overlay--hidden'}`}>
+      <div className={`page-shell__overlay page-shell__overlay--${section} ${visible ? 'page-shell__overlay--visible' : 'page-shell__overlay--hidden'}`}>
         <div className="page-shell__wisps" />
 
         <button onClick={handleBack} className="page-shell__back">

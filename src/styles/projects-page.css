@@ -1,112 +1,147 @@
-
 .projects-page__grid {
-  display: flex;
-  gap: 28px;
-  align-items: center;
-  flex-wrap: wrap;
-  justify-content: center;
+	display: flex;
+	gap: 128px;
+	align-items: center;
+	flex-wrap: wrap;
+	justify-content: center;
 }
+
 .crystal-card {
-  position: relative;
-  width: var(--crystal-size);
-  cursor: default;
-  animation: crystalFloat var(--crystal-float-duration, 5s) ease-in-out infinite;
-  animation-delay: var(--crystal-float-delay, 0s);
-  filter: var(--crystal-filter);
+	position: relative;
+	width: var(--crystal-size);
+	cursor: default;
+	animation: crystalFloat var(--crystal-float-duration, 5s) ease-in-out infinite;
+	animation-delay: var(--crystal-float-delay, 0s);
+	filter: var(--crystal-filter);
 }
+
 .crystal-card__shape {
-  position: relative;
-  width: 100%;
-  clip-path: polygon(50% 0%, 82% 12%, 100% 38%, 92% 72%, 66% 100%, 34% 100%, 8% 72%, 0% 38%, 18% 12%);
-  overflow: hidden;
-  aspect-ratio: 0.72;
+	position: relative;
+	width: 100%;
+	clip-path: polygon(50% 0%, 82% 12%, 100% 38%, 92% 72%, 66% 100%, 34% 100%, 8% 72%, 0% 38%, 18% 12%);
+	overflow: hidden;
+	aspect-ratio: 0.72;
 }
+
 .crystal-card__face,
 .crystal-card__facets,
 .crystal-card__depth,
 .crystal-card__glare {
-  position: absolute;
-  inset: 0;
+	position: absolute;
+	inset: 0;
 }
-.crystal-card__face { background: var(--face-gradient); }
+
+.crystal-card__face {
+	background: var(--face-gradient);
+}
+
 .crystal-card__facets {
-  background: linear-gradient(135deg, rgba(255,255,255,0.6) 0%, transparent 40%), linear-gradient(225deg, rgba(255,255,255,0.3) 0%, transparent 35%), linear-gradient(315deg, rgba(180,220,255,0.2) 0%, transparent 45%);
+	background: linear-gradient(135deg, rgba(255, 255, 255, 0.6) 0%, transparent 40%), linear-gradient(225deg, rgba(255, 255, 255, 0.3) 0%, transparent 35%), linear-gradient(315deg, rgba(180, 220, 255, 0.2) 0%, transparent 45%);
 }
+
 .crystal-card__depth {
-  background: radial-gradient(ellipse at 50% 50%, rgba(100,160,220,0.18) 0%, rgba(80,140,210,0.08) 40%, transparent 70%);
+	background: radial-gradient(ellipse at 50% 50%, rgba(100, 160, 220, 0.18) 0%, rgba(80, 140, 210, 0.08) 40%, transparent 70%);
 }
+
 .crystal-card__glare {
-  background: conic-gradient(from 0deg at 35% 25%, transparent 0deg, transparent 55deg, rgba(255,255,255,0.75) 65deg, rgba(255,255,255,0.9) 72deg, rgba(255,255,255,0.75) 80deg, transparent 95deg, transparent 175deg, rgba(255,255,255,0.3) 182deg, rgba(255,255,255,0.45) 188deg, rgba(255,255,255,0.3) 195deg, transparent 210deg, transparent 360deg);
-  animation: glareRotate var(--glare-duration, 4s) linear infinite;
-  animation-delay: var(--glare-delay, 0s);
+	background: conic-gradient(from 0deg at 35% 25%, transparent 0deg, transparent 55deg, rgba(255, 255, 255, 0.75) 65deg, rgba(255, 255, 255, 0.9) 72deg, rgba(255, 255, 255, 0.75) 80deg, transparent 95deg, transparent 175deg, rgba(255, 255, 255, 0.3) 182deg, rgba(255, 255, 255, 0.45) 188deg, rgba(255, 255, 255, 0.3) 195deg, transparent 210deg, transparent 360deg);
+	animation: glareRotate var(--glare-duration, 4s) linear infinite;
+	animation-delay: var(--glare-delay, 0s);
 }
+
 .crystal-card__cap {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 0;
-  border-left: var(--cap-width) solid transparent;
-  border-right: var(--cap-width) solid transparent;
-  border-bottom: var(--cap-height) solid rgba(220,240,255,0.5);
-  z-index: 3;
+	position: absolute;
+	top: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 0;
+	height: 0;
+	border-left: var(--cap-width) solid transparent;
+	border-right: var(--cap-width) solid transparent;
+	border-bottom: var(--cap-height) solid rgba(220, 240, 255, 0.5);
+	z-index: 3;
 }
+
 .crystal-card__content {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 28px 18px;
-  gap: 8px;
-  z-index: 2;
+	position: absolute;
+	inset: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-evenly;
+	padding: 28px 18px;
+	gap: 25px;
+	z-index: 2;
 }
-.crystal-card__icon { font-size: 28px; margin-bottom: 4px; }
+
+.crystal-card__icon {
+	font-size: 28px;
+	margin-bottom: 4px;
+}
+
+.crystal-card__icon-image {
+	width: 92px;
+	height: 92px;
+	object-fit: contain;
+	margin-bottom: 4px;
+	filter: drop-shadow(0 2px 6px rgba(255, 255, 255, 0.55));
+}
+
 .crystal-card__title {
-  font-size: 13px;
-  font-weight: 800;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: rgba(60,100,160,0.9);
-  text-align: center;
-  text-shadow: 0 1px 4px rgba(255,255,255,0.8);
+	font-size: 18px;
+	font-weight: 800;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	color: rgba(60, 100, 160, 0.9);
+	text-align: center;
+	text-shadow: 0 1px 4px rgba(255, 255, 255, 0.8);
 }
+
 .crystal-card__desc {
-  font-size: 10px;
-  color: rgba(80,120,180,0.7);
-  text-align: center;
-  line-height: 1.5;
-  letter-spacing: 0.3px;
+	font-size: 10px;
+	color: rgba(80, 120, 180, 0.7);
+	text-align: center;
+	line-height: 1.5;
+	letter-spacing: 0.3px;
 }
+
 .crystal-card__tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 3px;
-  justify-content: center;
-  margin-top: 4px;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 3px;
+	justify-content: center;
+	margin-top: 4px;
 }
+
 .crystal-card__tag {
-  font-size: 8px;
-  padding: 2px 6px;
-  border-radius: 8px;
-  background: rgba(160,200,240,0.25);
-  border: 1px solid rgba(140,180,230,0.4);
-  color: rgba(60,100,160,0.8);
-  letter-spacing: 0.5px;
+	font-size: 8px;
+	padding: 2px 6px;
+	border-radius: 8px;
+	background: rgba(160, 200, 240, 0.25);
+	border: 1px solid rgba(140, 180, 230, 0.4);
+	color: rgba(60, 100, 160, 0.8);
+	letter-spacing: 0.5px;
 }
+
+.crystal-card__links {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+}
+
 .crystal-card__link {
-  margin-top: 6px;
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: rgba(100,140,200,0.8);
-  padding: 3px 10px;
-  border-radius: 8px;
-  border: 1px solid rgba(140,180,230,0.5);
-  background: rgba(200,230,255,0.3);
-  cursor: pointer;
-  text-decoration: none;
+	display: flex;
+	justify-content: space-evenly;
+	margin-top: 6px;
+	font-size: 9px;
+	font-weight: 700;
+	letter-spacing: 1.5px;
+	text-transform: uppercase;
+	color: rgba(100, 140, 200, 0.8);
+	padding: 3px 10px;
+	border-radius: 8px;
+	border: 1px solid rgba(140, 180, 230, 0.5);
+	background: rgba(200, 230, 255, 0.3);
+	cursor: pointer;
+	text-decoration: none;
 }
