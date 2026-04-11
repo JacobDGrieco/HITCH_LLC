@@ -1,0 +1,104 @@
+
+.experience-page__timeline {
+  width: 100%;
+  max-width: 640px;
+}
+.experience-page__item {
+  opacity: 0;
+  display: flex;
+  gap: 20px;
+}
+.experience-page__rail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+.experience-page__node {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  margin-top: 4px;
+  flex-shrink: 0;
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--accent), 0 0 24px var(--accent-shadow);
+}
+.experience-page__line {
+  width: 2px;
+  flex: 1;
+  min-height: 40px;
+  margin-top: 6px;
+  background: linear-gradient(to bottom, var(--accent), rgba(180,140,220,0.1));
+}
+.experience-page__card {
+  flex: 1;
+  margin-bottom: var(--card-margin, 0px);
+  border: 1px solid var(--accent-border);
+  border-radius: 14px;
+  padding: 18px 20px;
+  box-shadow: 0 4px 16px rgba(200,140,200,0.1);
+}
+.experience-page__card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.experience-page__title {
+  font-size: 15px;
+  font-weight: 700;
+  color: rgba(70,50,100,0.9);
+  margin-bottom: 3px;
+}
+.experience-page__role {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 0.3px;
+}
+.experience-page__meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 5px;
+}
+.experience-page__period {
+  font-size: 11px;
+  color: rgba(130,110,160,0.65);
+  font-weight: 600;
+}
+.experience-page__active {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 8px;
+  background: var(--accent-soft-bg);
+  border: 1px solid var(--accent-border-strong);
+  color: var(--accent);
+}
+.experience-page__desc {
+  font-size: 12px;
+  line-height: 1.7;
+  color: rgba(90,70,130,0.75);
+  margin: 8px 0;
+}
+.experience-page__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 6px;
+}
+.experience-page__tag {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  padding: 2px 10px;
+  border-radius: 8px;
+  background: var(--accent-soft-bg);
+  border: 1px solid var(--accent-border-soft);
+  color: var(--accent);
+}
