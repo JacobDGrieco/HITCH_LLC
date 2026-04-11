@@ -1,34 +1,54 @@
 import { useState } from 'react';
 import '../styles/shared.css';
 import '../styles/contact-page.css';
-import CrystalCard from '../components/CrystalCard';
+import '../styles/contact-crystal.css';
+import ContactCrystal from '../components/ContactCrystal';
 
-const LINKS = [
-	{ label: 'Email', value: 'jacobdgrieco@gmail.com', href: 'mailto:jacobdgrieco@gmail.com', icon: '✉' },
-	{ label: 'LinkedIn', value: 'linkedin.com/in/jacob-grieco', href: 'https://linkedin.com/in/jacob-grieco', icon: '⬡' },
-	{ label: 'GitHub', value: 'github.com/JacobDGrieco', href: 'https://github.com/JacobDGrieco', icon: '⬡' },
-	{ label: 'Resume', value: 'Download PDF', href: '/resume.pdf', icon: '↓' },
-];
-
-const CONTACT_CRYSTALS = [
+const CONTACTS = [
 	{
 		title: 'Email',
-		desc: 'Best for direct questions, freelance work, and project inquiries.',
-		tags: ['Direct', 'Fast'],
+		subtitle: 'jacobdgrieco@gmail.com',
+		href: 'mailto:jacobdgrieco@gmail.com',
 		icon: '✉',
-		gemColor: 'rgba(245,175,210,0.92)',
+		hue: 'rgba(245,175,210,0.94)',
+		size: 168,
+		delay: 0,
+		position: 'top-left',
 	},
 	{
-		title: 'Profiles',
-		desc: 'LinkedIn and GitHub for experience, projects, and code samples.',
-		tags: ['LinkedIn', 'GitHub'],
-		icon: '⬢',
-		gemColor: 'rgba(175,220,255,0.92)',
+		title: 'LinkedIn',
+		subtitle: 'Professional profile',
+		href: 'https://linkedin.com/in/jacob-grieco',
+		iconImage: '/linkedin.png',
+		hue: 'rgba(175,220,255,0.94)',
+		size: 174,
+		delay: -1.6,
+		position: 'top-right',
+	},
+	{
+		title: 'GitHub',
+		subtitle: 'Projects and code',
+		href: 'https://github.com/JacobDGrieco',
+		iconImage: '/github.png',
+		hue: 'rgba(212,193,255,0.94)',
+		size: 170,
+		delay: -0.7,
+		position: 'bottom-left',
+	},
+	{
+		title: 'Resume',
+		subtitle: 'Download PDF',
+		href: '/resume.pdf',
+		iconImage: '/resume.png',
+		hue: 'rgba(255,217,170,0.94)',
+		size: 172,
+		delay: -2.2,
+		position: 'bottom-right',
 	},
 ];
 
 export default function ContactPage() {
-	const [form, setForm] = useState({ name: '', email: '', message: '' });
+	const [form, setForm] = useState({ name: '', email: '', subject: '', message: '', company: '' });
 	const [status, setStatus] = useState(null);
 
 	function handleChange(e) {
@@ -57,47 +77,47 @@ export default function ContactPage() {
 				<div className="page-subtitle">let&apos;s connect</div>
 			</div>
 
-			<div className="page-crystal-row contact-page__crystals">
-				{CONTACT_CRYSTALS.map((item) => (
-					<CrystalCard key={item.title} size={320} {...item} />
-				))}
-			</div>
-
-			<div className="contact-page__layout">
-				<div className="contact-page__card contact-page__card--links glass-card">
-					<div className="contact-page__eyebrow">Direct Links</div>
-					{LINKS.map((link) => (
-						<a
-							key={link.label}
-							href={link.href}
-							target={link.href.startsWith('http') ? '_blank' : undefined}
-							rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-							className="contact-page__link"
-						>
-							<span className="contact-page__link-icon">{link.icon}</span>
-							<div>
-								<div className="contact-page__link-label">{link.label}</div>
-								<div className="contact-page__link-value">{link.value}</div>
-							</div>
-						</a>
+			<div className="contact-page__cluster-shell">
+				<div className="contact-page__cluster">
+					{CONTACTS.map((item) => (
+						<div key={item.title} className={`contact-page__orbit contact-page__orbit--${item.position}`}>
+							<ContactCrystal {...item} />
+						</div>
 					))}
-				</div>
 
-				<div className="contact-page__card contact-page__card--form glass-card">
-					<div className="contact-page__eyebrow contact-page__eyebrow--spaced">Send a Message</div>
-					{status === 'sent' ? (
-						<div className="contact-page__success">Message sent — I&apos;ll be in touch soon ☁</div>
-					) : (
-						<form onSubmit={handleSubmit} className="contact-page__form">
-							<input name="name" value={form.name} onChange={handleChange} placeholder="Your name" required className="contact-page__input" />
-							<input name="email" type="email" value={form.email} onChange={handleChange} placeholder="Your email" required className="contact-page__input" />
-							<textarea name="message" value={form.message} onChange={handleChange} placeholder="Your message" required rows={4} className="contact-page__textarea" />
-							{status === 'error' && <div className="contact-page__error">Something went wrong — try emailing directly.</div>}
-							<button type="submit" disabled={status === 'sending'} className="contact-page__button">
-								{status === 'sending' ? 'Sending…' : 'Send →'}
-							</button>
-						</form>
-					)}
+					<div className="contact-page__message-core glass-card">
+						<div className="contact-page__message-shell">
+							<div className="contact-page__message-glow" />
+							<div className="contact-page__message-facets" />
+							<div className="contact-page__message-shine" />
+							<div className="contact-page__message-content">
+								<div className="contact-page__eyebrow">Send a Message</div>
+								{status === 'sent' ? (
+									<div className="contact-page__success">Message sent — I&apos;ll be in touch soon ☁</div>
+								) : (
+									<form onSubmit={handleSubmit} className="contact-page__form">
+										<input name="name" value={form.name} onChange={handleChange} placeholder="Your name" required className="contact-page__input" />
+										<input name="email" type="email" value={form.email} onChange={handleChange} placeholder="Your email" required className="contact-page__input" />
+										<input name="subject" value={form.subject} onChange={handleChange} placeholder="Subject" className="contact-page__input" />
+										<textarea name="message" value={form.message} onChange={handleChange} placeholder="Your message" required rows={5} className="contact-page__textarea" />
+										<input
+											name="company"
+											value={form.company}
+											onChange={handleChange}
+											tabIndex={-1}
+											autoComplete="off"
+											className="contact-page__honeypot"
+											aria-hidden="true"
+										/>
+										{status === 'error' && <div className="contact-page__error">Something went wrong — try emailing directly.</div>}
+										<button type="submit" disabled={status === 'sending'} className="contact-page__button">
+											{status === 'sending' ? 'Sending…' : 'Send Message'}
+										</button>
+									</form>
+								)}
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

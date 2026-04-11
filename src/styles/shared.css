@@ -1,41 +1,41 @@
-
 .page-section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 28px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 28px;
+	width: 100%;
 }
 
 .page-section--narrow {
-  width: 100%;
-  max-width: 680px;
+	width: 100%;
+	max-width: 680px;
 }
 
 .page-header {
-  text-align: center;
+	text-align: center;
 }
 
 .page-title {
-  font-size: 38px;
-  font-weight: 800;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: var(--page-title-color);
-  text-shadow: var(--page-title-shadow);
+	font-size: 38px;
+	font-weight: 800;
+	letter-spacing: 3px;
+	text-transform: uppercase;
+	color: var(--page-title-color);
+	text-shadow: var(--page-title-shadow);
 }
 
 .page-subtitle {
-  margin-top: 6px;
-  font-size: 12px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: var(--page-subtitle-color);
+	margin-top: 6px;
+	font-size: 12px;
+	letter-spacing: 3px;
+	text-transform: uppercase;
+	color: var(--page-subtitle-color);
 }
 
 .glass-card {
-  background: var(--card-bg);
-  backdrop-filter: blur(8px);
-  border: 1px solid var(--card-border);
-  border-radius: 16px;
-  box-shadow: var(--card-shadow);
+	background: var(--card-bg);
+	backdrop-filter: blur(8px);
+	border: 1px solid var(--card-border);
+	border-radius: 16px;
+	box-shadow: var(--card-shadow);
 }
