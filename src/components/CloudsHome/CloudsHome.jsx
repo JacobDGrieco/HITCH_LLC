@@ -46,11 +46,8 @@ const CLOUD_IMAGE_POOL = Array.from({ length: 8 }, (_, index) => `/cloud${index 
 
 const FLUID_STOPS = {
 	cloudScale: [[900, 0.55], [2400, 1]],
-	logoTop: [[1200, 60], [2400, 65]],
-	logoWidthRem: [[900, 35], [2400, 100]],
-	jacobLeft: [[900, 15], [2400, 31]],
-	jacobTop: [[1200, 22], [2400, 15]],
-	jacobScale: [[900, 0.3], [2400, 1]],
+	heroScale: [[375, 0.45], [768, 0.42], [1440, 0.72], [2400, 1]],
+	heroBottom: [[375, -4], [480, 0], [640, 2], [768, 4], [1440, 6], [2400, 8]],
 };
 
 function interpolateStops(width, stops) {
@@ -128,11 +125,8 @@ export default function CloudsHome() {
 
 	const fluidVars = useMemo(() => ({
 		'--home-cloud-scale': interpolateStops(viewportWidth, FLUID_STOPS.cloudScale),
-		'--home-logo-top': `${interpolateStops(viewportWidth, FLUID_STOPS.logoTop)}%`,
-		'--home-logo-width': `${interpolateStops(viewportWidth, FLUID_STOPS.logoWidthRem)}rem`,
-		'--home-jacob-left': `${interpolateStops(viewportWidth, FLUID_STOPS.jacobLeft)}%`,
-		'--home-jacob-top': `${interpolateStops(viewportWidth, FLUID_STOPS.jacobTop)}%`,
-		'--home-jacob-scale': interpolateStops(viewportWidth, FLUID_STOPS.jacobScale),
+		'--home-hero-scale': interpolateStops(viewportWidth, FLUID_STOPS.heroScale),
+		'--home-hero-bottom': `${interpolateStops(viewportWidth, FLUID_STOPS.heroBottom)}%`,
 	}), [viewportWidth]);
 
 	const pageCloudImages = useMemo(
@@ -228,30 +222,34 @@ export default function CloudsHome() {
 					))}
 				</div>
 
-				<div className="clouds-home__logo-cloud">
-					{SPARKLES.map((sparkle, i) => (
-						<div
-							key={i}
-							className="clouds-home__sparkle"
-							style={{
-								'--sparkle-top': sparkle.top,
-								'--sparkle-left': sparkle.left,
-								'--sparkle-right': sparkle.right,
-								'--sparkle-delay': sparkle.delay,
-							}}
-						>
-							<div className="clouds-home__sparkle-shape">
-								<div className="clouds-home__sparkle-v" />
-								<div className="clouds-home__sparkle-h" />
-							</div>
-						</div>
-					))}
+				<div className="clouds-home__hero-cluster">
+					<div className="clouds-home__hero-cluster-inner">
+						<JacobBalloon />
 
-					<img src="/logo.png" alt="HeadInTheCloudsHaven" className="clouds-home__logo" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
+						<div className="clouds-home__logo-cloud">
+							{SPARKLES.map((sparkle, i) => (
+								<div
+									key={i}
+									className="clouds-home__sparkle"
+									style={{
+										'--sparkle-top': sparkle.top,
+										'--sparkle-left': sparkle.left,
+										'--sparkle-right': sparkle.right,
+										'--sparkle-delay': sparkle.delay,
+									}}
+								>
+									<div className="clouds-home__sparkle-shape">
+										<div className="clouds-home__sparkle-v" />
+										<div className="clouds-home__sparkle-h" />
+									</div>
+								</div>
+							))}
+
+							<img src="/logo.png" alt="HeadInTheCloudsHaven" className="clouds-home__logo" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
+						</div>
+					</div>
 				</div>
 			</div>
-
-			<JacobBalloon />
 
 			<div className="clouds-home__header">
 				<div className="clouds-home__hint">Click a cloud to explore</div>
