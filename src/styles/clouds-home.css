@@ -349,6 +349,13 @@
 	padding: 18px;
 	justify-content: center;
 	align-items: center;
+	transition: opacity 220ms ease, visibility 220ms ease;
+}
+
+.clouds-home__footer--hidden {
+	opacity: 0;
+	visibility: hidden;
+	pointer-events: none;
 }
 
 .clouds-home__das {
@@ -359,7 +366,7 @@
 	align-items: center;
 	gap: 14px;
 	padding: 8px 14px;
-	border-radius: 28px;
+	border-radius: 28px 0 28px 28px;
 	border: 1px solid rgba(229, 178, 208, 0.55);
 	background:
 		linear-gradient(145deg, rgba(255, 250, 253, 0.95), rgba(255, 238, 247, 0.78)),
@@ -378,8 +385,8 @@
 
 .clouds-home__das-mute {
 	position: absolute;
-	top: 8px;
-	right: 8px;
+	top: -8px;
+	right: -6px;
 	z-index: 1;
 	display: inline-flex;
 	align-items: center;
@@ -829,17 +836,7 @@
 	}
 }
 
-@media (max-width: 640px) {
-	.clouds-home {
-		--home-cloud-scale: 1;
-		min-height: 100dvh;
-	}
-
-	.clouds-home__bg-clouds,
-	.clouds-home__horizon {
-		opacity: 0.45;
-	}
-
+@media (max-width: 1440px) {
 	.clouds-home__nav-grid {
 		position: absolute;
 		top: 7%;
@@ -870,6 +867,18 @@
 
 	.page-cloud {
 		scale: 80%;
+	}
+}
+
+@media (max-width: 640px) {
+	.clouds-home {
+		--home-cloud-scale: 1;
+		min-height: 100dvh;
+	}
+
+	.clouds-home__bg-clouds,
+	.clouds-home__horizon {
+		opacity: 0.45;
 	}
 
 	.clouds-home__sparkle {

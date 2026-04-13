@@ -47,7 +47,7 @@ const CLOUD_IMAGE_POOL = Array.from({ length: 8 }, (_, index) => `/cloud${index 
 
 const FLUID_STOPS = {
 	cloudScale: [[900, 0.55], [2400, 1]],
-	heroScale: [[375, 0.45], [768, 0.42], [1440, 0.72], [2400, 1]],
+	heroScale: [[375, 0.45], [768, 0.8], [1440, 0.8], [2400, 1.25]],
 	heroBottom: [[375, -4], [480, 0], [640, 2], [768, 4], [1440, 6], [2400, 8]],
 };
 
@@ -75,7 +75,6 @@ export default function CloudsHome() {
 		currentTrack,
 		copyrightLine,
 		enableSound,
-		errorMessage,
 		hasTracks,
 		isPlaying,
 		licenseLabel,
@@ -280,13 +279,13 @@ export default function CloudsHome() {
 				</button>
 			</div>
 
-			<div className="clouds-home__footer">
-				{playbackState === 'loading' || (!hasTracks && playbackState !== 'error') ? null : playbackState === 'blocked' ? (
+			<div className={`clouds-home__footer${playIntro || playbackState === 'error' ? ' clouds-home__footer--hidden' : ''}`}>
+				{playbackState === 'loading' || !hasTracks ? null : playbackState === 'blocked' ? (
 					<button type="button" className="clouds-home__sound-on" onClick={enableSound}>
 						<span className="clouds-home__sound-on-dot" aria-hidden="true" />
 						<span className="clouds-home__sound-on-text">Sound On</span>
 					</button>
-				) : hasTracks || playbackState === 'error' ? (
+				) : hasTracks ? (
 					<div className={`clouds-home__das${playbackState === 'playing' ? ' clouds-home__das--playing' : ''}`}>
 						<button
 							type="button"
@@ -305,55 +304,47 @@ export default function CloudsHome() {
 								)}
 							</span>
 						</button>
-						{playbackState === 'error' ? (
-							<div className="clouds-home__das-copy clouds-home__das-copy--error">
-								<div className="clouds-home__das-title">
-									{errorMessage || 'Playback failed'}
+						<>
+							<div className="clouds-home__das-art" aria-hidden="true">
+								{currentArtUrl ? (
+									<img src={currentArtUrl} alt="" className="clouds-home__das-art-image" />
+								) : (
+									<div className="clouds-home__das-art-fallback" />
+								)}
+							</div>
+							<div className="clouds-home__das-copy">
+								<div className="clouds-home__das-title-group">
+									<div className="clouds-home__das-title">
+										{trackDisplay || currentTrack?.title || 'Untitled Track'}
+									</div>
+									{copyrightLine || licenseLabel ? (
+										<div className="clouds-home__das-license">
+											{copyrightLine ? <span>{copyrightLine}</span> : null}
+											{licenseLabel && licenseUrl ? (
+												<a
+													className="clouds-home__das-license-link"
+													href={licenseUrl}
+													target="_blank"
+													rel="noreferrer"
+												>
+													{licenseLabel}
+												</a>
+											) : licenseLabel ? (
+												<span>{licenseLabel}</span>
+											) : null}
+										</div>
+									) : null}
 								</div>
 							</div>
-						) : (
-							<>
-								<div className="clouds-home__das-art" aria-hidden="true">
-									{currentArtUrl ? (
-										<img src={currentArtUrl} alt="" className="clouds-home__das-art-image" />
-									) : (
-										<div className="clouds-home__das-art-fallback" />
-									)}
+							<div className="clouds-home__das-side">
+								<div className="clouds-home__das-bars" aria-hidden="true">
+									<div className="clouds-home__das-bar" />
+									<div className="clouds-home__das-bar" />
+									<div className="clouds-home__das-bar" />
+									<div className="clouds-home__das-bar" />
 								</div>
-								<div className="clouds-home__das-copy">
-									<div className="clouds-home__das-title-group">
-										<div className="clouds-home__das-title">
-											{trackDisplay || currentTrack?.title || 'Untitled Track'}
-										</div>
-										{copyrightLine || licenseLabel ? (
-											<div className="clouds-home__das-license">
-												{copyrightLine ? <span>{copyrightLine}</span> : null}
-												{licenseLabel && licenseUrl ? (
-													<a
-														className="clouds-home__das-license-link"
-														href={licenseUrl}
-														target="_blank"
-														rel="noreferrer"
-													>
-														{licenseLabel}
-													</a>
-												) : licenseLabel ? (
-													<span>{licenseLabel}</span>
-												) : null}
-											</div>
-										) : null}
-									</div>
-								</div>
-								<div className="clouds-home__das-side">
-									<div className="clouds-home__das-bars" aria-hidden="true">
-										<div className="clouds-home__das-bar" />
-										<div className="clouds-home__das-bar" />
-										<div className="clouds-home__das-bar" />
-										<div className="clouds-home__das-bar" />
-									</div>
-								</div>
-							</>
-						)}
+							</div>
+						</>
 					</div>
 				) : null}
 			</div>

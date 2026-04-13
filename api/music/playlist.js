@@ -1,5 +1,5 @@
 import { list } from '@vercel/blob';
-import { MUSIC_METADATA_BY_PATH } from '../../src/data/musicMetadata.js';
+import { getMusicMetadataByPath } from '../../lib/musicMetadataStore.js';
 
 const AUDIO_EXTENSIONS = new Set(['.mp3', '.wav', '.ogg', '.m4a', '.aac', '.flac']);
 const ART_EXTENSIONS = new Set(['.png', '.jpg', '.jpeg', '.webp', '.gif']);
@@ -42,6 +42,7 @@ export default async function handler(request, response) {
 	}
 
 	try {
+		const metadataByPath = await getMusicMetadataByPath();
 		const { blobs } = await list({
 			limit: 1000,
 		});
@@ -55,7 +56,7 @@ export default async function handler(request, response) {
 		const tracks = blobs
 			.filter((blob) => blob.pathname.startsWith('music/') && hasAudioExtension(blob.pathname))
 			.map((blob) => {
-				const metadata = MUSIC_METADATA_BY_PATH[blob.pathname] ?? {};
+				const metadata = metadataByPath[blob.pathname] ?? {};
 				const artPathname = metadata.artPathname ?? artByStem.get(getStem(blob.pathname)) ?? null;
 
 				return {
@@ -67,7 +68,6 @@ export default async function handler(request, response) {
 					licenseLabel: metadata.licenseLabel ?? '',
 					licenseUrl: metadata.licenseUrl ?? '',
 					pathname: blob.pathname,
-					sortOrder: metadata.sortOrder ?? inferSortOrder(blob.pathname),
 					streamUrl: `/api/music/stream?pathname=${encodeURIComponent(blob.pathname)}`,
 				};
 			})
