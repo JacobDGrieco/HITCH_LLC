@@ -208,7 +208,6 @@
 
 .about-page__headline {
 	margin: 0;
-	max-width: 12ch;
 	font-size: clamp(2rem, 1.3rem + 1.7vw, 3.2rem);
 	line-height: 0.95;
 	letter-spacing: -0.05em;

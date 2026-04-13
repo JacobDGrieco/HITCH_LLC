@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useSiteChrome } from './chrome/useSiteChrome'
 import '../styles/page-shell.css'
 
 const PUFF_CFG = [
@@ -15,12 +16,15 @@ const PUFF_CFG = [
 
 export default function PageShell({ children, section = 'default' }) {
   const navigate = useNavigate()
+  const { setDasHidden } = useSiteChrome()
   const puffRefs = useRef([])
   const expandRef = useRef(null)
   const [visible, setVisible] = useState(false)
   const [contentVisible, setContentVisible] = useState(false)
 
   useEffect(() => {
+    setDasHidden(false)
+
     const cx = window.innerWidth / 2
     const cy = window.innerHeight / 2
     const stage = expandRef.current
@@ -47,9 +51,10 @@ export default function PageShell({ children, section = 'default' }) {
       clearTimeout(t1)
       clearTimeout(t2)
     }
-  }, [])
+  }, [setDasHidden])
 
   function handleBack() {
+    setDasHidden(true)
     setContentVisible(false)
     setTimeout(() => {
       setVisible(false)

@@ -7,6 +7,7 @@ export default function CrystalCard({
   icon,
   iconImage,
   links = [],
+  className = '',
   size = 220,
   gemColor = 'rgba(200,185,255,0.92)',
   featured = false,
@@ -17,7 +18,7 @@ export default function CrystalCard({
 
   return (
     <div
-      className="crystal-card"
+      className={`crystal-card${className ? ` ${className}` : ''}`}
       style={{
         '--crystal-size': `${size}px`,
         '--face-gradient': faceGradient,

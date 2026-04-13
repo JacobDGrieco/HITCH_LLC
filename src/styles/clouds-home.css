@@ -107,7 +107,9 @@
 	left: 0;
 	right: 0;
 	height: 130px;
-	background: linear-gradient(transparent, rgba(225, 245, 255, 0.5));
+	background:
+		radial-gradient(ellipse 70% 52% at 50% 100%, rgba(255, 214, 120, 0.5) 0%, rgba(255, 179, 92, 0.28) 42%, transparent 78%),
+		linear-gradient(180deg, rgba(255, 205, 120, 0) 0%, rgba(255, 214, 128, 0.18) 38%, rgba(255, 186, 98, 0.34) 68%, rgba(244, 163, 82, 0.42) 100%);
 	z-index: 4;
 	pointer-events: none;
 }
@@ -585,7 +587,7 @@
 	text-transform: uppercase;
 	z-index: 10;
 	animation: fadeHint 3s ease 2.2s both;
-	padding: 8px 14px;
+	padding: 4px 14px;
 	border-radius: 999px;
 	background: rgba(255, 249, 252, 0.72);
 	border: 1px solid rgba(224, 170, 198, 0.36);
@@ -873,7 +875,10 @@
 @media (max-width: 640px) {
 	.clouds-home {
 		--home-cloud-scale: 1;
+		height: 100dvh;
 		min-height: 100dvh;
+		overflow: clip;
+		overscroll-behavior: none;
 	}
 
 	.clouds-home__bg-clouds,
@@ -886,24 +891,25 @@
 	}
 
 	.clouds-home__header {
-		padding: 14px 14px 0;
+		padding: 10px 12px 0;
 	}
 
 	.clouds-home__hint {
 		max-width: 54%;
 		text-align: left;
-		font-size: 10px;
-		letter-spacing: 1.7px;
+		font-size: 9px;
+		letter-spacing: 1.35px;
 		color: rgba(155, 70, 116, 0.96);
 		background: rgba(255, 252, 254, 0.9);
 		border-color: rgba(218, 144, 182, 0.48);
 		box-shadow: 0 10px 24px rgba(214, 158, 188, 0.24);
+		padding: 6px 10px;
 	}
 
 	.clouds-home__replay {
-		padding: 8px 12px;
-		font-size: 10px;
-		letter-spacing: 1.4px;
+		padding: 7px 10px;
+		font-size: 9px;
+		letter-spacing: 1.15px;
 	}
 
 	.clouds-home__footer {
@@ -964,13 +970,13 @@
 
 	.clouds-home__hint {
 		max-width: 50%;
-		font-size: 8px;
-		letter-spacing: 1.3px;
-		padding: 7px 11px;
+		font-size: 7px;
+		letter-spacing: 1.05px;
+		padding: 6px 9px;
 	}
 
 	.clouds-home__replay {
-		padding: 7px 10px;
-		font-size: 9px;
+		padding: 6px 9px;
+		font-size: 8px;
 	}
 }

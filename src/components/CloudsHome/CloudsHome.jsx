@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Cloud from './Cloud';
 import JacobBalloon from './JacobBalloon';
 import { useSiteMusic } from '../audio/useSiteMusic';
+import { useSiteChrome } from '../chrome/useSiteChrome';
 import '../../styles/clouds-home.css';
 
 const PAGE_CLOUDS = [
@@ -70,20 +71,8 @@ function interpolateStops(width, stops) {
 
 export default function CloudsHome() {
 	const navigate = useNavigate();
-	const {
-		currentArtUrl,
-		currentTrack,
-		copyrightLine,
-		enableSound,
-		hasTracks,
-		isPlaying,
-		licenseLabel,
-		licenseUrl,
-		playbackState,
-		requestAutoplay,
-		trackDisplay,
-		togglePlayback,
-	} = useSiteMusic();
+	const { requestAutoplay } = useSiteMusic();
+	const { setDasHidden } = useSiteChrome();
 	const puffRefs = useRef([]);
 	const expandRef = useRef(null);
 	const [transitioning, setTransitioning] = useState(false);
@@ -133,6 +122,14 @@ export default function CloudsHome() {
 			requestAutoplay();
 		}
 	}, [playIntro, requestAutoplay]);
+
+	useEffect(() => {
+		setDasHidden(playIntro || transitioning);
+
+		return () => {
+			setDasHidden(false);
+		};
+	}, [playIntro, setDasHidden, transitioning]);
 
 	function replayIntro() {
 		setSceneReveal(false);
@@ -277,76 +274,6 @@ export default function CloudsHome() {
 				<button type="button" className="clouds-home__replay" onClick={replayIntro}>
 					Replay Intro
 				</button>
-			</div>
-
-			<div className={`clouds-home__footer${playIntro || playbackState === 'error' ? ' clouds-home__footer--hidden' : ''}`}>
-				{playbackState === 'loading' || !hasTracks ? null : playbackState === 'blocked' ? (
-					<button type="button" className="clouds-home__sound-on" onClick={enableSound}>
-						<span className="clouds-home__sound-on-dot" aria-hidden="true" />
-						<span className="clouds-home__sound-on-text">Sound On</span>
-					</button>
-				) : hasTracks ? (
-					<div className={`clouds-home__das${playbackState === 'playing' ? ' clouds-home__das--playing' : ''}`}>
-						<button
-							type="button"
-							className="clouds-home__das-mute"
-							onClick={togglePlayback}
-							aria-label={isPlaying ? 'Pause music' : 'Play music'}
-						>
-							<span className="clouds-home__das-mute-icon" aria-hidden="true">
-								{isPlaying ? (
-									<>
-										<span className="clouds-home__das-pause-bar" />
-										<span className="clouds-home__das-pause-bar" />
-									</>
-								) : (
-									<span className="clouds-home__das-play-triangle" />
-								)}
-							</span>
-						</button>
-						<>
-							<div className="clouds-home__das-art" aria-hidden="true">
-								{currentArtUrl ? (
-									<img src={currentArtUrl} alt="" className="clouds-home__das-art-image" />
-								) : (
-									<div className="clouds-home__das-art-fallback" />
-								)}
-							</div>
-							<div className="clouds-home__das-copy">
-								<div className="clouds-home__das-title-group">
-									<div className="clouds-home__das-title">
-										{trackDisplay || currentTrack?.title || 'Untitled Track'}
-									</div>
-									{copyrightLine || licenseLabel ? (
-										<div className="clouds-home__das-license">
-											{copyrightLine ? <span>{copyrightLine}</span> : null}
-											{licenseLabel && licenseUrl ? (
-												<a
-													className="clouds-home__das-license-link"
-													href={licenseUrl}
-													target="_blank"
-													rel="noreferrer"
-												>
-													{licenseLabel}
-												</a>
-											) : licenseLabel ? (
-												<span>{licenseLabel}</span>
-											) : null}
-										</div>
-									) : null}
-								</div>
-							</div>
-							<div className="clouds-home__das-side">
-								<div className="clouds-home__das-bars" aria-hidden="true">
-									<div className="clouds-home__das-bar" />
-									<div className="clouds-home__das-bar" />
-									<div className="clouds-home__das-bar" />
-									<div className="clouds-home__das-bar" />
-								</div>
-							</div>
-						</>
-					</div>
-				) : null}
 			</div>
 
 			<div ref={expandRef} className="clouds-home__expand">

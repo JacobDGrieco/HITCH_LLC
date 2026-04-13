@@ -13,6 +13,8 @@ const PROJECTS = [
 		live: 'https://gaminglegion001.taile3eaea.ts.net/',
 		featured: true,
 		gemColor: 'rgba(245,175,210,0.92)',
+		size: 334,
+		className: 'projects-page__crystal',
 	},
 	{
 		id: 'pokemon',
@@ -23,6 +25,8 @@ const PROJECTS = [
 		github: 'https://github.com/JacobDGrieco/PokemonPGC_v2',
 		live: 'https://ppgc-delta.vercel.app/',
 		gemColor: 'rgba(200,185,255,0.92)',
+		size: 320,
+		className: 'projects-page__crystal',
 	},
 	{
 		id: 'relatime',
@@ -34,6 +38,8 @@ const PROJECTS = [
 		live: 'https://rela-time-timeline-tool.vercel.app/',
 		featured: true,
 		gemColor: 'rgba(175,220,255,0.92)',
+		size: 300,
+		className: 'projects-page__crystal',
 	},
 ];
 
@@ -46,16 +52,17 @@ export default function ProjectsPage() {
 			</div>
 
 			<div className="projects-page__grid">
-				{PROJECTS.map((project, index) => (
+				{PROJECTS.map((project) => (
 					<CrystalCard
 						key={project.id}
 						title={project.title}
 						desc={project.desc}
 						tags={project.tags}
 						iconImage={project.iconImage}
-						size={index === 1 ? 320 : 300}
+						size={project.size}
 						featured={project.featured}
 						gemColor={project.gemColor}
+						className={project.className}
 						links={[
 							{ label: 'GitHub →', href: project.github },
 							...(project.live ? [{ label: 'Live Site →', href: project.live }] : []),
