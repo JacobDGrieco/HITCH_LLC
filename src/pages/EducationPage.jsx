@@ -36,14 +36,6 @@ const EDUCATION_CRYSTALS = [
 	},
 ];
 
-function softAccent(accent) {
-	return accent.replace('0.8', '0.1');
-}
-
-function borderAccent(accent) {
-	return accent.replace('0.8', '0.3');
-}
-
 export default function EducationPage() {
 	const degreeRef = useRef(null);
 	const certsRef = useRef(null);

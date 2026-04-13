@@ -53,7 +53,7 @@ export default function PageShell({ children, section = 'default' }) {
     setContentVisible(false)
     setTimeout(() => {
       setVisible(false)
-      puffRefs.current.forEach((el, i) => {
+      puffRefs.current.forEach((el) => {
         if (!el) return
         el.style.transition = 'transform 550ms cubic-bezier(0.64,0,0.78,0), opacity 350ms ease 200ms'
         el.style.transform = 'translate(-50%, -50%) scale(0.04)'
