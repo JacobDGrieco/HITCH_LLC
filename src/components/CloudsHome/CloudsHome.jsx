@@ -48,8 +48,8 @@ const CLOUD_IMAGE_POOL = Array.from({ length: 8 }, (_, index) => `/cloud${index 
 
 const FLUID_STOPS = {
 	cloudScale: [[900, 0.55], [2400, 1]],
-	heroScale: [[375, 0.45], [768, 0.8], [1440, 0.8], [2400, 1.25]],
-	heroBottom: [[375, -4], [480, 0], [640, 2], [768, 4], [1440, 6], [2400, 8]],
+	heroScale: [[375, 0.45], [768, 0.7], [1600, 0.7], [2400, 1.25]],
+	heroBottom: [[375, -4], [480, 0], [640, 2], [768, 4], [1600, 6], [2400, 8]],
 };
 
 function interpolateStops(width, stops) {
