@@ -39,7 +39,6 @@ export default function SkillCrystal({
 				<div className="skill-crystal__shine" />
 				<div className="skill-crystal__content">
 					<div className="skill-crystal__name">{name}</div>
-					<div className="skill-crystal__value">{normalized}%</div>
 				</div>
 			</div>
 		</div>

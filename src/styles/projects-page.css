@@ -7,7 +7,6 @@
 }
 
 .projects-page__crystal .crystal-card__content {
-	justify-content: flex-start;
 	padding: 24px 16px 18px;
 	gap: 14px;
 }
@@ -41,7 +40,6 @@
 }
 
 .projects-page__crystal .crystal-card__links {
-	margin-top: auto;
 	padding-top: 2px;
 }
 
