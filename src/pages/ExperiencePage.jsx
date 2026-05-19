@@ -1,6 +1,6 @@
 import '../styles/shared.css';
 import '../styles/experience-page.css';
-import CrystalCard from '../components/CrystalCard';
+import DropCard from '../components/DropCard';
 
 const EXPERIENCE = [
 	{
@@ -43,7 +43,7 @@ export default function ExperiencePage() {
 
 			<div className="page-crystal-row experience-page__crystals">
 				{EXPERIENCE.map((item, index) => (
-					<CrystalCard
+					<DropCard
 						key={item.title}
 						size={item.size}
 						title={item.title}

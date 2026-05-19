@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import '../styles/shared.css';
 import '../styles/education-page.css';
-import CrystalCard from '../components/CrystalCard';
+import DropCard from '../components/DropCard';
 
 const EDUCATION_CRYSTALS = [
 	{
@@ -60,7 +60,7 @@ export default function EducationPage() {
 
 			<div className="page-crystal-row education-page__crystals">
 				{EDUCATION_CRYSTALS.map((item) => (
-					<CrystalCard key={item.title} {...item} />
+					<DropCard key={item.title} {...item} />
 				))}
 			</div>
 		</div>

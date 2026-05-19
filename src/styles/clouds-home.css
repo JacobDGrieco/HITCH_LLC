@@ -8,6 +8,8 @@
 	overflow: hidden;
 }
 
+/* ─── Sky & background ─────────────────────────────────────────── */
+
 .clouds-home__sky {
 	position: fixed;
 	inset: 0;
@@ -23,6 +25,7 @@
 	height: 100%;
 	object-fit: cover;
 	object-position: center top;
+	filter: saturate(0.9) sepia(0.12) hue-rotate(-8deg) brightness(1.02);
 }
 
 .clouds-home__haze {
@@ -30,8 +33,36 @@
 	inset: 0;
 	z-index: 1;
 	pointer-events: none;
-	background: radial-gradient(ellipse 100% 30% at 50% 100%, rgba(220, 240, 255, 0.4) 0%, transparent 70%);
+	background:
+		radial-gradient(ellipse 90% 28% at 50% 100%, rgba(255, 185, 80, 0.38) 0%, rgba(255, 140, 60, 0.18) 48%, transparent 74%),
+		linear-gradient(180deg,
+			transparent 0%,
+			transparent 45%,
+			rgba(255, 195, 120, 0.10) 65%,
+			rgba(255, 160, 80, 0.22) 82%,
+			rgba(240, 130, 70, 0.28) 100%
+		);
 }
+
+.clouds-home__horizon {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: 130px;
+	background:
+		radial-gradient(ellipse 70% 52% at 50% 100%, rgba(255, 200, 90, 0.55) 0%, rgba(255, 160, 70, 0.30) 42%, transparent 78%),
+		linear-gradient(180deg,
+			rgba(255, 195, 100, 0) 0%,
+			rgba(255, 190, 95, 0.20) 38%,
+			rgba(255, 155, 65, 0.40) 68%,
+			rgba(240, 128, 55, 0.50) 100%
+		);
+	z-index: 4;
+	pointer-events: none;
+}
+
+/* ─── Intro animation ─────────────────────────────────────────── */
 
 .clouds-home__intro-ground-scene {
 	position: fixed;
@@ -61,13 +92,20 @@
 	z-index: 10;
 	pointer-events: none;
 	background:
-		radial-gradient(circle at 50% 50%, rgba(255, 236, 246, 1) 0%, rgba(252, 204, 227, 1) 34%, rgba(244, 170, 206, 1) 62%, rgba(230, 142, 191, 1) 100%);
+		radial-gradient(circle at 50% 50%,
+			rgba(255, 240, 230, 1) 0%,
+			rgba(255, 210, 185, 1) 34%,
+			rgba(250, 175, 155, 1) 62%,
+			rgba(235, 145, 120, 1) 100%
+		);
 	opacity: 0;
 }
 
 .clouds-home--intro .clouds-home__intro-wash {
 	animation: homePinkWash 3.9s ease both;
 }
+
+/* ─── Sun ─────────────────────────────────────────────────────── */
 
 .clouds-home__sun-wrap {
 	display: none;
@@ -80,6 +118,8 @@
 	background: radial-gradient(circle at 42% 42%, #fffef0, #fffacd 30%, #ffe680 65%, #ffd700 100%);
 	box-shadow: 0 0 0 8px rgba(255, 240, 100, 0.08), 0 0 60px rgba(255, 230, 60, 0.35), 0 0 120px rgba(255, 220, 40, 0.15);
 }
+
+/* ─── Background decoration clouds ───────────────────────────── */
 
 .clouds-home__bg-clouds {
 	position: fixed;
@@ -101,40 +141,46 @@
 	background: radial-gradient(ellipse at 40% 25%, rgba(255, 240, 248, 0.92) 0%, rgba(252, 220, 235, 0.82) 35%, rgba(240, 195, 220, 0.6) 65%, rgba(220, 170, 205, 0.3) 100%);
 }
 
-.clouds-home__horizon {
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	height: 130px;
-	background:
-		radial-gradient(ellipse 70% 52% at 50% 100%, rgba(255, 214, 120, 0.5) 0%, rgba(255, 179, 92, 0.28) 42%, transparent 78%),
-		linear-gradient(180deg, rgba(255, 205, 120, 0) 0%, rgba(255, 214, 128, 0.18) 38%, rgba(255, 186, 98, 0.34) 68%, rgba(244, 163, 82, 0.42) 100%);
-	z-index: 4;
-	pointer-events: none;
-}
+/* ─── Stage layout ────────────────────────────────────────────── */
 
 .clouds-home__stage {
 	position: fixed;
 	inset: 0;
 	z-index: 5;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0 2vw;
+	pointer-events: none;
 }
 
-.clouds-home__nav-grid {
-	display: contents;
+.clouds-home__left-zone {
+	flex: 1;
+	position: relative;
+	height: 100%;
+	pointer-events: none;
 }
+
+.clouds-home__right-zone {
+	flex: 0 0 auto;
+	display: grid;
+	grid-template-columns: repeat(2, auto);
+	gap: 10px 6px;
+	align-content: center;
+	justify-items: center;
+	padding-right: 3vw;
+	pointer-events: auto;
+}
+
+/* ─── Nav clouds ──────────────────────────────────────────────── */
 
 .page-cloud {
-	position: absolute;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	cursor: pointer;
-	top: var(--cloud-top, auto);
-	left: var(--cloud-left, auto);
-	right: var(--cloud-right, auto);
-	scale: var(--home-cloud-scale);
-	animation: var(--cloud-animation);
+	animation: cloudBob 7s ease-in-out infinite;
+	animation-delay: calc(var(--float-index, 0) * -1.15s);
 }
 
 .clouds-home--intro .page-cloud,
@@ -185,8 +231,8 @@
 
 .page-cloud__body {
 	position: relative;
-	width: 220px;
-	height: 150px;
+	width: 210px;
+	height: 140px;
 	transition: filter 0.3s, transform 0.3s, opacity 0.2s;
 	filter: drop-shadow(0 8px 20px rgba(220, 140, 190, 0.4)) drop-shadow(0 2px 6px rgba(200, 120, 170, 0.25));
 }
@@ -194,16 +240,6 @@
 .page-cloud:hover .page-cloud__body {
 	filter: drop-shadow(0 12px 28px rgba(230, 130, 195, 0.65)) drop-shadow(0 3px 10px rgba(210, 110, 180, 0.4)) brightness(1.05);
 	transform: scale(1.07) translateY(-6px);
-}
-
-.page-cloud__image {
-	display: block;
-	width: 100%;
-	height: 100%;
-	object-fit: contain;
-	object-position: center;
-	user-select: none;
-	-webkit-user-drag: none;
 }
 
 .page-cloud__shadow {
@@ -221,18 +257,20 @@
 .page-cloud__label {
 	position: absolute;
 	left: 50%;
-	bottom: 18px;
+	bottom: 22px;
 	transform: translateX(-50%);
-	font-size: 18px;
+	font-size: 16px;
 	font-weight: 800;
-	color: rgba(170, 75, 125, 0.95);
+	color: rgba(145, 63, 105, 0.95);
 	text-shadow: 0 1px 0 rgba(255, 255, 255, 1), 0 2px 8px rgba(255, 255, 255, 0.9);
-	letter-spacing: 1.5px;
+	letter-spacing: 1.2px;
 	text-transform: uppercase;
 	pointer-events: none;
 	white-space: nowrap;
 	z-index: 2;
 }
+
+/* ─── Hero cluster ────────────────────────────────────────────── */
 
 .clouds-home__hero-cluster {
 	position: absolute;
@@ -265,6 +303,8 @@
 	pointer-events: none;
 	z-index: 2;
 }
+
+/* ─── Sparkles ────────────────────────────────────────────────── */
 
 .clouds-home__sparkle {
 	position: absolute;
@@ -311,6 +351,8 @@
 	filter: drop-shadow(0 14px 32px rgba(200, 120, 180, 0.45)) drop-shadow(0 4px 12px rgba(180, 100, 160, 0.25));
 }
 
+/* ─── Expand puff transition ──────────────────────────────────── */
+
 .clouds-home__expand {
 	position: fixed;
 	top: 0;
@@ -329,6 +371,8 @@
 	background: radial-gradient(ellipse at 38% 28%, rgba(255, 248, 252, 1) 0%, rgba(255, 232, 244, 0.98) 20%, rgba(252, 212, 232, 0.96) 40%, rgba(244, 190, 218, 0.93) 58%, rgba(230, 165, 205, 0.88) 74%, rgba(210, 140, 190, 0.8) 88%, rgba(190, 118, 172, 0.65) 100%);
 }
 
+/* ─── Header ──────────────────────────────────────────────────── */
+
 .clouds-home__header {
 	position: absolute;
 	top: 0;
@@ -341,6 +385,8 @@
 	padding: 18px;
 	pointer-events: none;
 }
+
+/* ─── Footer / music player ───────────────────────────────────── */
 
 .clouds-home__footer {
 	width: 100%;
@@ -618,6 +664,8 @@
 	box-shadow: 0 12px 26px rgba(205, 145, 181, 0.22);
 }
 
+/* ─── Jacob balloon ───────────────────────────────────────────── */
+
 .jacob-balloon {
 	position: absolute;
 	left: 200px;
@@ -669,6 +717,13 @@
 .jacob-balloon__string {
 	display: block;
 	overflow: visible;
+}
+
+/* ─── Keyframes ───────────────────────────────────────────────── */
+
+@keyframes cloudBob {
+	0%, 100% { transform: translateY(0px); }
+	50%       { transform: translateY(-8px); }
 }
 
 @keyframes homeGroundScene {
@@ -752,123 +807,44 @@
 }
 
 @keyframes dasBars {
-
-	0%,
-	100% {
-		height: 10px;
-	}
-
-	35% {
-		height: 16px;
-	}
-
-	70% {
-		height: 10px;
-	}
+	0%, 100% { height: 10px; }
+	35%       { height: 16px; }
+	70%       { height: 10px; }
 }
 
-@media (max-width: 1024px) {
-	.clouds-home {
-		--home-cloud-scale: 0.72;
+/* ─── Responsive ──────────────────────────────────────────────── */
+
+@media (max-width: 1100px) {
+	.clouds-home__stage {
+		flex-direction: column;
+		justify-content: flex-start;
+		align-items: stretch;
+		padding: 0;
 	}
 
-	.clouds-home__bg-clouds {
-		opacity: 0.7;
+	.clouds-home__left-zone {
+		flex: 1;
+		order: 2;
+	}
+
+	.clouds-home__right-zone {
+		order: 1;
+		grid-template-columns: repeat(3, auto);
+		justify-content: center;
+		padding: 8px 12px 0;
+		gap: 6px 4px;
 	}
 
 	.page-cloud__body {
-		width: clamp(138px, 24vw, 176px);
+		width: clamp(130px, 20vw, 175px);
 		height: auto;
 		aspect-ratio: 22 / 15;
 	}
 
 	.page-cloud__label {
-		bottom: 16px;
-		font-size: 15px;
-		letter-spacing: 1.1px;
-	}
-
-	.page-cloud:nth-child(1) {
-		top: 9% !important;
-		left: 3% !important;
-		right: auto !important;
-	}
-
-	.page-cloud:nth-child(2) {
-		top: 9% !important;
-		right: 3% !important;
-		left: auto !important;
-	}
-
-	.page-cloud:nth-child(3) {
-		top: 29% !important;
-		left: 1.5% !important;
-		right: auto !important;
-	}
-
-	.page-cloud:nth-child(4) {
-		top: 29% !important;
-		right: 1.5% !important;
-		left: auto !important;
-	}
-
-	.page-cloud:nth-child(5) {
-		top: 50% !important;
-		left: 4% !important;
-		right: auto !important;
-	}
-
-	.page-cloud:nth-child(6) {
-		top: 50% !important;
-		right: 4% !important;
-		left: auto !important;
-	}
-
-	.clouds-home__footer {
-		padding: 16px 18px 18px;
-		align-items: flex-end;
-	}
-
-	.clouds-home__das {
-		width: min(100%, 460px);
-	}
-
-	.clouds-home__hint {
-		letter-spacing: 2px;
-	}
-}
-
-@media (max-width: 1440px) {
-	.clouds-home__nav-grid {
-		position: absolute;
-		top: 7%;
-		left: 0;
-		right: 0;
-		display: grid;
-		grid-template-columns: repeat(3, minmax(0, 1fr));
-		gap: 10px 8px;
-		padding: 0 10px;
-		justify-items: center;
-	}
-
-	.page-cloud {
-		position: static;
-		scale: 1;
-	}
-
-	.page-cloud__body {
-		width: min(45vw, 205px);
-		min-width: 150px;
-	}
-
-	.page-cloud__label {
-		bottom: 12px;
-		font-size: 11px;
-		letter-spacing: 0.65px;
-	}
-
-	.page-cloud {
-		scale: 80%;
+		bottom: 14px;
+		font-size: 13px;
+		letter-spacing: 0.8px;
 	}
 }
 
@@ -948,24 +924,40 @@
 		transform: scale(1.12);
 		transform-origin: center center;
 	}
-}
 
-@media (max-width: 480px) {
+	.clouds-home__right-zone {
+		grid-template-columns: repeat(2, auto);
+		padding: 6px 8px 0;
+		gap: 4px;
+	}
+
 	.page-cloud__body {
 		width: min(43vw, 182px);
 		min-width: 136px;
-	}
-
-	.clouds-home__nav-grid {
-		top: 8%;
-		gap: 8px 6px;
-		padding: 0 8px;
 	}
 
 	.page-cloud__label {
 		font-size: 10px;
 		bottom: 10px;
 		letter-spacing: 0.55px;
+	}
+}
+
+@media (max-width: 480px) {
+	.clouds-home__right-zone {
+		padding: 6px 6px 0;
+		gap: 3px;
+	}
+
+	.page-cloud__body {
+		width: min(43vw, 160px);
+		min-width: 120px;
+	}
+
+	.page-cloud__label {
+		font-size: 9px;
+		bottom: 8px;
+		letter-spacing: 0.4px;
 	}
 
 	.clouds-home__hint {

@@ -7,12 +7,12 @@
 }
 
 :root {
-	--page-title-color: rgba(130, 65, 115, 0.9);
-	--page-title-shadow: 0 2px 16px rgba(220, 160, 200, 0.35);
-	--page-subtitle-color: rgba(100, 130, 180, 0.65);
-	--card-bg: rgba(255, 255, 255, 0.55);
-	--card-border: rgba(200, 160, 200, 0.3);
-	--card-shadow: 0 4px 20px rgba(200, 140, 200, 0.12);
+	--page-title-color: rgba(140, 70, 90, 0.92);
+	--page-title-shadow: 0 2px 16px rgba(230, 155, 170, 0.35);
+	--page-subtitle-color: rgba(160, 110, 80, 0.65);
+	--card-bg: rgba(255, 252, 248, 0.58);
+	--card-border: rgba(210, 165, 155, 0.32);
+	--card-shadow: 0 4px 20px rgba(210, 145, 130, 0.13);
 }
 
 html,

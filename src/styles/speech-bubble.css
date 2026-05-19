@@ -1,0 +1,58 @@
+.speech-bubble {
+  position: absolute;
+  top: -72px;
+  left: 50%;
+  transform: translateX(-42%);
+  z-index: 4;
+  pointer-events: none;
+}
+
+.speech-bubble__text {
+  background: rgba(255, 252, 250, 0.94);
+  border: 1.5px solid rgba(210, 155, 175, 0.45);
+  border-radius: 18px;
+  padding: 10px 18px;
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(145, 63, 105, 0.95);
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  box-shadow: 0 6px 20px rgba(210, 140, 170, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.speech-bubble__text--hidden {
+  opacity: 0;
+  transform: translateY(4px);
+}
+
+.speech-bubble__tail {
+  position: absolute;
+  bottom: -10px;
+  left: 38%;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 10px solid rgba(210, 155, 175, 0.45);
+}
+
+.speech-bubble__tail::after {
+  content: '';
+  position: absolute;
+  top: -12px;
+  left: -7px;
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 10px solid rgba(255, 252, 250, 0.94);
+}
+
+@media (max-width: 640px) {
+  .speech-bubble {
+    display: none;
+  }
+}

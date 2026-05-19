@@ -1,20 +1,17 @@
-export default function Cloud({ label, style, onClick, imageSrc }) {
+import SvgCloud from './SvgCloud';
+
+export default function Cloud({ label, onClick, uid, floatIndex }) {
   return (
     <div
       className="page-cloud"
-      style={{
-        '--cloud-top': style.top,
-        '--cloud-left': style.left,
-        '--cloud-right': style.right,
-        '--cloud-animation': style.animation,
-      }}
+      style={{ '--float-index': floatIndex }}
       onClick={onClick}
     >
       <div className="page-cloud__body">
-        <img src={imageSrc} alt="" className="page-cloud__image" />
+        <SvgCloud uid={uid} width={220} height={130} />
+        <div className="page-cloud__label">{label}</div>
         <div className="page-cloud__shadow" />
       </div>
-      <div className="page-cloud__label">{label}</div>
     </div>
-  )
+  );
 }

@@ -1,19 +1,19 @@
 import '../styles/shared.css';
 import '../styles/projects-page.css';
-import CrystalCard from '../components/CrystalCard';
+import DropCard from '../components/DropCard';
 
 const PROJECTS = [
-	{
-		id: 'halomed',
-		title: 'HaloMed',
-		desc: 'Healthcare brand site for wig consultations, service discovery, insurance support, and polished animated page transitions.',
-		tags: ['React', 'JavaScript', 'HTML & CSS', 'GSAP'],
-		iconImage: '/halomed.png',
-		live: 'https://halo-med.vercel.app/',
-		gemColor: 'rgba(245,210,125,0.92)',
-		size: 324,
-		className: 'projects-page__crystal',
-	},
+	// {
+	// 	id: 'halomed',
+	// 	title: 'HaloMed',
+	// 	desc: 'Healthcare brand site for wig consultations, service discovery, insurance support, and polished animated page transitions.',
+	// 	tags: ['React', 'JavaScript', 'HTML & CSS', 'GSAP'],
+	// 	iconImage: '/halomed.png',
+	// 	live: 'https://halo-med.vercel.app/',
+	// 	gemColor: 'rgba(245,210,125,0.92)',
+	// 	size: 324,
+	// 	className: 'projects-page__crystal',
+	// },
 	{
 		id: 'asd',
 		title: 'ASD',
@@ -73,7 +73,7 @@ export default function ProjectsPage() {
 
 			<div className="projects-page__grid">
 				{PROJECTS.map((project) => (
-					<CrystalCard
+					<DropCard
 						key={project.id}
 						title={project.title}
 						desc={project.desc}

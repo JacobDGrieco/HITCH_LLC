@@ -1,7 +1,9 @@
 .page-shell__sky {
 	position: fixed;
 	inset: 0;
-	background: radial-gradient(ellipse 80% 55% at 72% 18%, rgba(255, 248, 180, 0.18) 0%, transparent 60%), linear-gradient(180deg, #1a6fa8 0%, #2e8fc7 12%, #4aaee0 26%, #6ec6f0 42%, #9ad8f5 60%, #c5ebfa 78%, #e8f7fd 92%, #f5fbff 100%);
+	background:
+		radial-gradient(ellipse 68% 38% at 50% 52%, rgba(255, 235, 215, 0.88) 0%, rgba(252, 215, 198, 0.78) 30%, rgba(245, 195, 185, 0.50) 55%, transparent 76%),
+		linear-gradient(180deg, #f6ddd4 0%, #f7e0d5 18%, #f8e5d8 36%, #faeadd 56%, #fcf0e5 78%, #fff7f0 100%);
 	z-index: 0;
 }
 
@@ -27,7 +29,9 @@
 	position: fixed;
 	inset: 0;
 	z-index: 25;
-	background: linear-gradient(160deg, #dff0fc 0%, #eef7ff 35%, #f5f0ff 65%, #fce8f5 100%);
+	background:
+		radial-gradient(ellipse 60% 34% at 50% 48%, rgba(255, 248, 240, 0.96) 0%, rgba(255, 228, 210, 0.90) 28%, rgba(252, 200, 195, 0.78) 52%, rgba(244, 175, 190, 0.52) 72%, transparent 100%),
+		linear-gradient(160deg, #fff8f2 0%, #fff0e8 18%, #fde0d8 42%, #f9cfd4 68%, #f5c4d2 100%);
 	transition: opacity 0.4s ease;
 	overflow: hidden;
 	display: flex;
@@ -102,15 +106,14 @@
 
 .page-shell__sky--projects {
 	background:
-		radial-gradient(ellipse 68% 38% at 50% 52%, rgba(255, 238, 246, 0.92) 0%, rgba(252, 223, 237, 0.85) 30%, rgba(245, 203, 225, 0.58) 55%, transparent 76%),
-		radial-gradient(ellipse 52% 30% at 18% 26%, rgba(255, 248, 252, 0.58) 0%, rgba(255, 232, 244, 0.3) 42%, transparent 72%),
-		linear-gradient(180deg, #f6d9ea 0%, #f7dfed 18%, #f8e5f1 36%, #faebf4 56%, #fcf1f8 78%, #fff7fb 100%);
+		radial-gradient(ellipse 68% 38% at 50% 52%, rgba(255, 235, 215, 0.88) 0%, rgba(252, 215, 198, 0.78) 30%, rgba(245, 195, 185, 0.50) 55%, transparent 76%),
+		linear-gradient(180deg, #f6ddd4 0%, #f7e0d5 18%, #f8e5d8 36%, #faeadd 56%, #fcf0e5 78%, #fff7f0 100%);
 }
 
 .page-shell__overlay--projects {
 	background:
-		radial-gradient(ellipse 60% 34% at 50% 48%, rgba(255, 248, 252, 0.96) 0%, rgba(255, 234, 244, 0.93) 30%, rgba(252, 210, 230, 0.82) 56%, rgba(244, 190, 218, 0.58) 72%, transparent 100%),
-		linear-gradient(160deg, #fff7fb 0%, #fff1f7 18%, #fde7f1 42%, #f9dceb 68%, #f6d3e6 100%);
+		radial-gradient(ellipse 60% 34% at 50% 48%, rgba(255, 248, 240, 0.96) 0%, rgba(255, 228, 210, 0.90) 28%, rgba(252, 200, 195, 0.78) 52%, rgba(244, 175, 190, 0.52) 72%, transparent 100%),
+		linear-gradient(160deg, #fff8f2 0%, #fff0e8 18%, #fde0d8 42%, #f9cfd4 68%, #f5c4d2 100%);
 }
 
 .page-shell__overlay--projects .page-shell__wisps {
@@ -126,9 +129,8 @@
 .page-shell__sky--contact,
 .page-shell__sky--about {
 	background:
-		radial-gradient(ellipse 68% 38% at 50% 52%, rgba(255, 238, 246, 0.92) 0%, rgba(252, 223, 237, 0.85) 30%, rgba(245, 203, 225, 0.58) 55%, transparent 76%),
-		radial-gradient(ellipse 52% 30% at 18% 26%, rgba(255, 248, 252, 0.58) 0%, rgba(255, 232, 244, 0.3) 42%, transparent 72%),
-		linear-gradient(180deg, #f6d9ea 0%, #f7dfed 18%, #f8e5f1 36%, #faebf4 56%, #fcf1f8 78%, #fff7fb 100%);
+		radial-gradient(ellipse 68% 38% at 50% 52%, rgba(255, 235, 215, 0.88) 0%, rgba(252, 215, 198, 0.78) 30%, rgba(245, 195, 185, 0.50) 55%, transparent 76%),
+		linear-gradient(180deg, #f6ddd4 0%, #f7e0d5 18%, #f8e5d8 36%, #faeadd 56%, #fcf0e5 78%, #fff7f0 100%);
 }
 
 .page-shell__overlay--skills,
@@ -137,8 +139,8 @@
 .page-shell__overlay--contact,
 .page-shell__overlay--about {
 	background:
-		radial-gradient(ellipse 60% 34% at 50% 48%, rgba(255, 248, 252, 0.96) 0%, rgba(255, 234, 244, 0.93) 30%, rgba(252, 210, 230, 0.82) 56%, rgba(244, 190, 218, 0.58) 72%, transparent 100%),
-		linear-gradient(160deg, #fff7fb 0%, #fff1f7 18%, #fde7f1 42%, #f9dceb 68%, #f6d3e6 100%);
+		radial-gradient(ellipse 60% 34% at 50% 48%, rgba(255, 248, 240, 0.96) 0%, rgba(255, 228, 210, 0.90) 28%, rgba(252, 200, 195, 0.78) 52%, rgba(244, 175, 190, 0.52) 72%, transparent 100%),
+		linear-gradient(160deg, #fff8f2 0%, #fff0e8 18%, #fde0d8 42%, #f9cfd4 68%, #f5c4d2 100%);
 }
 
 .page-shell__overlay--skills .page-shell__wisps,
