@@ -8,7 +8,9 @@
 		"dev:vercel": "vercel dev",
 		"build": "vite build",
 		"lint": "eslint .",
-		"preview": "vite preview"
+		"preview": "vite preview",
+		"db:setup": "node --env-file=.env api/db/setup.js",
+		"db:seed": "node --env-file=.env api/db/seed.js"
 	},
 	"dependencies": {
 		"@gsap/react": "^2.1.2",
