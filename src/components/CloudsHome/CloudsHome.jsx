@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Cloud from './Cloud';
 import JacobBalloon from './JacobBalloon';
 import SpeechBubble from './SpeechBubble';
+import SkyScene from './SkyScene';
 import { useSiteMusic } from '../audio/useSiteMusic';
 import { useSiteChrome } from '../chrome/useSiteChrome';
 import '../../styles/clouds-home.css';
@@ -25,15 +26,6 @@ const PUFF_CFG = [
   { ox: -20, oy: 30, size: 68, delay: 60, dur: 630 },
   { ox: 20, oy: 30, size: 68, delay: 60, dur: 630 },
   { ox: 0, oy: -28, size: 58, delay: 100, dur: 650 },
-];
-
-const BG_CLOUDS = [
-  { w: '155px', h: '52px', top: '18%', left: '1%', opacity: 0.65 },
-  { w: '105px', h: '36px', top: '14%', left: '24%', opacity: 0.5 },
-  { w: '180px', h: '62px', top: '12%', right: '14%', opacity: 0.6 },
-  { w: '92px', h: '31px', top: '24%', right: '2%', opacity: 0.48 },
-  { w: '70px', h: '24px', top: '8%', left: '50%', opacity: 0.38 },
-  { w: '120px', h: '40px', top: '30%', left: '36%', opacity: 0.3 },
 ];
 
 const SPARKLES = [
@@ -193,32 +185,9 @@ export default function CloudsHome() {
       </div>
       <div className="clouds-home__intro-wash" />
 
-      <div className="clouds-home__sky">
-        <img src="/sky.png" alt="" className="clouds-home__sky-image" />
-      </div>
+      <div className="clouds-home__sky" />
+      <SkyScene />
       <div className="clouds-home__haze" />
-
-      <div className="clouds-home__sun-wrap">
-        <div className="clouds-home__sun" />
-      </div>
-
-      <div className="clouds-home__bg-clouds">
-        {BG_CLOUDS.map((cloud, i) => (
-          <div
-            key={i}
-            className="clouds-home__bg-cloud"
-            style={{
-              '--w': cloud.w,
-              '--h': cloud.h,
-              '--top': cloud.top,
-              '--left': cloud.left,
-              '--right': cloud.right,
-              '--opacity': cloud.opacity,
-            }}
-          />
-        ))}
-      </div>
-
       <div className="clouds-home__horizon" />
 
       <div className="clouds-home__stage">
