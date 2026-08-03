@@ -56,8 +56,11 @@ export default function ExperiencePage() {
 
 	useEffect(() => {
 		fetch('/api/experience')
-			.then((r) => r.json())
-			.then(({ experience: data }) => setExperience(data))
+			.then((r) => {
+				if (!r.ok) throw new Error(`Experience request failed with status ${r.status}`);
+				return r.json();
+			})
+			.then(({ experience: data }) => setExperience(Array.isArray(data) && data.length ? data : FALLBACK))
 			.catch(() => setExperience(FALLBACK));
 	}, []);
 

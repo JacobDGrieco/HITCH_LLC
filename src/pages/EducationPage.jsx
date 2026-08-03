@@ -68,8 +68,11 @@ export default function EducationPage() {
 
 	useEffect(() => {
 		fetch('/api/education')
-			.then((r) => r.json())
-			.then(({ education: data }) => setEducation(data))
+			.then((r) => {
+				if (!r.ok) throw new Error(`Education request failed with status ${r.status}`);
+				return r.json();
+			})
+			.then(({ education: data }) => setEducation(Array.isArray(data) && data.length ? data : FALLBACK))
 			.catch(() => setEducation(FALLBACK));
 	}, []);
 

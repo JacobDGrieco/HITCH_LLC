@@ -34,7 +34,7 @@ export default function DropCard({
 
         <div className="drop-card__content">
           {iconImage ? (
-            <img src={iconImage} alt="" className="drop-card__icon-image" />
+            <img src={iconImage} alt="" width="82" height="82" loading="lazy" className="drop-card__icon-image" />
           ) : icon ? (
             <div className="drop-card__icon">{icon}</div>
           ) : null}

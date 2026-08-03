@@ -62,47 +62,6 @@
 
 /* ─── Intro animation ─────────────────────────────────────────── */
 
-.clouds-home__intro-ground-scene {
-	position: fixed;
-	inset: 0;
-	z-index: 9;
-	pointer-events: none;
-	opacity: 0;
-}
-
-.clouds-home__intro-ground-image {
-	position: absolute;
-	inset: 0;
-	display: block;
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-	object-position: center calc(100% + 52px);
-}
-
-.clouds-home--intro .clouds-home__intro-ground-scene {
-	animation: homeGroundScene 3.9s ease both;
-}
-
-.clouds-home__intro-wash {
-	position: fixed;
-	inset: 0;
-	z-index: 10;
-	pointer-events: none;
-	background:
-		radial-gradient(circle at 50% 50%,
-			rgba(255, 240, 230, 1) 0%,
-			rgba(255, 210, 185, 1) 34%,
-			rgba(250, 175, 155, 1) 62%,
-			rgba(235, 145, 120, 1) 100%
-		);
-	opacity: 0;
-}
-
-.clouds-home--intro .clouds-home__intro-wash {
-	animation: homePinkWash 3.9s ease both;
-}
-
 /* ─── Sun ─────────────────────────────────────────────────────── */
 
 .clouds-home__sun-wrap {
@@ -156,55 +115,14 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	color: inherit;
+	font: inherit;
 	cursor: pointer;
 	animation: cloudBob 7s ease-in-out infinite;
 	animation-delay: calc(var(--float-index, 0) * -1.15s);
-}
-
-.clouds-home--intro .page-cloud,
-.clouds-home--intro .clouds-home__hero-cluster-inner,
-.clouds-home--intro .clouds-home__hint,
-.clouds-home--intro .clouds-home__replay {
-	opacity: 0;
-}
-
-.clouds-home--scene-reveal .page-cloud,
-.clouds-home--scene-reveal .clouds-home__hero-cluster-inner,
-.clouds-home--scene-reveal .clouds-home__hint,
-.clouds-home--scene-reveal .clouds-home__replay {
-	animation: homeDropIn 0.82s cubic-bezier(0.18, 0.9, 0.22, 1) forwards;
-}
-
-.clouds-home--scene-reveal .page-cloud:nth-child(1) {
-	animation-delay: 0.08s;
-}
-
-.clouds-home--scene-reveal .page-cloud:nth-child(2) {
-	animation-delay: 0.16s;
-}
-
-.clouds-home--scene-reveal .page-cloud:nth-child(3) {
-	animation-delay: 0.24s;
-}
-
-.clouds-home--scene-reveal .page-cloud:nth-child(4) {
-	animation-delay: 0.32s;
-}
-
-.clouds-home--scene-reveal .page-cloud:nth-child(5) {
-	animation-delay: 0.40s;
-}
-
-.clouds-home--scene-reveal .page-cloud:nth-child(6) {
-	animation-delay: 0.48s;
-}
-
-.clouds-home--scene-reveal .clouds-home__hero-cluster-inner {
-	animation-delay: 0.3s;
-}
-
-.clouds-home--scene-reveal .clouds-home__hint {
-	animation-delay: 0.62s;
 }
 
 .page-cloud__body {
@@ -218,6 +136,11 @@
 .page-cloud:hover .page-cloud__body {
 	filter: drop-shadow(0 12px 28px rgba(230, 130, 195, 0.65)) drop-shadow(0 3px 10px rgba(210, 110, 180, 0.4)) brightness(1.05);
 	transform: scale(1.07) translateY(-6px);
+}
+
+.page-cloud:focus-visible .page-cloud__body {
+	outline: 3px solid rgba(145, 63, 105, 0.74);
+	outline-offset: 6px;
 }
 
 .page-cloud__shadow {
@@ -618,158 +541,12 @@
 	box-shadow: 0 8px 22px rgba(214, 158, 188, 0.18);
 }
 
-.clouds-home__replay {
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	padding: 8px 14px;
-	border-radius: 999px;
-	border: 1px solid rgba(210, 150, 186, 0.42);
-	background: rgba(255, 250, 253, 0.84);
-	box-shadow: 0 8px 20px rgba(205, 145, 181, 0.16);
-	font-size: 11px;
-	font-weight: 800;
-	letter-spacing: 1.8px;
-	text-transform: uppercase;
-	color: rgba(160, 83, 126, 0.92);
-	cursor: pointer;
-	pointer-events: auto;
-}
-
-.clouds-home__replay:hover {
-	transform: translateY(-2px);
-	background: rgba(255, 255, 255, 0.96);
-	box-shadow: 0 12px 26px rgba(205, 145, 181, 0.22);
-}
-
-/* ─── Jacob balloon ───────────────────────────────────────────── */
-
-.jacob-balloon {
-	position: absolute;
-	left: 200px;
-	top: -120px;
-	gap: 8px;
-	animation: jacobFloat 7.5s ease-in-out infinite;
-	z-index: 1;
-	scale: 70%;
-}
-
-.jacob-balloon__headshot {
-	width: 560px;
-}
-
-.jacob-balloon__balloon-wrap {
-	position: absolute;
-	left: 54%;
-	top: -8.5%;
-	scale: 150%;
-	z-index: -1;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	animation: balloonWiggle 4.8s ease-in-out infinite;
-	transform-origin: bottom center;
-}
-
-.jacob-balloon__balloon {
-	width: 62px;
-	height: 74px;
-	border-radius: 50% 50% 46% 46%;
-	background: radial-gradient(circle at 35% 28%, rgba(255, 250, 252, 0.95) 0%, rgba(255, 214, 232, 0.97) 24%, rgba(245, 170, 205, 0.96) 52%, rgba(222, 126, 181, 0.94) 76%, rgba(194, 97, 159, 0.92) 100%);
-	box-shadow: inset -8px -12px 18px rgba(150, 70, 120, 0.18), 0 10px 24px rgba(199, 110, 166, 0.35);
-	position: relative;
-}
-
-.jacob-balloon__balloon::after {
-	content: '';
-	position: absolute;
-	width: 14px;
-	height: 14px;
-	bottom: -4px;
-	left: 50%;
-	transform: translateX(-50%) rotate(45deg);
-	background: rgba(207, 113, 169, 0.95);
-	border-radius: 3px;
-}
-
-.jacob-balloon__string {
-	display: block;
-	overflow: visible;
-}
 
 /* ─── Keyframes ───────────────────────────────────────────────── */
 
 @keyframes cloudBob {
 	0%, 100% { transform: translateY(0px); }
 	50%       { transform: translateY(-8px); }
-}
-
-@keyframes homeGroundScene {
-	0% {
-		opacity: 1;
-		transform: translateY(0) scale(1);
-		filter: saturate(0.95) blur(0);
-	}
-
-	34% {
-		opacity: 1;
-		transform: translateY(0) scale(1);
-		filter: saturate(0.95) blur(0);
-	}
-
-	82% {
-		opacity: 1;
-		transform: translateY(16vh) scale(1.05);
-		filter: saturate(1) blur(0.2px);
-	}
-
-	100% {
-		opacity: 0;
-		transform: translateY(34vh) scale(1.12);
-		filter: saturate(1.02) blur(0.4px);
-	}
-}
-
-@keyframes homePinkWash {
-	from {
-		opacity: 0;
-	}
-
-	28% {
-		opacity: 0;
-	}
-
-	52% {
-		opacity: 1;
-	}
-
-	82% {
-		opacity: 1;
-	}
-
-	to {
-		opacity: 0;
-	}
-}
-
-@keyframes homeDropIn {
-	from {
-		opacity: 0;
-		transform: translateY(-120px) scale(0.96);
-		filter: blur(4px);
-	}
-
-	70% {
-		opacity: 1;
-		transform: translateY(8px) scale(1.01);
-		filter: blur(0);
-	}
-
-	to {
-		opacity: 1;
-		transform: translateY(0) scale(1);
-		filter: blur(0);
-	}
 }
 
 @keyframes homeFooterFadeIn {
@@ -859,12 +636,6 @@
 		padding: 6px 10px;
 	}
 
-	.clouds-home__replay {
-		padding: 7px 10px;
-		font-size: 9px;
-		letter-spacing: 1.15px;
-	}
-
 	.clouds-home__footer {
 		padding: 0 14px 14px;
 	}
@@ -894,12 +665,6 @@
 		justify-content: center;
 		padding: 13px 18px;
 		font-size: 11px;
-	}
-
-	.clouds-home__intro-ground-image {
-		object-position: center bottom;
-		transform: scale(1.12);
-		transform-origin: center center;
 	}
 
 	.clouds-home__right-zone {
@@ -944,8 +709,4 @@
 		padding: 6px 9px;
 	}
 
-	.clouds-home__replay {
-		padding: 6px 9px;
-		font-size: 8px;
-	}
 }

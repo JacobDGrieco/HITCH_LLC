@@ -26,6 +26,11 @@
 	transform: scale(1.03);
 }
 
+.contact-crystal:focus-visible .contact-crystal__shell {
+	outline: 3px solid rgba(115, 73, 132, 0.58);
+	outline-offset: 5px;
+}
+
 .contact-crystal__core,
 .contact-crystal__facets,
 .contact-crystal__shine,

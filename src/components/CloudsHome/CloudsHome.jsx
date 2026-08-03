@@ -1,8 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Cloud from './Cloud';
-import JacobBalloon from './JacobBalloon';
-import SpeechBubble from './SpeechBubble';
 import SkyScene from './SkyScene';
 import { useSiteMusic } from '../audio/useSiteMusic';
 import { useSiteChrome } from '../chrome/useSiteChrome';
@@ -65,72 +63,30 @@ export default function CloudsHome() {
   const { requestAutoplay } = useSiteMusic();
   const { setDasHidden } = useSiteChrome();
   const puffRefs = useRef([]);
-  const expandRef = useRef(null);
-  const [transitioning, setTransitioning] = useState(false);
-  const [viewportWidth, setViewportWidth] = useState(() => window.innerWidth);
-  const [playIntro, setPlayIntro] = useState(() => {
-    try {
-      return window.sessionStorage.getItem('homeIntroSeen') !== 'true';
-    } catch {
-      return true;
-    }
-  });
-  const [sceneReveal, setSceneReveal] = useState(() => !playIntro);
+	const expandRef = useRef(null);
+	const [transitioning, setTransitioning] = useState(false);
+	const [viewportWidth, setViewportWidth] = useState(() => window.innerWidth);
 
-  useEffect(() => {
-    function handleResize() {
-      setViewportWidth(window.innerWidth);
+	useEffect(() => {
+		function handleResize() {
+			setViewportWidth(window.innerWidth);
     }
 
     window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+		return () => window.removeEventListener('resize', handleResize);
+	}, []);
 
-  useEffect(() => {
-    if (!playIntro) return;
+	useEffect(() => {
+		requestAutoplay();
+	}, [requestAutoplay]);
 
-    const revealTimer = window.setTimeout(() => {
-      setSceneReveal(true);
-    }, 2950);
+	useEffect(() => {
+		setDasHidden(transitioning);
 
-    const timer = window.setTimeout(() => {
-      setPlayIntro(false);
-      try {
-        window.sessionStorage.setItem('homeIntroSeen', 'true');
-      } catch {
-        // Ignore storage failures; intro replay is acceptable.
-      }
-    }, 3900);
-
-    return () => {
-      window.clearTimeout(revealTimer);
-      window.clearTimeout(timer);
-    };
-  }, [playIntro]);
-
-  useEffect(() => {
-    if (!playIntro) {
-      requestAutoplay();
-    }
-  }, [playIntro, requestAutoplay]);
-
-  useEffect(() => {
-    setDasHidden(playIntro || transitioning);
-
-    return () => {
-      setDasHidden(false);
-    };
-  }, [playIntro, setDasHidden, transitioning]);
-
-  function replayIntro() {
-    setSceneReveal(false);
-    setPlayIntro(true);
-    try {
-      window.sessionStorage.removeItem('homeIntroSeen');
-    } catch {
-      // Ignore storage failures; replay still works for this render cycle.
-    }
-  }
+		return () => {
+			setDasHidden(false);
+		};
+	}, [setDasHidden, transitioning]);
 
   const fluidVars = useMemo(() => ({
     '--home-cloud-scale': interpolateStops(viewportWidth, FLUID_STOPS.cloudScale),
@@ -178,25 +134,17 @@ export default function CloudsHome() {
     setTimeout(() => navigate(route), 740);
   }
 
-  return (
-    <div className={`clouds-home${playIntro ? ' clouds-home--intro' : ''}${sceneReveal ? ' clouds-home--scene-reveal' : ''}`} style={fluidVars}>
-      <div className="clouds-home__intro-ground-scene">
-        <img src="/ground.png" alt="" className="clouds-home__intro-ground-image" />
-      </div>
-      <div className="clouds-home__intro-wash" />
-
-      <div className="clouds-home__sky" />
-      <SkyScene />
-      <div className="clouds-home__haze" />
+	return (
+		<div className="clouds-home" style={fluidVars}>
+			<div className="clouds-home__sky" />
+			<SkyScene />
+			<div className="clouds-home__haze" />
       <div className="clouds-home__horizon" />
 
       <div className="clouds-home__stage">
         <div className="clouds-home__left-zone">
           <div className="clouds-home__hero-cluster">
             <div className="clouds-home__hero-cluster-inner">
-              <SpeechBubble />
-              <JacobBalloon />
-
               <div className="clouds-home__logo-cloud">
                 {SPARKLES.map((sparkle, i) => (
                   <div
@@ -216,7 +164,7 @@ export default function CloudsHome() {
                   </div>
                 ))}
 
-                <img src="/logo.png" alt="HeadInTheCloudsHaven" className="clouds-home__logo" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
+                <img src="/logo.png" alt="HeadInTheCloudsHaven" width="1536" height="1024" fetchPriority="high" className="clouds-home__logo" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
               </div>
             </div>
           </div>
@@ -235,12 +183,9 @@ export default function CloudsHome() {
         </div>
       </div>
 
-      <div className="clouds-home__header">
-        <div className="clouds-home__hint">Click a cloud to explore</div>
-        <button type="button" className="clouds-home__replay" onClick={replayIntro}>
-          Replay Intro
-        </button>
-      </div>
+			<div className="clouds-home__header">
+				<div className="clouds-home__hint">Click a cloud to explore</div>
+			</div>
 
       <div ref={expandRef} className="clouds-home__expand">
         {PUFF_CFG.map((_, i) => (

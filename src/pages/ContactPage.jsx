@@ -47,7 +47,7 @@ const CONTACTS = [
 	},
 ];
 
-const FALLBACK_ERROR = 'Something went wrong - try emailing directly.';
+const FALLBACK_ERROR = 'Something went wrong. Try emailing directly.';
 
 export default function ContactPage() {
 	const [form, setForm] = useState({ name: '', email: '', subject: '', message: '', company: '' });
@@ -113,13 +113,25 @@ export default function ContactPage() {
 							<div className="contact-page__message-content">
 								<div className="contact-page__eyebrow">Send a Message</div>
 								{status === 'sent' ? (
-									<div className="contact-page__success">Message sent — I&apos;ll be in touch soon</div>
+									<div className="contact-page__success" role="status" aria-live="polite">Message sent — I&apos;ll be in touch soon</div>
 								) : (
 									<form onSubmit={handleSubmit} className="contact-page__form">
-										<input name="name" value={form.name} onChange={handleChange} placeholder="Your name" required className="contact-page__input" />
-										<input name="email" type="email" value={form.email} onChange={handleChange} placeholder="Your email" required className="contact-page__input" />
-										<input name="subject" value={form.subject} onChange={handleChange} placeholder="Subject" className="contact-page__input" />
-										<textarea name="message" value={form.message} onChange={handleChange} placeholder="Your message" required rows={5} className="contact-page__textarea" />
+										<label className="contact-page__field">
+											<span className="contact-page__label">Name</span>
+											<input name="name" autoComplete="name" value={form.name} onChange={handleChange} placeholder="Jane Grieco" required className="contact-page__input" />
+										</label>
+										<label className="contact-page__field">
+											<span className="contact-page__label">Email</span>
+											<input name="email" type="email" autoComplete="email" spellCheck={false} value={form.email} onChange={handleChange} placeholder="jane@example.com" required className="contact-page__input" />
+										</label>
+										<label className="contact-page__field">
+											<span className="contact-page__label">Subject</span>
+											<input name="subject" autoComplete="off" value={form.subject} onChange={handleChange} placeholder="Project inquiry" className="contact-page__input" />
+										</label>
+										<label className="contact-page__field">
+											<span className="contact-page__label">Message</span>
+											<textarea name="message" autoComplete="off" value={form.message} onChange={handleChange} placeholder="Tell me about your project…" required rows={5} className="contact-page__textarea" />
+										</label>
 										<input
 											name="company"
 											value={form.company}
@@ -129,9 +141,9 @@ export default function ContactPage() {
 											className="contact-page__honeypot"
 											aria-hidden="true"
 										/>
-										{status === 'error' && <div className="contact-page__error">{errorMessage || FALLBACK_ERROR}</div>}
+										{status === 'error' && <div className="contact-page__error" role="alert">{errorMessage || FALLBACK_ERROR}</div>}
 										<button type="submit" disabled={status === 'sending'} className="contact-page__button">
-											{status === 'sending' ? 'Sending...' : 'Send Message'}
+											{status === 'sending' ? 'Sending…' : 'Send Message'}
 										</button>
 									</form>
 								)}
@@ -143,4 +155,3 @@ export default function ContactPage() {
 		</div>
 	);
 }
-

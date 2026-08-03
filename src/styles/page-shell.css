@@ -82,6 +82,11 @@
 	box-shadow: 0 4px 16px rgba(200, 140, 180, 0.3);
 }
 
+.page-shell__back:focus-visible {
+	outline: 3px solid rgba(160, 80, 130, 0.58);
+	outline-offset: 3px;
+}
+
 .page-shell__content {
 	flex: 1;
 	display: flex;

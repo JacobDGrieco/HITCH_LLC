@@ -132,6 +132,11 @@
 	text-decoration: none;
 }
 
+.drop-card__link:focus-visible {
+	outline: 2px solid rgba(70, 120, 190, 0.62);
+	outline-offset: 2px;
+}
+
 .page-crystal-row {
 	display: flex;
 	align-items: center;

@@ -81,7 +81,7 @@ export default function PageShell({ children, section = 'default' }) {
       <div className={`page-shell__overlay page-shell__overlay--${section} ${visible ? 'page-shell__overlay--visible' : 'page-shell__overlay--hidden'}`}>
         <div className="page-shell__wisps" />
 
-        <button onClick={handleBack} className="page-shell__back">
+        <button type="button" onClick={handleBack} className="page-shell__back">
           ☁ ← Back to sky
         </button>
 

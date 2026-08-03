@@ -51,7 +51,7 @@ export default function PersistentDas() {
 
 					<div className="site-das__art" aria-hidden="true">
 						{currentArtUrl ? (
-							<img src={currentArtUrl} alt="" className="site-das__art-image" />
+							<img src={currentArtUrl} alt="" width="34" height="34" className="site-das__art-image" />
 						) : (
 							<div className="site-das__art-fallback" />
 						)}

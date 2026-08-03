@@ -30,7 +30,7 @@ export default function ContactCrystal({
 				<div className="contact-crystal__shine" />
 				<div className="contact-crystal__content">
 					{iconImage ? (
-						<img src={iconImage} alt="" className="contact-crystal__icon-image" />
+						<img src={iconImage} alt="" width="72" height="72" loading="lazy" className="contact-crystal__icon-image" />
 					) : icon ? (
 						<div className="contact-crystal__icon">{icon}</div>
 					) : null}

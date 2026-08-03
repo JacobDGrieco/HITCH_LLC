@@ -73,8 +73,11 @@ export default function ProjectsPage() {
 
 	useEffect(() => {
 		fetch('/api/projects')
-			.then((r) => r.json())
-			.then(({ projects: data }) => setProjects(data))
+			.then((r) => {
+				if (!r.ok) throw new Error(`Projects request failed with status ${r.status}`);
+				return r.json();
+			})
+			.then(({ projects: data }) => setProjects(Array.isArray(data) && data.length ? data : FALLBACK))
 			.catch(() => setProjects(FALLBACK));
 	}, []);
 

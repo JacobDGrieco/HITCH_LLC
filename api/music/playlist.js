@@ -68,6 +68,7 @@ export default async function handler(request, response) {
 					licenseLabel: metadata.licenseLabel ?? '',
 					licenseUrl: metadata.licenseUrl ?? '',
 					pathname: blob.pathname,
+					sortOrder: inferSortOrder(blob.pathname),
 					streamUrl: `/api/music/stream?pathname=${encodeURIComponent(blob.pathname)}`,
 				};
 			})

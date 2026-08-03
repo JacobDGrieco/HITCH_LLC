@@ -126,6 +126,21 @@
 	gap: 12px;
 }
 
+.contact-page__field {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+}
+
+.contact-page__label {
+	padding-left: 4px;
+	font-size: 10px;
+	font-weight: 800;
+	letter-spacing: 1.4px;
+	text-transform: uppercase;
+	color: rgba(132, 78, 148, 0.76);
+}
+
 .contact-page__input,
 .contact-page__textarea {
 	width: 100%;
@@ -135,7 +150,6 @@
 	border: 1px solid rgba(205, 152, 212, 0.36);
 	color: rgba(83, 55, 108, 0.92);
 	font-size: 14px;
-	outline: none;
 	transition: border-color 0.2s ease, background 0.2s ease;
 	backdrop-filter: blur(10px);
 }
@@ -149,6 +163,13 @@
 .contact-page__textarea:focus {
 	border-color: rgba(176, 117, 202, 0.68);
 	background: rgba(255, 255, 255, 0.72);
+}
+
+.contact-page__input:focus-visible,
+.contact-page__textarea:focus-visible,
+.contact-page__button:focus-visible {
+	outline: 3px solid rgba(122, 72, 155, 0.54);
+	outline-offset: 2px;
 }
 
 .contact-page__honeypot {

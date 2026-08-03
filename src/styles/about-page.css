@@ -288,6 +288,11 @@
 	transform: translateY(-2px);
 }
 
+.about-page__button:focus-visible {
+	outline: 3px solid rgba(128, 74, 107, 0.5);
+	outline-offset: 3px;
+}
+
 .about-page__button--primary {
 	background: linear-gradient(135deg, rgba(210, 126, 170, 0.96), rgba(232, 165, 198, 0.92));
 	color: white;

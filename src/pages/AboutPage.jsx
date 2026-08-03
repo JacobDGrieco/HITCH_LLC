@@ -29,7 +29,7 @@ export default function AboutPage() {
 						<div className="about-page__portrait-mist about-page__portrait-mist--three" />
 						<div className="about-page__portrait-core">
 							<div className="about-page__portrait-ring">
-								<img src="/headshot.jpg" alt="Jacob Grieco" className="about-page__portrait-image" />
+								<img src="/headshot.jpg" alt="Jacob Grieco" width="4254" height="3429" loading="lazy" className="about-page__portrait-image" />
 							</div>
 						</div>
 						<div className="about-page__portrait-caption">Jacob Grieco</div>

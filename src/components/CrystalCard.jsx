@@ -40,7 +40,7 @@ export default function CrystalCard({
 
         <div className="crystal-card__content">
           {iconImage ? (
-            <img src={iconImage} alt="" className="crystal-card__icon-image" />
+            <img src={iconImage} alt="" width="82" height="82" loading="lazy" className="crystal-card__icon-image" />
           ) : icon ? (
             <div className="crystal-card__icon">{icon}</div>
           ) : null}

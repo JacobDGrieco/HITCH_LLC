@@ -68,8 +68,11 @@ export default function SkillsPage() {
 
 	useEffect(() => {
 		fetch('/api/skills')
-			.then((r) => r.json())
-			.then(({ skills: data }) => setSkills(data))
+			.then((r) => {
+				if (!r.ok) throw new Error(`Skills request failed with status ${r.status}`);
+				return r.json();
+			})
+			.then(({ skills: data }) => setSkills(Array.isArray(data) && data.length ? data : FALLBACK))
 			.catch(() => setSkills(FALLBACK));
 	}, []);
 
