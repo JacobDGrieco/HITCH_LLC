@@ -1,53 +1,22 @@
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
-const TEX_W = 512;
-const TEX_H = 320;
-const TEX_ASPECT = TEX_W / TEX_H; // ~1.6
+const CLOUD_TEXTURES = [
+	{ src: '/cloud1.png', aspect: 537 / 187 },
+	{ src: '/cloud2.png', aspect: 537 / 187 },
+	{ src: '/cloud3.png', aspect: 537 / 187 },
+	{ src: '/cloud4.png', aspect: 537 / 187 },
+	{ src: '/cloud5.png', aspect: 537 / 187 },
+	{ src: '/cloud6.png', aspect: 537 / 187 },
+	{ src: '/cloud7.png', aspect: 537 / 187 },
+	{ src: '/cloud8.png', aspect: 537 / 187 },
+	{ src: '/cloud9.png', aspect: 1536 / 1024 },
+];
 
-function buildCloudTexture() {
-	const canvas = document.createElement('canvas');
-	canvas.width = TEX_W;
-	canvas.height = TEX_H;
-	const ctx = canvas.getContext('2d');
-
-	const puff = (x, y, rx, ry) => {
-		const g = ctx.createRadialGradient(x, y, 0, x, y, Math.max(rx, ry));
-		g.addColorStop(0,   'rgba(255, 248, 252, 0.97)');
-		g.addColorStop(0.35,'rgba(252, 232, 244, 0.82)');
-		g.addColorStop(0.65,'rgba(245, 215, 234, 0.48)');
-		g.addColorStop(1,   'rgba(235, 198, 222, 0.00)');
-		ctx.fillStyle = g;
-		ctx.beginPath();
-		ctx.ellipse(x, y, rx, ry, 0, 0, Math.PI * 2);
-		ctx.fill();
-	};
-
-	const cx = TEX_W / 2;
-	const cy = TEX_H * 0.68;
-	puff(cx,      cy + 18, 100, 44);
-	puff(cx - 60, cy - 2,   62, 52);
-	puff(cx + 60, cy - 2,   62, 52);
-	puff(cx - 38, cy - 34,  55, 48);
-	puff(cx + 38, cy - 34,  55, 48);
-	puff(cx,      cy - 50,  58, 48);
-	puff(cx - 20, cy - 72,  42, 36);
-	puff(cx + 20, cy - 72,  42, 36);
-
-	const hl = ctx.createRadialGradient(cx * 0.7, cy - 62, 0, cx * 0.7, cy - 62, 82);
-	hl.addColorStop(0, 'rgba(255,255,255,0.52)');
-	hl.addColorStop(1, 'rgba(255,255,255,0.00)');
-	ctx.fillStyle = hl;
-	ctx.fillRect(0, 0, TEX_W, TEX_H);
-
-	return new THREE.CanvasTexture(canvas);
-}
-
-// [bg → near] — more layers = more depth
 const LAYERS = [
-	{ n: 6, yMin: -0.10, yMax: 0.45, hMin: 0.38, hMax: 0.55, spd: 0.028, px: 0.30, py: 0.12, alpha: 0.46 },
-	{ n: 5, yMin:  0.05, yMax: 0.60, hMin: 0.24, hMax: 0.36, spd: 0.046, px: 0.60, py: 0.22, alpha: 0.60 },
-	{ n: 4, yMin:  0.22, yMax: 0.76, hMin: 0.14, hMax: 0.24, spd: 0.066, px: 0.80, py: 0.32, alpha: 0.72 },
+	{ n: 5, yMin: -0.22, yMax: 0.30, hMin: 0.18, hMax: 0.28, spd: 0.018, px: 0.22, py: 0.10, alpha: 0.18, tint: 0x8faecf },
+	{ n: 5, yMin: -0.02, yMax: 0.58, hMin: 0.22, hMax: 0.36, spd: 0.032, px: 0.50, py: 0.20, alpha: 0.28, tint: 0xc8d9ec },
+	{ n: 4, yMin: 0.18, yMax: 0.78, hMin: 0.16, hMax: 0.30, spd: 0.052, px: 0.74, py: 0.30, alpha: 0.38, tint: 0xf1eef6 },
 ];
 
 const PLAX_STRENGTH = 0.058;
@@ -57,53 +26,58 @@ export default function SkyScene() {
 
 	useEffect(() => {
 		const mount = mountRef.current;
-		if (!mount) return;
+		if (!mount) return undefined;
 
 		const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-		const mobile  = window.innerWidth <= 640;
+		const mobile = window.innerWidth <= 640;
 
-		let W = window.innerWidth;
-		let H = window.innerHeight;
-		let asp = W / H;
+		let width = window.innerWidth;
+		let height = window.innerHeight;
+		let aspect = width / height;
 
-		// ─── Renderer ────────────────────────────────────────────────
 		const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: false });
 		renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
-		renderer.setSize(W, H);
+		renderer.setSize(width, height);
 		renderer.setClearColor(0x000000, 0);
 		mount.appendChild(renderer.domElement);
 
 		const scene = new THREE.Scene();
-		const camera = new THREE.OrthographicCamera(-asp, asp, 1, -1, 0, 10);
+		const camera = new THREE.OrthographicCamera(-aspect, aspect, 1, -1, 0, 10);
 		camera.position.z = 5;
 
-		// ─── Cloud texture ─────────────────────────────────────────
-		const texture = buildCloudTexture();
+		const loader = new THREE.TextureLoader();
+		const textures = CLOUD_TEXTURES.map((cloud) => {
+			const texture = loader.load(cloud.src);
+			texture.colorSpace = THREE.SRGBColorSpace;
+			return { ...cloud, texture };
+		});
 
-		// ─── Cloud layers ──────────────────────────────────────────
-		const layerData = LAYERS.map((cfg) => {
+		const layerData = LAYERS.map((cfg, layerIndex) => {
 			const group = new THREE.Group();
 			scene.add(group);
 
 			const count = mobile ? Math.max(2, cfg.n - 2) : cfg.n;
-
-			const meshes = Array.from({ length: count }, () => {
-				const h = cfg.hMin + Math.random() * (cfg.hMax - cfg.hMin);
-				const w = h * TEX_ASPECT;
-				const geo = new THREE.PlaneGeometry(w, h);
-				const mat = new THREE.MeshBasicMaterial({
-					map: texture,
+			const meshes = Array.from({ length: count }, (_, cloudIndex) => {
+				const textureIndex = (layerIndex * 3 + cloudIndex * 2 + Math.floor(Math.random() * textures.length)) % textures.length;
+				const cloud = textures[textureIndex];
+				const cloudHeight = cfg.hMin + Math.random() * (cfg.hMax - cfg.hMin);
+				const cloudWidth = cloudHeight * cloud.aspect;
+				const geometry = new THREE.PlaneGeometry(cloudWidth, cloudHeight);
+				const material = new THREE.MeshBasicMaterial({
+					map: cloud.texture,
+					color: cfg.tint,
 					transparent: true,
 					opacity: cfg.alpha * (0.75 + Math.random() * 0.25),
 					depthWrite: false,
+					depthTest: false,
 				});
-				const mesh = new THREE.Mesh(geo, mat);
-				const x = (Math.random() * 2 - 1) * asp * 1.4;
+				const mesh = new THREE.Mesh(geometry, material);
+				const x = (Math.random() * 2 - 1) * aspect * 1.45;
 				const y = cfg.yMin + Math.random() * (cfg.yMax - cfg.yMin);
 				mesh.position.set(x, y, 0);
 				mesh.userData.baseX = x;
-				mesh.userData.spd   = cfg.spd * (0.7 + Math.random() * 0.6);
-				mesh.userData.hw    = w / 2;
+				mesh.userData.speed = cfg.spd * (0.7 + Math.random() * 0.6);
+				mesh.userData.halfWidth = cloudWidth / 2;
 				group.add(mesh);
 				return mesh;
 			});
@@ -111,53 +85,51 @@ export default function SkyScene() {
 			return { group, meshes, cfg };
 		});
 
-		// ─── Mouse parallax ────────────────────────────────────────
-		let mx = 0, my = 0, tx = 0, ty = 0;
-		const onMouse = (e) => {
-			tx = (e.clientX / W) * 2 - 1;
-			ty = (e.clientY / H) * 2 - 1;
+		let mouseX = 0;
+		let mouseY = 0;
+		let targetX = 0;
+		let targetY = 0;
+		const onMouse = (event) => {
+			targetX = (event.clientX / width) * 2 - 1;
+			targetY = (event.clientY / height) * 2 - 1;
 		};
 		if (!reduced) window.addEventListener('mousemove', onMouse);
 
-		// ─── Resize ────────────────────────────────────────────────
 		const onResize = () => {
-			W = window.innerWidth;
-			H = window.innerHeight;
-			asp = W / H;
-			renderer.setSize(W, H);
-			camera.left  = -asp;
-			camera.right =  asp;
+			width = window.innerWidth;
+			height = window.innerHeight;
+			aspect = width / height;
+			renderer.setSize(width, height);
+			camera.left = -aspect;
+			camera.right = aspect;
 			camera.updateProjectionMatrix();
 		};
 		window.addEventListener('resize', onResize);
 
-		// ─── Animation loop ────────────────────────────────────────
 		let raf;
 		let last = performance.now();
-
 		const animate = (now) => {
 			raf = requestAnimationFrame(animate);
-			const dt = Math.min((now - last) / 1000, 0.05);
+			const deltaSeconds = Math.min((now - last) / 1000, 0.05);
 			last = now;
 
 			if (!reduced) {
-				mx += (tx - mx) * 0.04;
-				my += (ty - my) * 0.04;
+				mouseX += (targetX - mouseX) * 0.04;
+				mouseY += (targetY - mouseY) * 0.04;
 			}
 
 			layerData.forEach(({ group, meshes, cfg }) => {
 				if (!reduced) {
-					group.position.x =  mx * PLAX_STRENGTH * cfg.px;
-					group.position.y = -my * PLAX_STRENGTH * cfg.py;
+					group.position.x = mouseX * PLAX_STRENGTH * cfg.px;
+					group.position.y = -mouseY * PLAX_STRENGTH * cfg.py;
 				}
 
-				meshes.forEach((m) => {
-					m.userData.baseX += m.userData.spd * dt;
-					// wrap when fully off right edge
-					if (m.userData.baseX - m.userData.hw > asp * 1.4) {
-						m.userData.baseX = -asp * 1.4 - m.userData.hw;
+				meshes.forEach((mesh) => {
+					mesh.userData.baseX += mesh.userData.speed * deltaSeconds;
+					if (mesh.userData.baseX - mesh.userData.halfWidth > aspect * 1.45) {
+						mesh.userData.baseX = -aspect * 1.45 - mesh.userData.halfWidth;
 					}
-					m.position.x = m.userData.baseX;
+					mesh.position.x = mesh.userData.baseX;
 				});
 			});
 
@@ -165,14 +137,16 @@ export default function SkyScene() {
 		};
 		animate(performance.now());
 
-		// ─── Cleanup ───────────────────────────────────────────────
 		return () => {
 			cancelAnimationFrame(raf);
 			window.removeEventListener('mousemove', onMouse);
 			window.removeEventListener('resize', onResize);
-			texture.dispose();
+			textures.forEach(({ texture }) => texture.dispose());
 			layerData.forEach(({ meshes }) => {
-				meshes.forEach((m) => { m.geometry.dispose(); m.material.dispose(); });
+				meshes.forEach((mesh) => {
+					mesh.geometry.dispose();
+					mesh.material.dispose();
+				});
 			});
 			renderer.dispose();
 			if (mount.contains(renderer.domElement)) mount.removeChild(renderer.domElement);

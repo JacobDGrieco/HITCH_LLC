@@ -1,16 +1,20 @@
-import SvgCloud from './SvgCloud';
-
-export default function Cloud({ label, onClick, uid, floatIndex }) {
+export default function Cloud({ label, onClick, imageSrc, imageWidth, imageHeight, scale, floatIndex }) {
 	return (
 		<button
 			type="button"
 			className="page-cloud"
-			style={{ '--float-index': floatIndex }}
+			style={{
+				'--float-index': floatIndex,
+				'--page-cloud-scale': scale,
+				'--page-cloud-hover-scale': scale * 1.07,
+				width: `${imageWidth * scale}px`,
+				height: `${imageHeight * scale}px`,
+			}}
 			onClick={onClick}
 			aria-label={`Open ${label}`}
 		>
 			<span className="page-cloud__body">
-				<SvgCloud uid={uid} width={220} height={130} />
+				<img src={imageSrc} alt="" className="page-cloud__image" />
 				<span className="page-cloud__label">{label}</span>
 				<span className="page-cloud__shadow" />
 			</span>

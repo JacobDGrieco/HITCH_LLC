@@ -1,7 +1,9 @@
 .clouds-home {
+	--home-logo-width: 860px;
 	--home-cloud-scale: 1;
-	--home-hero-scale: 1;
-	--home-hero-bottom: 0%;
+	--home-cloud-gap: 20px;
+	--home-cloud-offset-odd: 8px;
+	--home-cloud-offset-even: 124px;
 	position: relative;
 	width: 100%;
 	height: 100%;
@@ -15,15 +17,40 @@
 	inset: 0;
 	z-index: 0;
 	pointer-events: none;
-	background: linear-gradient(180deg,
-		#8fc0e8 0%,
-		#aad0f0 14%,
-		#c4def5 30%,
-		#d9ebf8 48%,
-		#edf5fb 66%,
-		#f8f4f0 84%,
-		#fdf0e8 100%
-	);
+	background:
+		radial-gradient(ellipse 72% 48% at 22% 18%, rgba(232, 244, 252, 0.34), transparent 62%),
+		radial-gradient(ellipse 62% 34% at 74% 24%, rgba(172, 205, 232, 0.30), transparent 68%),
+		linear-gradient(180deg,
+			#5d92c4 0%,
+			#6fa3ce 18%,
+			#8ab9d7 42%,
+			#b6d0df 67%,
+			#dbe2e0 86%,
+			#efe6dc 100%
+		);
+}
+
+.clouds-home__sky::before,
+.clouds-home__sky::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+}
+
+.clouds-home__sky::before {
+	background:
+		linear-gradient(180deg, rgba(24, 74, 122, 0.18), transparent 34%),
+		radial-gradient(ellipse 95% 18% at 50% 72%, rgba(255, 255, 255, 0.18), transparent 72%);
+	mix-blend-mode: soft-light;
+}
+
+.clouds-home__sky::after {
+	background:
+		radial-gradient(ellipse 78% 16% at 14% 55%, rgba(255, 255, 255, 0.12), transparent 70%),
+		radial-gradient(ellipse 70% 14% at 86% 48%, rgba(238, 246, 252, 0.15), transparent 72%),
+		linear-gradient(90deg, rgba(31, 87, 136, 0.11), transparent 24%, transparent 76%, rgba(42, 96, 138, 0.10));
+	opacity: 0.8;
 }
 
 .clouds-home__haze {
@@ -32,13 +59,13 @@
 	z-index: 1;
 	pointer-events: none;
 	background:
-		radial-gradient(ellipse 90% 28% at 50% 100%, rgba(255, 185, 80, 0.38) 0%, rgba(255, 140, 60, 0.18) 48%, transparent 74%),
+		radial-gradient(ellipse 92% 24% at 50% 100%, rgba(255, 190, 118, 0.18) 0%, rgba(248, 150, 86, 0.08) 48%, transparent 76%),
 		linear-gradient(180deg,
 			transparent 0%,
 			transparent 45%,
-			rgba(255, 195, 120, 0.10) 65%,
-			rgba(255, 160, 80, 0.22) 82%,
-			rgba(240, 130, 70, 0.28) 100%
+			rgba(255, 218, 156, 0.06) 66%,
+			rgba(246, 178, 106, 0.10) 84%,
+			rgba(225, 142, 86, 0.13) 100%
 		);
 }
 
@@ -47,36 +74,18 @@
 	bottom: 0;
 	left: 0;
 	right: 0;
-	height: 130px;
+	height: 118px;
 	background:
-		radial-gradient(ellipse 70% 52% at 50% 100%, rgba(255, 200, 90, 0.55) 0%, rgba(255, 160, 70, 0.30) 42%, transparent 78%),
+		radial-gradient(ellipse 70% 48% at 50% 100%, rgba(255, 202, 130, 0.24) 0%, rgba(255, 166, 94, 0.12) 42%, transparent 78%),
 		linear-gradient(180deg,
 			rgba(255, 195, 100, 0) 0%,
-			rgba(255, 190, 95, 0.20) 38%,
-			rgba(255, 155, 65, 0.40) 68%,
-			rgba(240, 128, 55, 0.50) 100%
+			rgba(255, 195, 118, 0.08) 42%,
+			rgba(246, 164, 96, 0.14) 70%,
+			rgba(223, 138, 82, 0.18) 100%
 		);
 	z-index: 4;
 	pointer-events: none;
 }
-
-/* ─── Intro animation ─────────────────────────────────────────── */
-
-/* ─── Sun ─────────────────────────────────────────────────────── */
-
-.clouds-home__sun-wrap {
-	display: none;
-}
-
-.clouds-home__sun {
-	width: 62px;
-	height: 62px;
-	border-radius: 50%;
-	background: radial-gradient(circle at 42% 42%, #fffef0, #fffacd 30%, #ffe680 65%, #ffd700 100%);
-	box-shadow: 0 0 0 8px rgba(255, 240, 100, 0.08), 0 0 60px rgba(255, 230, 60, 0.35), 0 0 120px rgba(255, 220, 40, 0.15);
-}
-
-/* bg-clouds removed — replaced by SkyScene Three.js layer */
 
 /* ─── Stage layout ────────────────────────────────────────────── */
 
@@ -84,37 +93,37 @@
 	position: fixed;
 	inset: 0;
 	z-index: 5;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	padding: 0 2vw;
+	padding: 0;
 	pointer-events: none;
 }
 
 .clouds-home__left-zone {
-	flex: 1;
-	position: relative;
-	height: 100%;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	width: 65%;
 	pointer-events: none;
 }
 
 .clouds-home__right-zone {
-	flex: 0 0 auto;
-	display: grid;
-	grid-template-columns: repeat(2, auto);
-	gap: 10px 6px;
-	align-content: center;
-	justify-items: center;
-	padding-right: 3vw;
+	position: absolute;
+	top: 50%;
+	left: 65%;
+	width: 25%;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: var(--home-cloud-gap);
+	transform: translateY(-50%);
 	pointer-events: auto;
 }
 
 /* ─── Nav clouds ──────────────────────────────────────────────── */
 
 .page-cloud {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+	position: relative;
+	display: block;
 	padding: 0;
 	border: 0;
 	background: transparent;
@@ -126,16 +135,29 @@
 }
 
 .page-cloud__body {
-	position: relative;
-	width: 210px;
-	height: 140px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	display: inline-block;
+	width: max-content;
+	height: max-content;
+	transform: translate(-50%, -50%) scale(var(--page-cloud-scale));
+	transform-origin: center;
 	transition: filter 0.3s, transform 0.3s, opacity 0.2s;
-	filter: drop-shadow(0 8px 20px rgba(220, 140, 190, 0.4)) drop-shadow(0 2px 6px rgba(200, 120, 170, 0.25));
+	filter: drop-shadow(0 14px 22px rgba(44, 92, 135, 0.20)) drop-shadow(0 2px 7px rgba(255, 255, 255, 0.34));
+}
+
+.page-cloud:nth-child(even) {
+	margin-left: var(--home-cloud-offset-even);
+}
+
+.page-cloud:nth-child(odd) {
+	margin-left: var(--home-cloud-offset-odd);
 }
 
 .page-cloud:hover .page-cloud__body {
-	filter: drop-shadow(0 12px 28px rgba(230, 130, 195, 0.65)) drop-shadow(0 3px 10px rgba(210, 110, 180, 0.4)) brightness(1.05);
-	transform: scale(1.07) translateY(-6px);
+	filter: drop-shadow(0 18px 30px rgba(39, 85, 129, 0.28)) drop-shadow(0 4px 12px rgba(255, 255, 255, 0.40)) brightness(1.04);
+	transform: translate(-50%, -50%) scale(var(--page-cloud-hover-scale)) translateY(-6px);
 }
 
 .page-cloud:focus-visible .page-cloud__body {
@@ -145,25 +167,33 @@
 
 .page-cloud__shadow {
 	position: absolute;
-	bottom: 6px;
-	left: 14%;
-	width: 72%;
-	height: 22px;
-	background: radial-gradient(ellipse, rgba(190, 130, 190, 0.26), transparent 72%);
+	bottom: 0;
+	left: 12%;
+	width: 76%;
+	height: 18px;
+	background: radial-gradient(ellipse, rgba(50, 88, 125, 0.18), transparent 72%);
 	border-radius: 50%;
 	filter: blur(10px);
 	z-index: -1;
 }
 
+.page-cloud__image {
+	display: block;
+	width: auto;
+	height: auto;
+	max-width: none;
+	filter: saturate(0.64) brightness(1.07) contrast(0.96);
+}
+
 .page-cloud__label {
 	position: absolute;
 	left: 50%;
-	bottom: 22px;
-	transform: translateX(-50%);
-	font-size: 16px;
+	top: 52%;
+	transform: translate(-50%, -50%);
+	font-size: 15px;
 	font-weight: 800;
-	color: rgba(145, 63, 105, 0.95);
-	text-shadow: 0 1px 0 rgba(255, 255, 255, 1), 0 2px 8px rgba(255, 255, 255, 0.9);
+	color: rgba(58, 88, 126, 0.96);
+	text-shadow: 0 1px 0 rgba(252, 251, 252, 0.92), 0 3px 12px rgba(255, 255, 255, 0.82);
 	letter-spacing: 1.2px;
 	text-transform: uppercase;
 	pointer-events: none;
@@ -171,85 +201,20 @@
 	z-index: 2;
 }
 
-/* ─── Hero cluster ────────────────────────────────────────────── */
-
-.clouds-home__hero-cluster {
+.clouds-home__logo {
 	position: absolute;
+	top: 50%;
 	left: 50%;
-	bottom: var(--home-hero-bottom);
-	width: 1180px;
-	height: 760px;
-	transform: translateX(-50%) scale(var(--home-hero-scale));
-	transform-origin: center bottom;
-	pointer-events: none;
-}
-
-.clouds-home__hero-cluster-inner {
-	position: relative;
-	width: 100%;
-	height: 100%;
-}
-
-.clouds-home__logo-cloud {
-	position: absolute;
-	left: 50%;
-	top: 458px;
+	display: block;
+	width: var(--home-logo-width);
+	max-width: min(86vw, 1120px);
+	max-height: 86vh;
+	height: auto;
 	transform: translate(-50%, -50%);
-	width: 1040px;
-	aspect-ratio: 3 / 2;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	animation: floatC 9s ease-in-out infinite;
+	object-fit: contain;
+	filter: drop-shadow(0 18px 34px rgba(48, 83, 128, 0.24)) drop-shadow(0 4px 14px rgba(241, 238, 247, 0.30));
 	pointer-events: none;
 	z-index: 2;
-}
-
-/* ─── Sparkles ────────────────────────────────────────────────── */
-
-.clouds-home__sparkle {
-	position: absolute;
-	top: var(--sparkle-top);
-	left: var(--sparkle-left, auto);
-	right: var(--sparkle-right, auto);
-	animation: twinkle 2.6s ease-in-out infinite;
-	animation-delay: var(--sparkle-delay, 0s);
-}
-
-.clouds-home__sparkle-shape {
-	position: relative;
-	width: 10px;
-	height: 10px;
-}
-
-.clouds-home__sparkle-v,
-.clouds-home__sparkle-h {
-	position: absolute;
-	background: rgba(255, 180, 220, 0.95);
-	border-radius: 1px;
-}
-
-.clouds-home__sparkle-v {
-	width: 2px;
-	height: 10px;
-	left: 4px;
-	top: 0;
-}
-
-.clouds-home__sparkle-h {
-	width: 10px;
-	height: 2px;
-	left: 0;
-	top: 4px;
-}
-
-.clouds-home__logo {
-	display: block;
-	width: 100%;
-	height: 100%;
-	max-width: 100%;
-	object-fit: contain;
-	filter: drop-shadow(0 14px 32px rgba(200, 120, 180, 0.45)) drop-shadow(0 4px 12px rgba(180, 100, 160, 0.25));
 }
 
 /* ─── Expand puff transition ──────────────────────────────────── */
@@ -529,16 +494,16 @@
 	font-size: 11px;
 	font-weight: 700;
 	letter-spacing: 3px;
-	color: rgba(180, 100, 145, 0.65);
+	color: rgba(54, 84, 121, 0.78);
 	text-shadow: 0 1px 4px rgba(255, 255, 255, 0.9);
 	text-transform: uppercase;
 	z-index: 10;
 	animation: fadeHint 3s ease 2.2s both;
 	padding: 4px 14px;
 	border-radius: 999px;
-	background: rgba(255, 249, 252, 0.72);
-	border: 1px solid rgba(224, 170, 198, 0.36);
-	box-shadow: 0 8px 22px rgba(214, 158, 188, 0.18);
+	background: rgba(244, 250, 253, 0.78);
+	border: 1px solid rgba(165, 193, 216, 0.48);
+	box-shadow: 0 10px 24px rgba(47, 96, 138, 0.12);
 }
 
 
@@ -571,41 +536,25 @@
 
 @media (max-width: 1100px) {
 	.clouds-home__stage {
-		flex-direction: column;
-		justify-content: flex-start;
-		align-items: stretch;
 		padding: 0;
 	}
 
 	.clouds-home__left-zone {
-		flex: 1;
-		order: 2;
+		width: 65%;
 	}
 
 	.clouds-home__right-zone {
-		order: 1;
-		grid-template-columns: repeat(3, auto);
-		justify-content: center;
-		padding: 8px 12px 0;
-		gap: 6px 4px;
-	}
-
-	.page-cloud__body {
-		width: clamp(130px, 20vw, 175px);
-		height: auto;
-		aspect-ratio: 22 / 15;
+		left: 65%;
 	}
 
 	.page-cloud__label {
-		bottom: 14px;
-		font-size: 13px;
+		font-size: 12px;
 		letter-spacing: 0.8px;
 	}
 }
 
 @media (max-width: 640px) {
 	.clouds-home {
-		--home-cloud-scale: 1;
 		height: 100dvh;
 		min-height: 100dvh;
 		overflow: clip;
@@ -613,11 +562,7 @@
 	}
 
 	.clouds-home__horizon {
-		opacity: 0.45;
-	}
-
-	.clouds-home__sparkle {
-		display: none;
+		opacity: 0.34;
 	}
 
 	.clouds-home__header {
@@ -625,14 +570,14 @@
 	}
 
 	.clouds-home__hint {
-		max-width: 54%;
+		max-width: calc(100% - 24px);
 		text-align: left;
 		font-size: 9px;
 		letter-spacing: 1.35px;
-		color: rgba(155, 70, 116, 0.96);
-		background: rgba(255, 252, 254, 0.9);
-		border-color: rgba(218, 144, 182, 0.48);
-		box-shadow: 0 10px 24px rgba(214, 158, 188, 0.24);
+		color: rgba(47, 78, 115, 0.94);
+		background: rgba(244, 250, 253, 0.9);
+		border-color: rgba(143, 178, 207, 0.52);
+		box-shadow: 0 10px 24px rgba(47, 96, 138, 0.16);
 		padding: 6px 10px;
 	}
 
@@ -668,42 +613,27 @@
 	}
 
 	.clouds-home__right-zone {
-		grid-template-columns: repeat(2, auto);
-		padding: 6px 8px 0;
-		gap: 4px;
-	}
-
-	.page-cloud__body {
-		width: min(43vw, 182px);
-		min-width: 136px;
+		left: 65%;
 	}
 
 	.page-cloud__label {
 		font-size: 10px;
-		bottom: 10px;
 		letter-spacing: 0.55px;
 	}
 }
 
 @media (max-width: 480px) {
 	.clouds-home__right-zone {
-		padding: 6px 6px 0;
-		gap: 3px;
-	}
-
-	.page-cloud__body {
-		width: min(43vw, 160px);
-		min-width: 120px;
+		left: 65%;
 	}
 
 	.page-cloud__label {
 		font-size: 9px;
-		bottom: 8px;
 		letter-spacing: 0.4px;
 	}
 
 	.clouds-home__hint {
-		max-width: 50%;
+		max-width: calc(100% - 18px);
 		font-size: 7px;
 		letter-spacing: 1.05px;
 		padding: 6px 9px;
