@@ -1,5 +1,5 @@
 .contact-page__cluster-shell {
-	width: min(100%, 1120px);
+	width: min(100%, 1160px);
 	display: flex;
 	justify-content: center;
 	padding: 8px 0 12px;
@@ -7,42 +7,32 @@
 
 .contact-page__cluster {
 	position: relative;
-	width: min(100%, 980px);
-	min-height: clamp(620px, 70vh, 720px);
+	display: grid;
+	grid-template-columns: minmax(190px, 240px) minmax(0, 680px);
+	align-items: center;
+	justify-content: center;
+	gap: clamp(48px, 7vw, 92px);
+	width: min(100%, 1060px);
+	min-height: clamp(820px, 86vh, 920px);
+}
+
+.contact-page__contact-list {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 14px;
 }
 
 .contact-page__orbit {
-	position: absolute;
 	z-index: 2;
-}
-
-.contact-page__orbit--top-left {
-	top: 0;
-	left: -25px;
-}
-
-.contact-page__orbit--top-right {
-	top: 0;
-	right: 0;
-}
-
-.contact-page__orbit--bottom-left {
-	bottom: 0;
-	left: 0;
-}
-
-.contact-page__orbit--bottom-right {
-	bottom: 0;
-	right: 0;
+	display: flex;
+	justify-content: center;
 }
 
 .contact-page__message-core {
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	transform: translate(-50%, -50%);
-	width: min(100%, 560px);
-	aspect-ratio: 0.94;
+	width: min(100%, 680px);
+	aspect-ratio: 100 / 132;
 	padding: 0;
 	border: 0;
 	border-radius: 0;
@@ -56,59 +46,93 @@
 	position: relative;
 	width: 100%;
 	height: 100%;
-	overflow: hidden;
-	clip-path: polygon(50% 0%, 82% 12%, 100% 38%, 93% 76%, 67% 100%, 33% 100%, 7% 76%, 0% 38%, 18% 12%);
-	background:
-		linear-gradient(175deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 240, 248, 0.95) 18%, rgba(243, 210, 233, 0.92) 46%, rgba(234, 191, 224, 0.88) 68%, rgba(255, 255, 255, 0.96) 100%);
-	border: 1px solid rgba(255, 255, 255, 0.82);
-	backdrop-filter: blur(14px);
+	isolation: isolate;
 	filter: drop-shadow(0 20px 40px rgba(186, 126, 189, 0.22));
 }
 
-.contact-page__message-glow,
-.contact-page__message-facets,
-.contact-page__message-shine,
+.contact-page__message-vessel,
 .contact-page__message-content {
 	position: absolute;
 	inset: 0;
 }
 
-.contact-page__message-glow {
-	background:
-		radial-gradient(circle at 50% 20%, rgba(255, 255, 255, 0.94) 0%, transparent 36%),
-		radial-gradient(circle at 50% 88%, rgba(246, 209, 236, 0.58) 0%, transparent 52%);
+.contact-page__message-vessel {
+	z-index: 0;
+	overflow: visible;
+	pointer-events: none;
 }
 
-.contact-page__message-facets {
-	background:
-		linear-gradient(125deg, rgba(255, 255, 255, 0.56) 0%, transparent 24%),
-		linear-gradient(225deg, rgba(255, 255, 255, 0.16) 0%, transparent 18%),
-		linear-gradient(315deg, rgba(188, 132, 205, 0.12) 0%, transparent 28%);
-	mix-blend-mode: screen;
+.contact-page__message-body {
+	fill: rgba(246, 204, 232, 0.6);
 }
 
-.contact-page__message-shine {
-	background: linear-gradient(112deg, transparent 18%, rgba(255, 255, 255, 0.88) 28%, rgba(255, 255, 255, 0.12) 39%, transparent 48%);
-	transform: translateX(-115%);
-	animation: contactMessageShine 9s ease-in-out infinite;
+.contact-page__message-inner {
+	fill: rgba(255, 232, 246, 0.82);
+	opacity: 0.84;
+}
+
+.contact-page__message-bottom {
+	fill: rgba(226, 148, 204, 0.44);
+}
+
+.contact-page__message-gloss {
+	fill: rgba(255, 255, 255, 0.58);
+	opacity: 0.72;
+}
+
+.contact-page__message-rim {
+	fill: none;
+	stroke: rgba(255, 255, 255, 0.72);
+	stroke-width: 2.6;
+	vector-effect: non-scaling-stroke;
 }
 
 .contact-page__message-content {
 	z-index: 2;
+	position: relative;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	padding: 8% 14% 11%;
+	padding: 24% 22% 8%;
 }
 
 .contact-page__eyebrow {
-	font-size: 11px;
+	position: absolute;
+	top: 18%;
+	left: 50%;
+	font-size: 10px;
 	font-weight: 800;
 	letter-spacing: 2.5px;
 	text-transform: uppercase;
 	color: rgba(140, 90, 150, 0.78);
 	text-align: center;
-	margin-bottom: 14px;
+	margin-bottom: 8px;
+	transform: translateX(-50%);
+	white-space: nowrap;
+}
+
+.contact-page__headshot-frame {
+	position: absolute;
+	top: 22%;
+	left: 50%;
+	width: 138px;
+	height: 138px;
+	margin-bottom: 0;
+	border-radius: 999px;
+	padding: 4px;
+	background: rgba(255, 255, 255, 0.64);
+	border: 1px solid rgba(205, 152, 212, 0.42);
+	box-shadow: 0 8px 18px rgba(186, 126, 189, 0.2);
+	transform: translateX(-50%);
+}
+
+.contact-page__headshot {
+	display: block;
+	width: 100%;
+	height: 100%;
+	border-radius: inherit;
+	object-fit: cover;
+	object-position: 50% 36%;
 }
 
 .contact-page__success {
@@ -123,13 +147,20 @@
 .contact-page__form {
 	display: flex;
 	flex-direction: column;
-	gap: 12px;
+	gap: 8px;
+	margin-top: 190px;
 }
 
 .contact-page__field {
+	align-self: center;
 	display: flex;
 	flex-direction: column;
-	gap: 5px;
+	gap: 4px;
+	width: 88%;
+}
+
+.contact-page__field--message {
+	width: 112%;
 }
 
 .contact-page__label {
@@ -144,19 +175,21 @@
 .contact-page__input,
 .contact-page__textarea {
 	width: 100%;
-	padding: 12px 14px;
-	border-radius: 14px;
+	box-sizing: border-box;
+	padding: 9px 11px;
+	border-radius: 12px;
 	background: rgba(255, 255, 255, 0.62);
 	border: 1px solid rgba(205, 152, 212, 0.36);
 	color: rgba(83, 55, 108, 0.92);
-	font-size: 14px;
+	font-size: 13px;
+	line-height: 1.35;
 	transition: border-color 0.2s ease, background 0.2s ease;
 	backdrop-filter: blur(10px);
 }
 
 .contact-page__textarea {
 	resize: none;
-	min-height: 124px;
+	min-height: 166px;
 }
 
 .contact-page__input:focus,
@@ -188,13 +221,15 @@
 }
 
 .contact-page__button {
-	padding: 11px 18px;
-	border-radius: 14px;
+	align-self: center;
+	width: 78%;
+	padding: 7px 18px;
+	border-radius: 12px;
 	cursor: pointer;
 	background: rgba(174, 92, 187, 0.74);
 	border: 1px solid rgba(188, 127, 209, 0.52);
 	color: #fff;
-	font-size: 12px;
+	font-size: 11px;
 	font-weight: 800;
 	letter-spacing: 1.6px;
 	text-transform: uppercase;
@@ -211,29 +246,6 @@
 	opacity: 0.64;
 }
 
-@keyframes contactMessageShine {
-
-	0%,
-	100% {
-		transform: translateX(-115%);
-		opacity: 0;
-	}
-
-	10% {
-		opacity: 1;
-	}
-
-	26% {
-		transform: translateX(115%);
-		opacity: 0.9;
-	}
-
-	27%,
-	100% {
-		opacity: 0;
-	}
-}
-
 @media (max-width: 980px) {
 	.contact-page__cluster {
 		display: grid;
@@ -243,7 +255,7 @@
 		justify-items: center;
 	}
 
-	.contact-page__orbit,
+	.contact-page__contact-list,
 	.contact-page__message-core {
 		position: static;
 		transform: none;
@@ -253,10 +265,15 @@
 		bottom: auto;
 	}
 
+	.contact-page__contact-list {
+		display: contents;
+	}
+
 	.contact-page__message-core {
 		grid-column: 1 / -1;
 		order: -1;
 		width: min(100%, 500px);
+		aspect-ratio: 100 / 132;
 	}
 }
 
@@ -273,8 +290,14 @@
 
 	.contact-page__message-shell {
 		min-height: 540px;
-		clip-path: none;
 		border-radius: 28px;
+		background: rgba(255, 232, 246, 0.82);
+		border: 1px solid rgba(255, 255, 255, 0.72);
+		overflow: hidden;
+	}
+
+	.contact-page__message-vessel {
+		display: none;
 	}
 }
 
@@ -288,33 +311,54 @@
 	}
 
 	.contact-page__message-content {
+		position: relative;
 		padding: 28px 20px 30px;
+	}
+
+	.contact-page__headshot-frame {
+		position: static;
+		align-self: center;
+		width: 117px;
+		height: 117px;
+		margin-bottom: 10px;
+		transform: none;
 	}
 
 	.contact-page__message-shell {
 		min-height: 500px;
-		clip-path: none;
 		border-radius: 24px;
 	}
 
 	.contact-page__eyebrow {
+		position: static;
 		font-size: 10px;
 		letter-spacing: 2px;
 		margin-bottom: 10px;
+		transform: none;
+	}
+
+	.contact-page__form {
+		margin-top: 0;
+	}
+
+	.contact-page__field,
+	.contact-page__field--message,
+	.contact-page__button {
+		width: 100%;
 	}
 
 	.contact-page__input,
 	.contact-page__textarea {
-		padding: 11px 12px;
-		font-size: 13px;
+		padding: 9px 11px;
+		font-size: 12px;
 	}
 
 	.contact-page__textarea {
-		min-height: 110px;
+		min-height: 132px;
 	}
 
 	.contact-page__button {
-		padding: 10px 16px;
-		font-size: 11px;
+		padding: 7px 16px;
+		font-size: 10px;
 	}
 }

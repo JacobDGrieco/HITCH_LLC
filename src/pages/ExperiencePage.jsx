@@ -13,7 +13,7 @@ const FALLBACK = [
 		tags: ['React', 'FastAPI / Python', 'PostgreSQL', 'REST APIs'],
 		iconImage: '/projects/staffingtool.png',
 		gemColor: 'rgba(0, 41, 122, 0.96)',
-		size: 350,
+		size: 402,
 		featured: true,
 		className: 'experience-page__crystal experience-page__crystal--product',
 	},
@@ -26,7 +26,7 @@ const FALLBACK = [
 		tags: ['Operations', 'Resident Support', 'Customer Service'],
 		iconImage: '/projects/staffingtool.png',
 		gemColor: 'rgba(16, 38, 104, 0.95)',
-		size: 330,
+		size: 378,
 		featured: true,
 		className: 'experience-page__crystal experience-page__crystal--operations',
 	},
@@ -36,16 +36,12 @@ function buildDesc(item) {
 	return `${item.role}\n${item.dateRange}\n\n${item.desc}`;
 }
 
-function DropCardSkeleton({ size = 340 }) {
+function DropCardSkeleton({ size = 390 }) {
 	return (
 		<div
+			className="drop-card drop-card--skeleton"
 			style={{
-				width: size,
-				height: size * 1.3,
-				borderRadius: '50% 50% 50% 50% / 30% 30% 70% 70%',
-				background: 'rgba(210, 185, 200, 0.18)',
-				animation: 'pulse 1.6s ease-in-out infinite',
-				flexShrink: 0,
+				'--drop-w': `${size}px`,
 			}}
 		/>
 	);
@@ -73,7 +69,7 @@ export default function ExperiencePage() {
 
 			<div className="page-crystal-row experience-page__crystals">
 				{experience === null ? (
-					[350, 330].map((size, i) => <DropCardSkeleton key={i} size={size} />)
+					[402, 378].map((size, i) => <DropCardSkeleton key={i} size={size} />)
 				) : (
 					experience.map((item) => (
 						<DropCard

@@ -11,7 +11,7 @@ const FALLBACK = [
 		desc: 'Built a strong foundation in software development, algorithms, systems, and problem-solving through broad computer science coursework. The program emphasizes both technical theory and practical application in real-world software design.',
 		gemColor: 'rgba(0, 51, 160, 0.9)',
 		iconImage: '/projects/staffingtool.png',
-		size: 410,
+		size: 462,
 		featured: true,
 		className: 'education-page__crystal education-page__crystal--major',
 	},
@@ -21,7 +21,7 @@ const FALLBACK = [
 		desc: 'Strengthened quantitative reasoning and analytical problem-solving through advanced mathematics coursework. The minor reinforces logic, precision, and structured thinking alongside technical work.',
 		gemColor: 'rgba(69, 134, 255, 0.82)',
 		iconImage: '/projects/staffingtool.png',
-		size: 350,
+		size: 396,
 		featured: false,
 		className: 'education-page__crystal education-page__crystal--minor',
 	},
@@ -31,7 +31,7 @@ const FALLBACK = [
 		desc: 'AI, machine learning, and responsible use of data-driven systems.',
 		gemColor: 'rgba(35, 87, 208, 0.86)',
 		iconImage: '/projects/staffingtool.png',
-		size: 280,
+		size: 318,
 		featured: false,
 		className: 'education-page__crystal education-page__crystal--certificate education-page__crystal--ai',
 	},
@@ -41,22 +41,18 @@ const FALLBACK = [
 		desc: 'System protection, cyber threats, and core security principles across software, networks, and data.',
 		gemColor: 'rgba(16, 38, 104, 0.9)',
 		iconImage: '/projects/staffingtool.png',
-		size: 280,
+		size: 318,
 		featured: false,
 		className: 'education-page__crystal education-page__crystal--certificate education-page__crystal--cyber',
 	},
 ];
 
-function DropCardSkeleton({ size = 280 }) {
+function DropCardSkeleton({ size = 318 }) {
 	return (
 		<div
+			className="drop-card drop-card--skeleton"
 			style={{
-				width: size,
-				height: size * 1.3,
-				borderRadius: '50% 50% 50% 50% / 30% 30% 70% 70%',
-				background: 'rgba(210, 185, 200, 0.18)',
-				animation: 'pulse 1.6s ease-in-out infinite',
-				flexShrink: 0,
+				'--drop-w': `${size}px`,
 			}}
 		/>
 	);
@@ -90,7 +86,7 @@ export default function EducationPage() {
 
 			<div className="page-crystal-row education-page__crystals" ref={rowRef}>
 				{education === null ? (
-					[410, 350, 280, 280].map((size, i) => <DropCardSkeleton key={i} size={size} />)
+					[462, 396, 318, 318].map((size, i) => <DropCardSkeleton key={i} size={size} />)
 				) : (
 					education.map((item) => (
 						<DropCard key={item.id} {...item} />

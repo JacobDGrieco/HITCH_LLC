@@ -12,7 +12,7 @@ const FALLBACK = [
 		iconImage: '/projects/asd.png',
 		live: 'https://www.asdrecords.net',
 		gemColor: 'rgba(120,210,255,0.92)',
-		size: 328,
+		size: 370,
 		className: 'projects-page__crystal',
 	},
 	{
@@ -25,7 +25,7 @@ const FALLBACK = [
 		live: 'https://staffing-tool-uk.onrender.com/',
 		featured: true,
 		gemColor: 'rgba(245,175,210,0.92)',
-		size: 334,
+		size: 378,
 		className: 'projects-page__crystal',
 	},
 	{
@@ -36,7 +36,7 @@ const FALLBACK = [
 		iconImage: '/projects/ppgc.png',
 		live: 'https://www.pokemonpgc.com/',
 		gemColor: 'rgba(200,185,255,0.92)',
-		size: 320,
+		size: 362,
 		className: 'projects-page__crystal',
 	},
 	{
@@ -48,21 +48,17 @@ const FALLBACK = [
 		live: 'https://www.relatime.org/',
 		featured: true,
 		gemColor: 'rgba(175,220,255,0.92)',
-		size: 300,
+		size: 340,
 		className: 'projects-page__crystal',
 	},
 ];
 
-function DropCardSkeleton({ size = 300 }) {
+function DropCardSkeleton({ size = 340 }) {
 	return (
 		<div
+			className="drop-card drop-card--skeleton"
 			style={{
-				width: size,
-				height: size * 1.3,
-				borderRadius: '50% 50% 50% 50% / 30% 30% 70% 70%',
-				background: 'rgba(210, 185, 200, 0.18)',
-				animation: 'pulse 1.6s ease-in-out infinite',
-				flexShrink: 0,
+				'--drop-w': `${size}px`,
 			}}
 		/>
 	);
@@ -90,7 +86,7 @@ export default function ProjectsPage() {
 
 			<div className="projects-page__grid">
 				{projects === null ? (
-					[320, 334, 300, 320].map((size, i) => <DropCardSkeleton key={i} size={size} />)
+					[362, 378, 340, 362].map((size, i) => <DropCardSkeleton key={i} size={size} />)
 				) : (
 					projects.map((project) => (
 						<DropCard
