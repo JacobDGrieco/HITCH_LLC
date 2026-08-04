@@ -1,4 +1,5 @@
 import { getDb } from '../lib/db.js';
+import { dedupeRowsByTitle } from '../lib/contentDedupe.js';
 
 export default async function handler(req, res) {
 	if (req.method !== 'GET') return res.status(405).end();
@@ -6,14 +7,14 @@ export default async function handler(req, res) {
 	try {
 		const sql = getDb();
 		const rows = await sql`
-			SELECT title, percentage, skill_group
+			SELECT id, title, percentage, skill_group, display_order
 			FROM skills
-			ORDER BY skill_group ASC, display_order ASC
+			ORDER BY id ASC
 		`;
 
 		res.setHeader('Cache-Control', 's-maxage=60, stale-while-revalidate=300');
 		return res.status(200).json({
-			skills: rows
+			skills: dedupeRowsByTitle(rows)
 				.map((row) => ({
 					name: row.title,
 					category: row.skill_group,

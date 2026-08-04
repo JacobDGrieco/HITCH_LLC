@@ -1,4 +1,5 @@
 import { getDb } from '../lib/db.js';
+import { dedupeRowsByTitle } from '../lib/contentDedupe.js';
 
 export default async function handler(req, res) {
 	if (req.method !== 'GET') return res.status(405).end();
@@ -6,12 +7,12 @@ export default async function handler(req, res) {
 	try {
 		const sql = getDb();
 		const rows = await sql`
-			SELECT id, title, "desc", color_hex, icon_image, size
+			SELECT id, title, "desc", color_hex, icon_image, size, display_order
 			FROM education_items
-			ORDER BY display_order ASC
+			ORDER BY id ASC
 		`;
 
-		const education = rows.map((r) => ({
+		const education = dedupeRowsByTitle(rows).map((r) => ({
 			id: r.id,
 			title: r.title,
 			desc: r.desc,

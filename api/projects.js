@@ -1,4 +1,5 @@
 import { getDb } from '../lib/db.js';
+import { dedupeRowsByTitle } from '../lib/contentDedupe.js';
 
 export default async function handler(req, res) {
 	if (req.method !== 'GET') return res.status(405).end();
@@ -6,12 +7,12 @@ export default async function handler(req, res) {
 	try {
 		const sql = getDb();
 		const rows = await sql`
-			SELECT id, title, "desc", tags, icon_image, link_url, color_hex, size
+			SELECT id, title, "desc", tags, icon_image, link_url, color_hex, size, display_order
 			FROM projects
-			ORDER BY display_order ASC
+			ORDER BY id ASC
 		`;
 
-		const projects = rows.map((r) => ({
+		const projects = dedupeRowsByTitle(rows).map((r) => ({
 			id: r.id,
 			title: r.title,
 			desc: r.desc,
