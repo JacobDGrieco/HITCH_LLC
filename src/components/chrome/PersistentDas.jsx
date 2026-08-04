@@ -4,14 +4,10 @@ import '../../styles/site-das.css';
 
 export default function PersistentDas() {
 	const {
-		currentArtUrl,
 		currentTrack,
-		copyrightLine,
 		enableSound,
 		hasTracks,
 		isPlaying,
-		licenseLabel,
-		licenseUrl,
 		playbackState,
 		trackDisplay,
 		togglePlayback,
@@ -49,45 +45,12 @@ export default function PersistentDas() {
 						</span>
 					</button>
 
-					<div className="site-das__art" aria-hidden="true">
-						{currentArtUrl ? (
-							<img src={currentArtUrl} alt="" width="34" height="34" className="site-das__art-image" />
-						) : (
-							<div className="site-das__art-fallback" />
-						)}
-					</div>
-
 					<div className="site-das__copy">
 						<div className="site-das__title-group">
+							<div className="site-das__context">A.S.D. radio</div>
 							<div className="site-das__title">
 								{trackDisplay || currentTrack?.title || 'Untitled Track'}
 							</div>
-							{copyrightLine || licenseLabel ? (
-								<div className="site-das__license">
-									{copyrightLine ? <span>{copyrightLine}</span> : null}
-									{licenseLabel && licenseUrl ? (
-										<a
-											className="site-das__license-link"
-											href={licenseUrl}
-											target="_blank"
-											rel="noreferrer"
-										>
-											{licenseLabel}
-										</a>
-									) : licenseLabel ? (
-										<span>{licenseLabel}</span>
-									) : null}
-								</div>
-							) : null}
-						</div>
-					</div>
-
-					<div className="site-das__side">
-						<div className="site-das__bars" aria-hidden="true">
-							<div className="site-das__bar" />
-							<div className="site-das__bar" />
-							<div className="site-das__bar" />
-							<div className="site-das__bar" />
 						</div>
 					</div>
 				</div>

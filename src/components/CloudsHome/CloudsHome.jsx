@@ -1,43 +1,96 @@
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useMemo, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Cloud from './Cloud';
-import { useSiteChrome } from '../chrome/useSiteChrome';
 import { loadEducationPageData, loadExperiencePageData, loadProjectsPageData, loadSkillsPageData } from '../../lib/pageDataCache';
 import '../../styles/clouds-home.css';
 
-const PAGE_CLOUDS = [
+const TOP_NAV_ITEMS = [
 	{ id: 'projects', label: 'Projects', route: '/projects' },
 	{ id: 'about', label: 'About', route: '/about' },
-	{ id: 'skills', label: 'Skills', route: '/skills' },
-	{ id: 'education', label: 'Education', route: '/education' },
+	{ id: 'skills', label: 'Skills / Experience', route: '/skills' },
 	{ id: 'contact', label: 'Contact', route: '/contact' },
-	{ id: 'experience', label: 'Experience', route: '/experience' },
+];
+
+const SCENE_CLOUDS = [
+	{
+		id: 'projects',
+		label: 'Projects',
+		route: '/projects',
+		className: 'page-cloud--projects',
+		scaleMultiplier: 1.18,
+	},
+	{
+		id: 'about',
+		label: 'About',
+		route: '/about',
+		className: 'page-cloud--about',
+		scaleMultiplier: 0.76,
+	},
+	{
+		id: 'contact',
+		label: 'Contact',
+		route: '/contact',
+		className: 'page-cloud--contact',
+		scaleMultiplier: 0.82,
+	},
+	{
+		id: 'experience',
+		label: 'Experience',
+		route: '/experience',
+		className: 'page-cloud--distant page-cloud--experience',
+		scaleMultiplier: 0.56,
+	},
 ];
 
 const CLOUD_IMAGE_SOURCES = [
-	{ src: '/home/cloud1.png', width: 537, height: 187 },
-	{ src: '/home/cloud2.png', width: 537, height: 187 },
-	{ src: '/home/cloud3.png', width: 537, height: 187 },
-	{ src: '/home/cloud4.png', width: 537, height: 187 },
-	{ src: '/home/cloud5.png', width: 537, height: 187 },
-	{ src: '/home/cloud6.png', width: 537, height: 187 },
+	{ src: '/home/cloud1.png', width: 412, height: 231 },
+	{ src: '/home/cloud2.png', width: 484, height: 218 },
+	{ src: '/home/cloud3.png', width: 471, height: 271 },
+	{ src: '/home/cloud4.png', width: 498, height: 262 },
+	{ src: '/home/cloud5.png', width: 432, height: 257 },
+	{ src: '/home/cloud6.png', width: 471, height: 228 },
 ];
 
-const RETURN_SECTION_STORAGE_KEY = 'cloudsHomeReturnSection';
+// Swap these paths for curated screenshots when the final samples are ready.
+const PROJECT_PORTALS = [
+	{
+		id: 'asd',
+		title: 'A.S.D.',
+		kicker: 'music + fashion platform',
+		description: 'Stage-led music, fashion, player, and CMS experience.',
+		previewImage: '/projects/asd.png',
+		route: '/projects',
+		className: 'project-portal--asd',
+	},
+	{
+		id: 'halomed',
+		title: 'HaloMed',
+		kicker: 'healthcare brand site',
+		description: 'Warm service hierarchy with animated care-path sections.',
+		previewImage: '/projects/halomed.png',
+		route: '/projects',
+		className: 'project-portal--halomed',
+	},
+	{
+		id: 'relatime',
+		title: 'RelaTime',
+		kicker: 'product interface',
+		description: 'Graph and timeline editor for structured relationships.',
+		previewImage: '/projects/relatime.png',
+		route: '/projects',
+		className: 'project-portal--relatime',
+	},
+];
 
 const LOGO_SPARKLES = [
-	{ left: 8, top: 36, size: 12, delay: -0.2, duration: 4.8 },
-	{ left: 18, top: 18, size: 5, delay: -2.1, duration: 5.7 },
-	{ left: 26, top: 9, size: 7, delay: -1.2, duration: 4.4 },
-	{ left: 34, top: 78, size: 11, delay: -3.1, duration: 5.2 },
-	{ left: 42, top: 54, size: 6, delay: -0.8, duration: 4.9 },
-	{ left: 50, top: 6, size: 5, delay: -2.7, duration: 5.6 },
-	{ left: 60, top: 62, size: 13, delay: -1.6, duration: 4.7 },
-	{ left: 68, top: 18, size: 16, delay: -3.8, duration: 5.3 },
-	{ left: 76, top: 44, size: 6, delay: -2.4, duration: 4.6 },
-	{ left: 88, top: 24, size: 9, delay: -1.1, duration: 5.8 },
-	{ left: 92, top: 74, size: 5, delay: -3.4, duration: 4.5 },
-	{ left: 15, top: 86, size: 7, delay: -0.6, duration: 5.4 },
+	{ left: 9, top: 30, size: 7, delay: -0.4, duration: 4.8 },
+	{ left: 16, top: 68, size: 11, delay: -2.1, duration: 5.4 },
+	{ left: 28, top: 18, size: 6, delay: -1.2, duration: 4.5 },
+	{ left: 39, top: 78, size: 13, delay: -3.1, duration: 5.2 },
+	{ left: 51, top: 8, size: 5, delay: -0.8, duration: 4.9 },
+	{ left: 63, top: 58, size: 12, delay: -2.7, duration: 5.6 },
+	{ left: 74, top: 22, size: 15, delay: -1.6, duration: 4.7 },
+	{ left: 86, top: 64, size: 6, delay: -3.8, duration: 5.3 },
 ];
 
 const STATIC_PAGE_IMAGE_SOURCES = [
@@ -45,6 +98,9 @@ const STATIC_PAGE_IMAGE_SOURCES = [
 	'/contact/resume.png',
 	'/contact/linkedin.png',
 	'/contact/github.png',
+	'/home/logo-cloud-layer.png',
+	'/home/logo-wordmark-layer.png',
+	...PROJECT_PORTALS.map((project) => project.previewImage),
 ];
 
 function preloadStaticPageImages() {
@@ -74,7 +130,7 @@ function shuffleCloudImages() {
 		[images[i], images[j]] = [images[j], images[i]];
 	}
 
-	return PAGE_CLOUDS.map((cloud, index) => ({
+	return SCENE_CLOUDS.map((cloud, index) => ({
 		...cloud,
 		imageSrc: images[index].src,
 		imageWidth: images[index].width,
@@ -93,34 +149,44 @@ function clampScale(scale, min, max) {
 	return Math.min(Math.max(scale, min), max);
 }
 
-function createCameraTransitionFromRect(rect) {
-	const cloudCenterX = rect.left + rect.width / 2;
-	const cloudCenterY = rect.top + rect.height / 2;
-	const sceneZoomScale = window.innerWidth <= 640 ? 3.7 : 3.35;
-	const midSceneZoomScale = 1 + ((sceneZoomScale - 1) * 0.72);
-
-	return {
-		shiftX: window.innerWidth / 2 - cloudCenterX * sceneZoomScale,
-		shiftY: window.innerHeight / 2 - cloudCenterY * sceneZoomScale,
-		midShiftX: window.innerWidth / 2 - cloudCenterX * midSceneZoomScale,
-		midShiftY: window.innerHeight / 2 - cloudCenterY * midSceneZoomScale,
-		midSceneZoomScale,
-		sceneZoomScale,
-	};
+function ProjectPortal({ project, onOpen }) {
+	return (
+		<button
+			type="button"
+			className={`project-portal ${project.className}`}
+			onClick={onOpen}
+			aria-label={`Open ${project.title} project details`}
+		>
+			<span className="project-portal__cloud" aria-hidden="true" />
+			<span className="project-portal__window">
+				<span className="project-portal__chrome" aria-hidden="true">
+					<span />
+					<span />
+					<span />
+				</span>
+				<span className="project-portal__media">
+					<img src={project.previewImage} alt="" loading="eager" className="project-portal__image" />
+					<span className="project-portal__placeholder">
+						<span>{project.title}</span>
+						<small>sample image</small>
+					</span>
+				</span>
+				<span className="project-portal__copy">
+					<span>
+						<strong>{project.title}</strong>
+						<small>{project.kicker}</small>
+					</span>
+					<em>{project.description}</em>
+				</span>
+			</span>
+		</button>
+	);
 }
 
 export default function CloudsHome() {
 	const navigate = useNavigate();
-	const { setDasHidden } = useSiteChrome();
-	const cloudRefs = useRef({});
-	const isTransitioningRef = useRef(false);
-	const [transitioning, setTransitioning] = useState(false);
-	const [transitionCloud, setTransitionCloud] = useState(null);
-	const [returnTransition, setReturnTransition] = useState(null);
-	const [returningActive, setReturningActive] = useState(false);
-	const [returnSection] = useState(() => window.sessionStorage.getItem(RETURN_SECTION_STORAGE_KEY));
 	const [viewport, setViewport] = useState(getViewport);
-	const pageClouds = useMemo(() => shuffleCloudImages(), []);
+	const sceneClouds = useMemo(() => shuffleCloudImages(), []);
 
 	useEffect(() => {
 		function handleResize() {
@@ -133,8 +199,6 @@ export default function CloudsHome() {
 
 	useEffect(() => {
 		return scheduleBackgroundPreload(() => {
-			if (isTransitioningRef.current) return;
-
 			preloadStaticPageImages();
 			void loadProjectsPageData()
 				.then(() => loadSkillsPageData())
@@ -144,94 +208,51 @@ export default function CloudsHome() {
 	}, []);
 
 	useEffect(() => {
-		setDasHidden(transitioning);
-
-		return () => {
-			setDasHidden(false);
-		};
-	}, [setDasHidden, transitioning]);
-
-	useLayoutEffect(() => {
-		if (!returnSection) return undefined;
-
-		const returnCloud = cloudRefs.current[returnSection];
-		if (!returnCloud) return undefined;
-
-		window.sessionStorage.removeItem(RETURN_SECTION_STORAGE_KEY);
-		setDasHidden(true);
-		isTransitioningRef.current = true;
-		setReturnTransition(createCameraTransitionFromRect(returnCloud.getBoundingClientRect()));
-
-		let animationFrameId = window.requestAnimationFrame(() => {
-			animationFrameId = window.requestAnimationFrame(() => {
-				setReturningActive(true);
-			});
-		});
-
-		const doneTimer = window.setTimeout(() => {
-			setReturnTransition(null);
-			setReturningActive(false);
-			isTransitioningRef.current = false;
-			setDasHidden(false);
-		}, 1780);
-
-		return () => {
-			window.cancelAnimationFrame(animationFrameId);
-			window.clearTimeout(doneTimer);
-			setDasHidden(false);
-		};
-	}, [returnSection, setDasHidden]);
+		window.sessionStorage.removeItem('cloudsHomeReturnSection');
+	}, []);
 
 	const scaleVars = useMemo(() => {
 		const sceneScale = Math.min(viewport.width / 1440, viewport.height / 900);
-		const logoScale = clampScale(sceneScale, 0.50, 1.32);
-		const cloudScale = clampScale(sceneScale, 0.48, 1.18) * 0.75;
+		const brandScale = clampScale(sceneScale, 0.50, 1.08);
+		const cloudScale = clampScale(sceneScale, 0.50, 1.08) * 0.66;
 
 		return {
-			'--home-logo-width': `${860 * logoScale}px`,
+			'--home-logo-width': `${900 * brandScale}px`,
 			'--home-cloud-scale': cloudScale,
-			'--home-cloud-gap': `${20 * cloudScale}px`,
-			'--home-cloud-offset-odd': `${28 * cloudScale}px`,
-			'--home-cloud-offset-even': `${154 * cloudScale}px`,
 		};
 	}, [viewport]);
 
-	function handleCloudClick(cloud, e) {
-		if (transitioning) return;
-		isTransitioningRef.current = true;
-		setTransitioning(true);
-
-		const rect = e.currentTarget.getBoundingClientRect();
+	function openSceneRoute(route, e) {
 		e.currentTarget.blur();
-		setTransitionCloud(createCameraTransitionFromRect(rect));
-
-		setTimeout(() => navigate(cloud.route), 1780);
+		navigate(route);
 	}
 
-	const activeCameraTransition = transitionCloud || returnTransition;
-	const homeStyleVars = {
-		...scaleVars,
-		...(activeCameraTransition ? {
-			'--home-zoom-mid-shift-x': `${activeCameraTransition.midShiftX}px`,
-			'--home-zoom-mid-shift-y': `${activeCameraTransition.midShiftY}px`,
-			'--home-zoom-shift-x': `${activeCameraTransition.shiftX}px`,
-			'--home-zoom-shift-y': `${activeCameraTransition.shiftY}px`,
-			'--home-scene-zoom-mid-scale': activeCameraTransition.midSceneZoomScale,
-			'--home-scene-zoom-scale': activeCameraTransition.sceneZoomScale,
-		} : null),
-	};
-
 	return (
-		<div className={`clouds-home ${transitioning ? 'clouds-home--transitioning' : ''} ${returnTransition ? 'clouds-home--return-ready' : ''} ${returningActive ? 'clouds-home--returning' : ''}`} style={homeStyleVars}>
+		<div className="clouds-home" style={scaleVars}>
 			<div className="clouds-home__camera">
 				<div className="clouds-home__sky" />
 				<div className="clouds-home__haze" />
 				<div className="clouds-home__horizon" />
 
-				<div className="clouds-home__stage">
-					<div className="clouds-home__left-zone">
-						<div className="clouds-home__logo-scene">
-							<div className="clouds-home__logo-sparkles" aria-hidden="true">
+				<header className="clouds-home__topbar">
+					<Link to="/" className="clouds-home__mark" aria-label="HeadInTheCloudsHaven home">
+						<span className="clouds-home__mark-cloud" aria-hidden="true" />
+						<span>HeadInTheCloudsHaven</span>
+					</Link>
+					<nav className="clouds-home__nav" aria-label="Portfolio sections">
+						{TOP_NAV_ITEMS.map((item) => (
+							<Link key={item.id} to={item.route} className="clouds-home__nav-link">
+								{item.label}
+							</Link>
+						))}
+					</nav>
+				</header>
+
+				<main className="clouds-home__stage">
+					<section className="clouds-home__brand-panel" aria-labelledby="home-brand-title">
+						<div className="clouds-home__eyebrow">Web Dev LLC + Portfolio</div>
+						<div className="clouds-home__logo-scene" aria-hidden="true">
+							<div className="clouds-home__logo-sparkles">
 								{LOGO_SPARKLES.map((sparkle, index) => (
 									<span
 										key={`${sparkle.left}-${sparkle.top}-${index}`}
@@ -246,40 +267,49 @@ export default function CloudsHome() {
 									/>
 								))}
 							</div>
-							<img src="/home/logo_full.png" alt="HeadInTheCloudsHaven" width="1024" height="1024" fetchPriority="high" className="clouds-home__logo" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
+							<img src="/home/logo-cloud-layer.png" alt="" width="1198" height="720" fetchPriority="high" className="clouds-home__logo-cloud" />
+							<img src="/home/logo-wordmark-layer.png" alt="" width="1108" height="214" fetchPriority="high" className="clouds-home__logo-wordmark" />
 						</div>
-					</div>
+						<h1 id="home-brand-title" className="clouds-home__sr-title">HeadInTheCloudsHaven LLC</h1>
+						<h2 className="clouds-home__headline">Cloud Portal Gallery</h2>
+						<p className="clouds-home__intro">
+							Web experiences crafted with imagination and code.
+						</p>
+						<div className="clouds-home__actions">
+							<button type="button" className="clouds-home__primary-action" onClick={(e) => openSceneRoute('/projects', e)}>
+								<span className="clouds-home__button-cloud" aria-hidden="true" />
+								<span>Enter Projects</span>
+							</button>
+						</div>
+					</section>
 
-					<div className="clouds-home__right-zone">
-						{pageClouds.map((cloud, index) => (
+					<section className="clouds-home__portal-field" aria-label="Selected project portals">
+						{PROJECT_PORTALS.map((project) => (
+							<ProjectPortal
+								key={project.id}
+								project={project}
+								onOpen={(e) => openSceneRoute(project.route, e)}
+							/>
+						))}
+					</section>
+
+					<div className="clouds-home__cloud-field" aria-label="Cloud navigation">
+						{sceneClouds.map((cloud, index) => (
 							<Cloud
 								key={cloud.id}
 								label={cloud.label}
 								imageSrc={cloud.imageSrc}
 								imageWidth={cloud.imageWidth}
 								imageHeight={cloud.imageHeight}
-								scale={scaleVars['--home-cloud-scale']}
+								scale={scaleVars['--home-cloud-scale'] * cloud.scaleMultiplier}
 								floatIndex={index}
-								buttonRef={(node) => {
-									cloudRefs.current[cloud.id] = node;
-								}}
-								onClick={(e) => handleCloudClick(cloud, e)}
+								className={cloud.className}
+								onClick={(e) => openSceneRoute(cloud.route, e)}
 							/>
 						))}
 					</div>
-				</div>
-
-				<div className="clouds-home__header">
-					<div className="clouds-home__hint">Click to Explore</div>
-				</div>
+				</main>
 			</div>
-
-			{(transitionCloud || returnTransition) && (
-				<div className={`clouds-home__portal ${returnTransition ? 'clouds-home__portal--return' : ''}`} aria-hidden="true">
-					<div className="clouds-home__portal-streaks" />
-					<div className="clouds-home__portal-wash" />
-				</div>
-			)}
 		</div>
 	);
 }

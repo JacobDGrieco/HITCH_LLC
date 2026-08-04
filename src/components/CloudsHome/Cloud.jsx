@@ -1,15 +1,16 @@
-export default function Cloud({ label, onClick, imageSrc, imageWidth, imageHeight, scale, floatIndex, buttonRef }) {
+export default function Cloud({ label, onClick, imageSrc, imageWidth, imageHeight, scale, floatIndex, buttonRef, className = '', style }) {
 	return (
 		<button
 			ref={buttonRef}
 			type="button"
-			className="page-cloud"
+			className={`page-cloud ${className}`.trim()}
 			style={{
 				'--float-index': floatIndex,
 				'--page-cloud-scale': scale,
 				'--page-cloud-hover-scale': scale * 1.07,
 				width: `${imageWidth * scale}px`,
 				height: `${imageHeight * scale}px`,
+				...style,
 			}}
 			onClick={onClick}
 			aria-label={`Open ${label}`}

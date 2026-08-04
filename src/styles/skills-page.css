@@ -7,7 +7,7 @@
 	flex-wrap: wrap;
 	justify-content: center;
 	align-items: flex-start;
-	width: min(1300px, 100%);
+	width: min(1350px, 100%);
 	max-width: 100%;
 	margin: 0 auto;
 	gap: clamp(28px, 4vw, 54px) clamp(24px, 4vw, 48px);

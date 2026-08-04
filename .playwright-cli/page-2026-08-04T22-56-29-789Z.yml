@@ -1,0 +1,61 @@
+- generic [ref=f42e2]:
+  - generic [ref=f42e4]:
+    - banner [ref=f42e5]:
+      - navigation "Portfolio sections" [ref=f42e6]:
+        - link "Projects" [ref=f42e7] [cursor=pointer]:
+          - /url: /projects
+        - link "About" [ref=f42e8] [cursor=pointer]:
+          - /url: /about
+        - link "Skills / Experience" [ref=f42e9] [cursor=pointer]:
+          - /url: /skills
+        - link "Contact" [ref=f42e10] [cursor=pointer]:
+          - /url: /contact
+    - main:
+      - region [ref=f42e11]:
+        - generic [ref=f42e12]: Web Dev LLC + Portfolio
+        - heading "HeadInTheCloudsHaven LLC" [level=1] [ref=f42e13]
+        - heading "Cloud Portal Gallery" [level=2] [ref=f42e14]
+        - paragraph [ref=f42e15]: Web experiences crafted with imagination and code.
+        - button "Enter Projects" [ref=f42e17] [cursor=pointer]
+      - region "Selected project portals":
+        - button "Open A.S.D. project details" [ref=f42e20] [cursor=pointer]:
+          - generic [ref=f42e21]:
+            - generic [ref=f42e27]:
+              - generic [ref=f42e28]: A.S.D.
+              - generic [ref=f42e29]: sample image
+            - generic [ref=f42e30]:
+              - generic [ref=f42e31]:
+                - strong [ref=f42e32]: A.S.D.
+                - generic [ref=f42e33]: music + fashion platform
+              - emphasis [ref=f42e34]: Stage-led music, fashion, player, and CMS experience.
+        - button "Open HaloMed project details" [ref=f42e35] [cursor=pointer]:
+          - generic [ref=f42e36]:
+            - generic [ref=f42e42]:
+              - generic [ref=f42e43]: HaloMed
+              - generic [ref=f42e44]: sample image
+            - generic [ref=f42e45]:
+              - generic [ref=f42e46]:
+                - strong [ref=f42e47]: HaloMed
+                - generic [ref=f42e48]: healthcare brand site
+              - emphasis [ref=f42e49]: Warm service hierarchy with animated care-path sections.
+        - button "Open RelaTime project details" [ref=f42e50] [cursor=pointer]:
+          - generic [ref=f42e51]:
+            - generic [ref=f42e57]:
+              - generic [ref=f42e58]: RelaTime
+              - generic [ref=f42e59]: sample image
+            - generic [ref=f42e60]:
+              - generic [ref=f42e61]:
+                - strong [ref=f42e62]: RelaTime
+                - generic [ref=f42e63]: product interface
+              - emphasis [ref=f42e64]: Graph and timeline editor for structured relationships.
+      - generic "Cloud navigation":
+        - button "Open Projects" [ref=f42e65] [cursor=pointer]:
+          - generic [ref=f42e66]: Projects
+        - button "Open About" [ref=f42e68] [cursor=pointer]:
+          - generic [ref=f42e69]: About
+        - button "Open Contact" [ref=f42e71] [cursor=pointer]:
+          - generic [ref=f42e72]: Contact
+        - button "Open Experience" [ref=f42e74] [cursor=pointer]:
+          - generic [ref=f42e75]: Experience
+  - iframe [ref=f42e77]:
+    

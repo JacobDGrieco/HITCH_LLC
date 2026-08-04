@@ -1,0 +1,47 @@
+- generic [ref=f36e2]:
+  - generic [ref=f36e4]:
+    - banner [ref=f36e5]:
+      - navigation "Portfolio sections" [ref=f36e6]:
+        - link "Projects" [ref=f36e7] [cursor=pointer]:
+          - /url: /projects
+        - link "About" [ref=f36e8] [cursor=pointer]:
+          - /url: /about
+        - link "Skills / Experience" [ref=f36e9] [cursor=pointer]:
+          - /url: /skills
+        - link "Contact" [ref=f36e10] [cursor=pointer]:
+          - /url: /contact
+    - main:
+      - region [ref=f36e11]:
+        - generic [ref=f36e12]: Web Dev LLC + Portfolio
+        - heading "HeadInTheCloudsHaven LLC" [level=1] [ref=f36e13]
+        - heading "Cloud Portal Gallery" [level=2] [ref=f36e14]
+        - paragraph [ref=f36e15]: Web experiences crafted with imagination and code.
+        - button "Enter Projects" [ref=f36e17] [cursor=pointer]
+      - region "Selected project portals" [ref=f36e20]:
+        - button "Open A.S.D. project details" [ref=f36e21] [cursor=pointer]:
+          - generic [ref=f36e22]:
+            - generic [ref=f36e28]:
+              - generic [ref=f36e29]: A.S.D.
+              - generic [ref=f36e30]: sample image
+            - generic [ref=f36e32]:
+              - strong [ref=f36e33]: A.S.D.
+              - generic [ref=f36e34]: music + fashion platform
+        - button "Open HaloMed project details" [ref=f36e35] [cursor=pointer]:
+          - generic [ref=f36e36]:
+            - generic [ref=f36e42]:
+              - generic [ref=f36e43]: HaloMed
+              - generic [ref=f36e44]: sample image
+            - generic [ref=f36e46]:
+              - strong [ref=f36e47]: HaloMed
+              - generic [ref=f36e48]: healthcare brand site
+        - button "Open RelaTime project details" [ref=f36e49] [cursor=pointer]:
+          - generic [ref=f36e50]:
+            - generic [ref=f36e56]:
+              - generic [ref=f36e57]: RelaTime
+              - generic [ref=f36e58]: sample image
+            - generic [ref=f36e60]:
+              - strong [ref=f36e61]: RelaTime
+              - generic [ref=f36e62]: product interface
+      - generic "Cloud navigation"
+  - iframe [ref=f36e63]:
+    
