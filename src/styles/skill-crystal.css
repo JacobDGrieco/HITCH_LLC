@@ -91,22 +91,29 @@
 	box-sizing: border-box;
 	display: grid;
 	place-items: center;
-	padding: 30% 18% 22%;
+	padding: 28% 10% 22%;
 	text-align: center;
 	pointer-events: none;
 }
 
 .skill-crystal__name {
+	display: block;
+	width: min(100%, var(--skill-name-max-width, 76%));
 	max-width: 100%;
-	font-size: 12px;
-	line-height: 1.15;
+	margin-inline: auto;
+	font-size: var(--skill-name-font-size, 12px);
+	line-height: var(--skill-name-line-height, 1.12);
 	font-weight: 800;
 	letter-spacing: 0.45px;
 	color: rgba(62, 74, 126, 0.96);
+	text-align: center;
+	text-wrap: balance;
 	text-shadow:
 		0 1px 7px rgba(255, 255, 255, 0.82),
 		0 -1px 8px rgba(255, 255, 255, 0.42);
-	overflow-wrap: anywhere;
+	overflow-wrap: normal;
+	word-break: normal;
+	hyphens: manual;
 }
 
 @keyframes skillCrystalFloat {
@@ -169,10 +176,6 @@
 
 @media (max-width: 640px) {
 	.skill-crystal__content {
-		padding: 31% 17% 22%;
-	}
-
-	.skill-crystal__name {
-		font-size: 11px;
+		padding: 29% 11% 22%;
 	}
 }

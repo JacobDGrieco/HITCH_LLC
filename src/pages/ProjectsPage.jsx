@@ -4,56 +4,6 @@ import '../styles/projects-page.css';
 import DropCard from '../components/DropCard';
 import { getCachedProjectsPageData, loadProjectsPageData } from '../lib/pageDataCache';
 
-const FALLBACK = [
-	{
-		id: 'a.s.d',
-		title: 'A.S.D',
-		desc: 'Music promo platform with artist pages, album and song routes, admin tools, and Prisma-backed media workflows.',
-		tags: ['React', 'Vercel', 'Prisma', 'REST APIs'],
-		iconImage: '/projects/asd.png',
-		live: 'https://www.asdrecords.net',
-		gemColor: 'rgba(120,210,255,0.92)',
-		size: 370,
-		className: 'projects-page__crystal',
-	},
-	{
-		id: 'staffing-tool',
-		title: 'UK HealthCare Staffing Tool',
-		desc: 'Full-stack scheduling system with week views, Gantt interactions, clinic templates, and PDF export workflows.',
-		tags: ['React', 'FastAPI / Python', 'PostgreSQL', 'SQLAlchemy'],
-		iconImage: '/projects/staffingtool.png',
-		github: 'https://github.com/Daratheon/Staffing-Tool-UK',
-		live: 'https://staffing-tool-uk.onrender.com/',
-		featured: true,
-		gemColor: 'rgba(245,175,210,0.92)',
-		size: 378,
-		className: 'projects-page__crystal',
-	},
-	{
-		id: 'pokemon',
-		title: 'PokémonPGC',
-		desc: 'Post-game checklist & Pokédex tracker across multiple titles. Migrated to React 18 with Prisma-backed sync.',
-		tags: ['React', 'Node.js', 'Prisma', 'SQL'],
-		iconImage: '/projects/ppgc.png',
-		live: 'https://www.pokemonpgc.com/',
-		gemColor: 'rgba(200,185,255,0.92)',
-		size: 362,
-		className: 'projects-page__crystal',
-	},
-	{
-		id: 'relatime',
-		title: 'RelaTime',
-		desc: 'Relationship graph editor with a built-in timeline for tracking how nodes and connections evolve over time.',
-		tags: ['React', 'JavaScript', 'Cytoscape.js', 'JSZip'],
-		iconImage: '/projects/relatime.png',
-		live: 'https://www.relatime.org/',
-		featured: true,
-		gemColor: 'rgba(175,220,255,0.92)',
-		size: 340,
-		className: 'projects-page__crystal',
-	},
-];
-
 function DropCardSkeleton({ size = 340, enterDelay = 0 }) {
 	return (
 		<div
@@ -106,8 +56,7 @@ export default function ProjectsPage() {
 							className={project.className}
 							enterDelay={index * 90}
 							links={[
-								...(project.github ? [{ label: 'GitHub →', href: project.github }] : []),
-								...(project.live ? [{ label: 'Live Site →', href: project.live }] : []),
+								...(project.link ? [{ label: 'Open Link', href: project.link }] : []),
 							]}
 						/>
 					))

@@ -1,5 +1,5 @@
 import { list } from '@vercel/blob';
-import { getMusicMetadataByPath } from '../../lib/musicMetadataStore.js';
+import { getMusicMetadataRows } from '../../lib/musicMetadataStore.js';
 
 const AUDIO_EXTENSIONS = new Set(['.mp3', '.wav', '.ogg', '.m4a', '.aac', '.flac']);
 const ART_EXTENSIONS = new Set(['.png', '.jpg', '.jpeg', '.webp', '.gif']);
@@ -11,6 +11,22 @@ function hasAudioExtension(pathname) {
 
 function hasArtExtension(pathname) {
 	return [...ART_EXTENSIONS].some((extension) => pathname.toLowerCase().endsWith(extension));
+}
+
+function isHttpUrl(value) {
+	try {
+		const url = new URL(value);
+		return url.protocol === 'http:' || url.protocol === 'https:';
+	} catch {
+		return false;
+	}
+}
+
+function isSoundCloudUrl(value) {
+	if (!isHttpUrl(value)) return false;
+
+	const { hostname } = new URL(value);
+	return hostname === 'soundcloud.com' || hostname.endsWith('.soundcloud.com');
 }
 
 function getStem(pathname) {
@@ -36,16 +52,34 @@ function formatTrackTitle(pathname) {
 		.join(' ') || 'Untitled Track';
 }
 
-export default async function handler(request, response) {
-	if (!globalThis.process?.env?.BLOB_READ_WRITE_TOKEN) {
-		return response.status(500).json({ error: 'Missing BLOB_READ_WRITE_TOKEN' });
-	}
+function formatSoundCloudTitle(soundCloudUrl) {
+	const { pathname } = new URL(soundCloudUrl);
+	const slug = pathname.split('/').filter(Boolean).pop() ?? '';
 
+	return slug
+		.split(/[-_]+/)
+		.filter(Boolean)
+		.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+		.join(' ') || 'SoundCloud Track';
+}
+
+function formatArtUrl(artPathname) {
+	if (!artPathname) return null;
+	if (isHttpUrl(artPathname)) return artPathname;
+
+	return `/api/music/stream?pathname=${encodeURIComponent(artPathname)}`;
+}
+
+export default async function handler(request, response) {
 	try {
-		const metadataByPath = await getMusicMetadataByPath();
-		const { blobs } = await list({
-			limit: 1000,
-		});
+		const metadataRows = await getMusicMetadataRows();
+		const metadataByPath = Object.fromEntries(metadataRows.map((metadata) => [metadata.pathname, metadata]));
+		const hasBlobToken = Boolean(globalThis.process?.env?.BLOB_READ_WRITE_TOKEN);
+		const { blobs = [] } = hasBlobToken
+			? await list({
+				limit: 1000,
+			})
+			: {};
 
 		const artByStem = new Map(
 			blobs
@@ -53,14 +87,14 @@ export default async function handler(request, response) {
 				.map((blob) => [getStem(blob.pathname), blob.pathname]),
 		);
 
-		const tracks = blobs
+		const blobTracks = blobs
 			.filter((blob) => blob.pathname.startsWith('music/') && hasAudioExtension(blob.pathname))
 			.map((blob) => {
 				const metadata = metadataByPath[blob.pathname] ?? {};
 				const artPathname = metadata.artPathname ?? artByStem.get(getStem(blob.pathname)) ?? null;
 
 				return {
-					artUrl: artPathname ? `/api/music/stream?pathname=${encodeURIComponent(artPathname)}` : null,
+					artUrl: formatArtUrl(artPathname),
 					id: blob.pathname,
 					title: metadata.title ?? formatTrackTitle(blob.pathname),
 					artist: metadata.artist ?? DEFAULT_ARTIST,
@@ -69,9 +103,29 @@ export default async function handler(request, response) {
 					licenseUrl: metadata.licenseUrl ?? '',
 					pathname: blob.pathname,
 					sortOrder: inferSortOrder(blob.pathname),
+					source: 'blob',
 					streamUrl: `/api/music/stream?pathname=${encodeURIComponent(blob.pathname)}`,
 				};
-			})
+			});
+
+		const soundCloudTracks = metadataRows
+			.filter((metadata) => isSoundCloudUrl(metadata.pathname))
+			.map((metadata, index) => ({
+				artUrl: formatArtUrl(metadata.artPathname),
+				id: metadata.pathname,
+				title: metadata.title || formatSoundCloudTitle(metadata.pathname),
+				artist: metadata.artist || 'SoundCloud',
+				copyrightLine: metadata.copyrightLine || '',
+				licenseLabel: metadata.licenseLabel || 'SoundCloud',
+				licenseUrl: metadata.licenseUrl || metadata.pathname,
+				pathname: metadata.pathname,
+				sortOrder: inferSortOrder(metadata.pathname) + index,
+				soundCloudUrl: metadata.pathname,
+				source: 'soundcloud',
+				streamUrl: metadata.pathname,
+			}));
+
+		const tracks = [...blobTracks, ...soundCloudTracks]
 			.sort((a, b) => {
 				if (a.sortOrder !== b.sortOrder) {
 					return a.sortOrder - b.sortOrder;
@@ -89,6 +143,8 @@ export default async function handler(request, response) {
 			licenseLabel: track.licenseLabel,
 			licenseUrl: track.licenseUrl,
 			pathname: track.pathname,
+			soundCloudUrl: track.soundCloudUrl,
+			source: track.source,
 			streamUrl: track.streamUrl,
 		}));
 

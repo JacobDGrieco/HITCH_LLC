@@ -6,7 +6,7 @@ export default async function handler(req, res) {
 	try {
 		const sql = getDb();
 		const rows = await sql`
-			SELECT id, title, role, date_range, desc, tags, icon_image, gem_color, size, featured, class_name
+			SELECT id, title, role, date_range, "desc", tags, icon_image, color_hex, size
 			FROM experience
 			ORDER BY display_order ASC
 		`;
@@ -19,10 +19,10 @@ export default async function handler(req, res) {
 			desc: r.desc,
 			tags: r.tags ?? [],
 			iconImage: r.icon_image,
-			gemColor: r.gem_color,
-			size: r.size,
-			featured: r.featured,
-			className: r.class_name,
+			gemColor: r.color_hex ?? undefined,
+			size: r.size ?? 1,
+			featured: false,
+			className: 'experience-page__crystal',
 		}));
 
 		res.setHeader('Cache-Control', 's-maxage=60, stale-while-revalidate=300');

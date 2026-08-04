@@ -169,10 +169,12 @@
 	text-transform: uppercase;
 	color: rgba(51, 83, 132, 0.94);
 	text-align: center;
+	text-wrap: balance;
 	text-shadow: 0 1px 5px rgba(255, 255, 255, 0.82);
 	white-space: normal;
-	overflow-wrap: anywhere;
+	overflow-wrap: normal;
 	word-break: normal;
+	hyphens: manual;
 }
 
 .drop-card__desc {
@@ -184,8 +186,11 @@
 	letter-spacing: 0.16px;
 	-webkit-text-stroke: var(--drop-desc-stroke-width) var(--drop-desc-stroke-color);
 	paint-order: stroke fill;
+	text-wrap: balance;
 	white-space: pre-wrap;
-	overflow-wrap: anywhere;
+	overflow-wrap: normal;
+	word-break: normal;
+	hyphens: manual;
 }
 
 .drop-card__tags {
@@ -206,7 +211,12 @@
 	border: 1px solid rgba(185, 220, 245, 0.48);
 	color: rgba(42, 88, 148, 0.82);
 	letter-spacing: 0.3px;
+	text-align: center;
+	text-wrap: balance;
 	text-shadow: none;
+	overflow-wrap: normal;
+	word-break: normal;
+	hyphens: manual;
 }
 
 .drop-card__links {
@@ -236,9 +246,11 @@
 	cursor: pointer;
 	text-decoration: none;
 	text-align: center;
+	text-wrap: balance;
 	white-space: normal;
-	overflow-wrap: anywhere;
+	overflow-wrap: normal;
 	word-break: normal;
+	hyphens: manual;
 }
 
 .drop-card__link:focus-visible {

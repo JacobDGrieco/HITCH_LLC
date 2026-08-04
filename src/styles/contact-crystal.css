@@ -106,8 +106,12 @@
 	line-height: 1.1;
 	text-transform: uppercase;
 	color: rgba(115, 73, 132, 0.94);
+	text-align: center;
+	text-wrap: balance;
 	text-shadow: 0 1px 6px rgba(255, 255, 255, 0.72);
-	overflow-wrap: anywhere;
+	overflow-wrap: normal;
+	word-break: normal;
+	hyphens: manual;
 }
 
 .contact-crystal__subtitle {
@@ -115,8 +119,11 @@
 	font-size: 11px;
 	line-height: 1.35;
 	color: rgb(107, 77, 126);
-	overflow-wrap: anywhere;
-	word-break: break-word;
+	text-align: center;
+	text-wrap: balance;
+	overflow-wrap: normal;
+	word-break: normal;
+	hyphens: manual;
 }
 
 @keyframes contactCrystalFloat {

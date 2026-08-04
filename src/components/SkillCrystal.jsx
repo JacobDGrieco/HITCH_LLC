@@ -1,4 +1,6 @@
 import '../styles/skill-crystal.css';
+import { getStandardSkillDropSize, resolveScaledDropSize } from '../lib/dropSizing';
+import { renderTextWithDelimiterBreaks } from '../lib/textBreaks.jsx';
 
 const DROP_PATH = 'M50 2 C56 18 76 43 88 67 C101 93 83 128 50 128 C17 128 -1 93 12 67 C24 43 44 18 50 2 Z';
 const DROP_INNER_PATH = 'M50 13 C55 27 72 49 82 70 C93 92 78 119 50 120 C22 119 7 92 18 70 C28 49 45 27 50 13 Z';
@@ -6,6 +8,22 @@ const DROP_BOTTOM_PATH = 'M19 88 C26 112 73 121 86 91 C84 112 70 128 50 128 C29 
 
 function clamp(value, min, max) {
 	return Math.min(max, Math.max(min, value));
+}
+
+function getSkillNameTypography(name, dropSize) {
+	const text = String(name ?? '');
+	const compactLength = text.replace(/\s/g, '').length;
+	const longestWordLength = Math.max(...text.split(/[\s/&]+/).filter(Boolean).map((part) => part.length), 1);
+	const readableMaxSize = clamp(dropSize * 0.108, 10, 12.5);
+	const wordFitSize = (dropSize * 0.74) / (longestWordLength * 0.62);
+	const phraseFitSize = compactLength > 18 ? readableMaxSize - (compactLength - 18) * 0.12 : readableMaxSize;
+	const fontSize = clamp(Math.min(readableMaxSize, wordFitSize, phraseFitSize), 8.2, readableMaxSize);
+
+	return {
+		'--skill-name-font-size': `${fontSize.toFixed(2)}px`,
+		'--skill-name-line-height': fontSize < 9 ? 1.06 : 1.12,
+		'--skill-name-max-width': `${Math.round(dropSize * 0.76)}px`,
+	};
 }
 
 export default function SkillCrystal({
@@ -18,10 +36,12 @@ export default function SkillCrystal({
 	animateEntry = true,
 }) {
 	const normalized = clamp(level, 0, 100);
-	const computedSize = size ?? Math.round(84 + normalized * 0.5);
+	const standardSize = getStandardSkillDropSize(normalized);
+	const computedSize = resolveScaledDropSize(size, standardSize);
 	const floatDuration = `${5.6 + (100 - normalized) * 0.02}s`;
 	const liquidY = 132 - normalized * 1.32;
 	const clipId = `skill-drop-${name.replace(/[^a-z0-9]/gi, '-').toLowerCase()}`;
+	const nameTypography = getSkillNameTypography(name, computedSize);
 
 	return (
 		<div
@@ -33,6 +53,7 @@ export default function SkillCrystal({
 				'--skill-delay': `${delay}s`,
 				'--skill-enter-delay': `${enterDelay}ms`,
 				'--skill-float-duration': floatDuration,
+				...nameTypography,
 			}}
 		>
 			<div className="skill-crystal__shell">
@@ -56,7 +77,7 @@ export default function SkillCrystal({
 					<path className="skill-crystal__rim" d={DROP_PATH} />
 				</svg>
 				<div className="skill-crystal__content">
-					<div className="skill-crystal__name">{name}</div>
+					<div className="skill-crystal__name">{renderTextWithDelimiterBreaks(name)}</div>
 				</div>
 			</div>
 		</div>

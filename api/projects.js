@@ -6,7 +6,7 @@ export default async function handler(req, res) {
 	try {
 		const sql = getDb();
 		const rows = await sql`
-			SELECT id, title, desc, tags, icon_image, github_url, live_url, gem_color, size, featured
+			SELECT id, title, "desc", tags, icon_image, link_url, color_hex, size
 			FROM projects
 			ORDER BY display_order ASC
 		`;
@@ -17,11 +17,10 @@ export default async function handler(req, res) {
 			desc: r.desc,
 			tags: r.tags ?? [],
 			iconImage: r.icon_image,
-			github: r.github_url,
-			live: r.live_url,
-			gemColor: r.gem_color,
-			size: r.size,
-			featured: r.featured,
+			link: r.link_url,
+			gemColor: r.color_hex ?? undefined,
+			size: r.size ?? 1,
+			featured: false,
 			className: 'projects-page__crystal',
 		}));
 

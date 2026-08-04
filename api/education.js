@@ -6,7 +6,7 @@ export default async function handler(req, res) {
 	try {
 		const sql = getDb();
 		const rows = await sql`
-			SELECT id, title, desc, gem_color, icon_image, size, featured, class_name
+			SELECT id, title, "desc", color_hex, icon_image, size
 			FROM education_items
 			ORDER BY display_order ASC
 		`;
@@ -15,11 +15,11 @@ export default async function handler(req, res) {
 			id: r.id,
 			title: r.title,
 			desc: r.desc,
-			gemColor: r.gem_color,
+			gemColor: r.color_hex ?? undefined,
 			iconImage: r.icon_image,
-			size: r.size,
-			featured: r.featured,
-			className: r.class_name,
+			size: r.size ?? 1,
+			featured: false,
+			className: 'education-page__crystal',
 		}));
 
 		res.setHeader('Cache-Control', 's-maxage=60, stale-while-revalidate=300');
