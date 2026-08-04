@@ -20,6 +20,7 @@ export default function ContactCrystal({
 	enterDelay = 0,
 }) {
 	const external = href?.startsWith('http');
+	const isEmailContact = href?.startsWith('mailto:');
 	const resolvedSize = resolveScaledDropSize(size, STANDARD_CONTACT_DROP_SIZE);
 
 	return (
@@ -50,7 +51,7 @@ export default function ContactCrystal({
 						<div className="contact-crystal__icon">{icon}</div>
 					) : null}
 					<div className="contact-crystal__title">{renderTextWithDelimiterBreaks(title)}</div>
-					<div className="contact-crystal__subtitle">{renderTextWithDelimiterBreaks(subtitle)}</div>
+					<div className={`contact-crystal__subtitle${isEmailContact ? ' contact-crystal__subtitle--email' : ''}`}>{renderTextWithDelimiterBreaks(subtitle)}</div>
 				</div>
 			</div>
 		</a>

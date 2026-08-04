@@ -8,12 +8,69 @@ const DROP_BOTTOM_PATH = 'M19 88 C26 112 73 121 86 91 C84 112 70 128 50 128 C29 
 const DROP_GLOSS_PATH = 'M38 24 C29 42 20 60 20 77 C20 94 29 105 39 112 C32 92 31 67 36 45 C39 34 44 21 48 12 C45 15 41 19 38 24 Z';
 const STANDARD_DROP_WIDTH = 340;
 
-function colorWithAlpha(color, alpha) {
-	const rgbaMatch = color.match(/^rgba?\(([^)]+)\)$/i);
-	if (!rgbaMatch) return color;
+function parseColorChannels(color) {
+	const normalizedColor = String(color ?? '').trim();
+	const hexMatch = normalizedColor.match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i);
 
-	const [red, green, blue] = rgbaMatch[1].split(',').map((part) => part.trim());
+	if (hexMatch) {
+		const hex = hexMatch[1].length === 3
+			? hexMatch[1].split('').map((char) => `${char}${char}`).join('')
+			: hexMatch[1];
+
+		return {
+			red: parseInt(hex.slice(0, 2), 16),
+			green: parseInt(hex.slice(2, 4), 16),
+			blue: parseInt(hex.slice(4, 6), 16),
+		};
+	}
+
+	const rgbaMatch = normalizedColor.match(/^rgba?\(([^)]+)\)$/i);
+	if (!rgbaMatch) return null;
+
+	const [red, green, blue] = rgbaMatch[1]
+		.split(',')
+		.slice(0, 3)
+		.map((part) => Number.parseFloat(part.trim()));
+
+	if (![red, green, blue].every(Number.isFinite)) return null;
+
+	return { red, green, blue };
+}
+
+function colorWithAlpha(color, alpha) {
+	const channels = parseColorChannels(color);
+	if (!channels) return color;
+
+	const { red, green, blue } = channels;
 	return `rgba(${red}, ${green}, ${blue}, ${alpha})`;
+}
+
+function linearizeColorChannel(value) {
+	const channel = value / 255;
+	return channel <= 0.03928 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4;
+}
+
+function getRelativeLuminance({ red, green, blue }) {
+	return 0.2126 * linearizeColorChannel(red)
+		+ 0.7152 * linearizeColorChannel(green)
+		+ 0.0722 * linearizeColorChannel(blue);
+}
+
+function getDropTitleStyle(color) {
+	const channels = parseColorChannels(color);
+	const isDarkDrop = channels ? getRelativeLuminance(channels) < 0.34 : false;
+
+	return isDarkDrop
+		? {
+			'--drop-title-color': 'rgba(250, 253, 255, 0.98)',
+			'--drop-title-shadow': '0 1px 9px rgba(4, 18, 54, 0.52), 0 0 10px rgba(255, 255, 255, 0.2)',
+			'--drop-title-stroke-color': 'rgba(7, 23, 68, 1)',
+		}
+		: {
+			'--drop-title-color': 'rgba(51, 83, 132, 0.94)',
+			'--drop-title-shadow': '0 1px 5px rgba(255, 255, 255, 0.82)',
+			'--drop-title-stroke-color': 'rgba(255, 255, 255, 1)',
+		};
 }
 
 export default function DropCard({
@@ -31,6 +88,7 @@ export default function DropCard({
 	animateEntry = true,
 }) {
 	const dropWidth = resolveScaledDropSize(size, STANDARD_DROP_WIDTH);
+	const dropTitleStyle = getDropTitleStyle(gemColor);
 
 	return (
 		<div
@@ -45,6 +103,7 @@ export default function DropCard({
 				'--drop-float-delay': featured ? '-1.8s' : '0s',
 				'--drop-enter-delay': `${enterDelay}ms`,
 				'--drop-filter': `drop-shadow(0 ${featured ? 18 : 14}px ${featured ? 38 : 30}px rgba(84, 146, 196, ${featured ? 0.42 : 0.34})) drop-shadow(0 5px 12px rgba(122, 168, 216, 0.24))`,
+				...dropTitleStyle,
 			}}
 		>
 			<div className="drop-card__shape">

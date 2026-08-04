@@ -6,8 +6,12 @@
 	--drop-color-pale: rgba(160, 212, 246, 0.28);
 	--drop-color-soft: rgba(160, 212, 246, 0.52);
 	--drop-color-deep: rgba(96, 158, 220, 0.88);
-	--drop-desc-stroke-color: rgba(255, 255, 255, 0.78);
-	--drop-desc-stroke-width: 1.3px;
+	--drop-desc-stroke-color: rgba(255, 255, 255, 1);
+	--drop-desc-stroke-width: 2.5px;
+	--drop-title-color: rgba(51, 83, 132, 0.94);
+	--drop-title-shadow: 0 1px 5px rgba(255, 255, 255, 0.82);
+	--drop-title-stroke-color: rgba(255, 255, 255, 1);
+	--drop-title-stroke-width: 0.85px;
 	position: relative;
 	width: var(--drop-render-w);
 	height: var(--drop-h);
@@ -51,7 +55,7 @@
 
 .drop-card__gloss {
 	fill: rgba(255, 255, 255, 0.62);
-	opacity: 0.82;
+	opacity: 0.34;
 }
 
 .drop-card__rim {
@@ -85,16 +89,17 @@
 }
 
 .drop-card__sparkle--one {
-	left: 21%;
-	top: 50%;
+	left: 29%;
+	top: 42%;
+	width: calc(var(--drop-render-w) * 0.07);
+	height: calc(var(--drop-render-w) * 0.07);
+	opacity: 0.6;
 }
 
 .drop-card__sparkle--two {
-	left: 32%;
-	top: 61%;
-	width: calc(var(--drop-render-w) * 0.08);
-	height: calc(var(--drop-render-w) * 0.08);
-	opacity: 0.82;
+	left: 77%;
+	top: 66%;
+	opacity: 0.5;
 }
 
 .drop-card__content {
@@ -167,10 +172,12 @@
 	letter-spacing: 1.2px;
 	line-height: 1.12;
 	text-transform: uppercase;
-	color: rgba(51, 83, 132, 0.94);
+	color: var(--drop-title-color);
 	text-align: center;
 	text-wrap: balance;
-	text-shadow: 0 1px 5px rgba(255, 255, 255, 0.82);
+	-webkit-text-stroke: var(--drop-title-stroke-width) var(--drop-title-stroke-color);
+	paint-order: stroke fill;
+	text-shadow: var(--drop-title-shadow);
 	white-space: normal;
 	overflow-wrap: normal;
 	word-break: normal;
@@ -179,10 +186,10 @@
 
 .drop-card__desc {
 	max-width: 92%;
-	font-size: 11.25px;
+	font-size: 12.25px;
 	color: rgba(26, 46, 76, 0.94);
 	text-align: center;
-	line-height: 1.45;
+	line-height: 1.42;
 	letter-spacing: 0.16px;
 	-webkit-text-stroke: var(--drop-desc-stroke-width) var(--drop-desc-stroke-color);
 	paint-order: stroke fill;
@@ -207,9 +214,9 @@
 	line-height: 1.1;
 	padding: 4px 8px;
 	border-radius: 999px;
-	background: rgba(239, 249, 255, 0.5);
-	border: 1px solid rgba(185, 220, 245, 0.48);
-	color: rgba(42, 88, 148, 0.82);
+	background: rgba(246, 251, 255, 0.94);
+	border: 1px solid rgba(201, 229, 249, 0.94);
+	color: rgba(35, 78, 136, 0.92);
 	letter-spacing: 0.3px;
 	text-align: center;
 	text-wrap: balance;
@@ -238,11 +245,11 @@
 	letter-spacing: 1px;
 	line-height: 1.1;
 	text-transform: uppercase;
-	color: rgba(48, 94, 156, 0.86);
+	color: rgba(35, 83, 148, 0.96);
 	padding: 5px 10px;
 	border-radius: 999px;
-	border: 1px solid rgba(162, 204, 238, 0.56);
-	background: rgba(236, 248, 255, 0.46);
+	border: 1px solid rgba(177, 215, 244, 0.94);
+	background: rgba(240, 249, 255, 0.94);
 	cursor: pointer;
 	text-decoration: none;
 	text-align: center;
@@ -340,6 +347,7 @@
 	}
 
 	.drop-card__desc {
-		line-height: 1.38;
+		font-size: 11.75px;
+		line-height: 1.36;
 	}
 }

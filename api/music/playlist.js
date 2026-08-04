@@ -74,6 +74,7 @@ export default async function handler(request, response) {
 	try {
 		const metadataRows = await getMusicMetadataRows();
 		const metadataByPath = Object.fromEntries(metadataRows.map((metadata) => [metadata.pathname, metadata]));
+		const soundCloudMetadataRows = metadataRows.filter((metadata) => isSoundCloudUrl(metadata.pathname));
 		const hasBlobToken = Boolean(globalThis.process?.env?.BLOB_READ_WRITE_TOKEN);
 		const { blobs = [] } = hasBlobToken
 			? await list({
@@ -87,29 +88,30 @@ export default async function handler(request, response) {
 				.map((blob) => [getStem(blob.pathname), blob.pathname]),
 		);
 
-		const blobTracks = blobs
-			.filter((blob) => blob.pathname.startsWith('music/') && hasAudioExtension(blob.pathname))
-			.map((blob) => {
-				const metadata = metadataByPath[blob.pathname] ?? {};
-				const artPathname = metadata.artPathname ?? artByStem.get(getStem(blob.pathname)) ?? null;
+		const blobTracks = soundCloudMetadataRows.length
+			? []
+			: blobs
+				.filter((blob) => blob.pathname.startsWith('music/') && hasAudioExtension(blob.pathname))
+				.map((blob) => {
+					const metadata = metadataByPath[blob.pathname] ?? {};
+					const artPathname = metadata.artPathname ?? artByStem.get(getStem(blob.pathname)) ?? null;
 
-				return {
-					artUrl: formatArtUrl(artPathname),
-					id: blob.pathname,
-					title: metadata.title ?? formatTrackTitle(blob.pathname),
-					artist: metadata.artist ?? DEFAULT_ARTIST,
-					copyrightLine: metadata.copyrightLine ?? '',
-					licenseLabel: metadata.licenseLabel ?? '',
-					licenseUrl: metadata.licenseUrl ?? '',
-					pathname: blob.pathname,
-					sortOrder: inferSortOrder(blob.pathname),
-					source: 'blob',
-					streamUrl: `/api/music/stream?pathname=${encodeURIComponent(blob.pathname)}`,
-				};
-			});
+					return {
+						artUrl: formatArtUrl(artPathname),
+						id: blob.pathname,
+						title: metadata.title ?? formatTrackTitle(blob.pathname),
+						artist: metadata.artist ?? DEFAULT_ARTIST,
+						copyrightLine: metadata.copyrightLine ?? '',
+						licenseLabel: metadata.licenseLabel ?? '',
+						licenseUrl: metadata.licenseUrl ?? '',
+						pathname: blob.pathname,
+						sortOrder: inferSortOrder(blob.pathname),
+						source: 'blob',
+						streamUrl: `/api/music/stream?pathname=${encodeURIComponent(blob.pathname)}`,
+					};
+				});
 
-		const soundCloudTracks = metadataRows
-			.filter((metadata) => isSoundCloudUrl(metadata.pathname))
+		const soundCloudTracks = soundCloudMetadataRows
 			.map((metadata, index) => ({
 				artUrl: formatArtUrl(metadata.artPathname),
 				id: metadata.pathname,

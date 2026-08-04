@@ -12,11 +12,11 @@ const DROP_GLOSS_PATH = 'M38 24 C29 42 20 60 20 77 C20 94 29 105 39 112 C32 92 3
 const CONTACTS = [
 	{
 		title: 'Email',
-		subtitle: 'contact@headinthecloudshaven.com',
+		subtitle: 'contact@headinthe\ncloudshaven.com',
 		href: 'mailto:contact@headinthecloudshaven.com',
 		icon: '✉',
 		hue: 'rgba(245,175,210,0.94)',
-		size: 1.04,
+		size: 1.05,
 		delay: 0,
 	},
 	{
@@ -25,7 +25,7 @@ const CONTACTS = [
 		href: '/contact/resume.pdf',
 		iconImage: '/contact/resume.png',
 		hue: 'rgba(255,217,170,0.94)',
-		size: 0.86,
+		size: 1.05,
 		delay: -2.2,
 	},
 	{
@@ -34,7 +34,7 @@ const CONTACTS = [
 		href: 'https://linkedin.com/in/jacob-grieco',
 		iconImage: '/contact/linkedin.png',
 		hue: 'rgba(175,220,255,0.94)',
-		size: 0.87,
+		size: 1.05,
 		delay: -1.6,
 	},
 	{
@@ -43,7 +43,7 @@ const CONTACTS = [
 		href: 'https://github.com/JacobDGrieco',
 		iconImage: '/contact/github.png',
 		hue: 'rgba(212,193,255,0.94)',
-		size: 0.84,
+		size: 1.05,
 		delay: -0.7,
 	},
 ];
