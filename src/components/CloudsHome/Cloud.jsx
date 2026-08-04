@@ -1,6 +1,7 @@
-export default function Cloud({ label, onClick, imageSrc, imageWidth, imageHeight, scale, floatIndex }) {
+export default function Cloud({ label, onClick, imageSrc, imageWidth, imageHeight, scale, floatIndex, buttonRef }) {
 	return (
 		<button
+			ref={buttonRef}
 			type="button"
 			className="page-cloud"
 			style={{
