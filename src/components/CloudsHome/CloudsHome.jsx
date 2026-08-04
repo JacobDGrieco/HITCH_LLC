@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Cloud from './Cloud';
 import { useSiteMusic } from '../audio/useSiteMusic';
 import { useSiteChrome } from '../chrome/useSiteChrome';
+import { loadEducationPageData, loadExperiencePageData, loadProjectsPageData, loadSkillsPageData } from '../../lib/pageDataCache';
 import '../../styles/clouds-home.css';
 
 const PAGE_CLOUDS = [
@@ -39,6 +40,32 @@ const LOGO_SPARKLES = [
 	{ left: 92, top: 74, size: 5, delay: -3.4, duration: 4.5 },
 	{ left: 15, top: 86, size: 7, delay: -0.6, duration: 5.4 },
 ];
+
+const STATIC_PAGE_IMAGE_SOURCES = [
+	'/headshot.jpg',
+	'/contact/resume.png',
+	'/contact/linkedin.png',
+	'/contact/github.png',
+];
+
+function preloadStaticPageImages() {
+	if (typeof Image === 'undefined') return;
+
+	STATIC_PAGE_IMAGE_SOURCES.forEach((src) => {
+		const image = new Image();
+		image.src = src;
+	});
+}
+
+function scheduleBackgroundPreload(callback) {
+	if ('requestIdleCallback' in window) {
+		const idleId = window.requestIdleCallback(callback, { timeout: 5000 });
+		return () => window.cancelIdleCallback(idleId);
+	}
+
+	const preloadTimer = window.setTimeout(callback, 2200);
+	return () => window.clearTimeout(preloadTimer);
+}
 
 function shuffleCloudImages() {
 	const images = [...CLOUD_IMAGE_SOURCES];
@@ -88,6 +115,7 @@ export default function CloudsHome() {
 	const { requestAutoplay } = useSiteMusic();
 	const { setDasHidden } = useSiteChrome();
 	const cloudRefs = useRef({});
+	const isTransitioningRef = useRef(false);
 	const [transitioning, setTransitioning] = useState(false);
 	const [transitionCloud, setTransitionCloud] = useState(null);
 	const [returnTransition, setReturnTransition] = useState(null);
@@ -110,6 +138,18 @@ export default function CloudsHome() {
 	}, [requestAutoplay]);
 
 	useEffect(() => {
+		return scheduleBackgroundPreload(() => {
+			if (isTransitioningRef.current) return;
+
+			preloadStaticPageImages();
+			void loadProjectsPageData()
+				.then(() => loadSkillsPageData())
+				.then(() => loadEducationPageData())
+				.then(() => loadExperiencePageData());
+		});
+	}, []);
+
+	useEffect(() => {
 		setDasHidden(transitioning);
 
 		return () => {
@@ -125,6 +165,7 @@ export default function CloudsHome() {
 
 		window.sessionStorage.removeItem(RETURN_SECTION_STORAGE_KEY);
 		setDasHidden(true);
+		isTransitioningRef.current = true;
 		setReturnTransition(createCameraTransitionFromRect(returnCloud.getBoundingClientRect()));
 
 		let animationFrameId = window.requestAnimationFrame(() => {
@@ -136,6 +177,7 @@ export default function CloudsHome() {
 		const doneTimer = window.setTimeout(() => {
 			setReturnTransition(null);
 			setReturningActive(false);
+			isTransitioningRef.current = false;
 			setDasHidden(false);
 		}, 1780);
 
@@ -162,6 +204,7 @@ export default function CloudsHome() {
 
 	function handleCloudClick(cloud, e) {
 		if (transitioning) return;
+		isTransitioningRef.current = true;
 		setTransitioning(true);
 
 		const rect = e.currentTarget.getBoundingClientRect();

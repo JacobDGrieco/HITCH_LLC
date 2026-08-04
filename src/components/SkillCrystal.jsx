@@ -14,6 +14,8 @@ export default function SkillCrystal({
 	hue = 'rgba(175,220,255,0.94)',
 	size,
 	delay = 0,
+	enterDelay = 0,
+	animateEntry = true,
 }) {
 	const normalized = clamp(level, 0, 100);
 	const computedSize = size ?? Math.round(84 + normalized * 0.5);
@@ -23,12 +25,13 @@ export default function SkillCrystal({
 
 	return (
 		<div
-			className="skill-crystal"
+			className={`skill-crystal${animateEntry ? ' skill-crystal--entering' : ''}`}
 			style={{
 				'--skill-crystal-size': `${computedSize}px`,
 				'--skill-level': normalized / 100,
 				'--skill-hue': hue,
 				'--skill-delay': `${delay}s`,
+				'--skill-enter-delay': `${enterDelay}ms`,
 				'--skill-float-duration': floatDuration,
 			}}
 		>

@@ -24,10 +24,12 @@ export default function DropCard({
 	size = 220,
 	gemColor = 'rgba(200, 185, 255, 0.92)',
 	featured = false,
+	enterDelay = 0,
+	animateEntry = true,
 }) {
 	return (
 		<div
-			className={`drop-card${className ? ` ${className}` : ''}`}
+			className={`drop-card${animateEntry ? ' drop-card--entering' : ''}${className ? ` ${className}` : ''}`}
 			style={{
 				'--drop-w': `${size}px`,
 				'--drop-color': gemColor,
@@ -36,6 +38,7 @@ export default function DropCard({
 				'--drop-color-deep': colorWithAlpha(gemColor, 0.88),
 				'--drop-float-duration': `${featured ? 6 : 5}s`,
 				'--drop-float-delay': featured ? '-1.8s' : '0s',
+				'--drop-enter-delay': `${enterDelay}ms`,
 				'--drop-filter': `drop-shadow(0 ${featured ? 18 : 14}px ${featured ? 38 : 30}px rgba(84, 146, 196, ${featured ? 0.42 : 0.34})) drop-shadow(0 5px 12px rgba(122, 168, 216, 0.24))`,
 			}}
 		>

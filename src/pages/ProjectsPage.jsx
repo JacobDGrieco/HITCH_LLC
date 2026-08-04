@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import '../styles/shared.css';
 import '../styles/projects-page.css';
 import DropCard from '../components/DropCard';
+import { getCachedProjectsPageData, loadProjectsPageData } from '../lib/pageDataCache';
 
 const FALLBACK = [
 	{
@@ -53,28 +54,32 @@ const FALLBACK = [
 	},
 ];
 
-function DropCardSkeleton({ size = 340 }) {
+function DropCardSkeleton({ size = 340, enterDelay = 0 }) {
 	return (
 		<div
 			className="drop-card drop-card--skeleton"
 			style={{
 				'--drop-w': `${size}px`,
+				'--drop-enter-delay': `${enterDelay}ms`,
 			}}
 		/>
 	);
 }
 
 export default function ProjectsPage() {
-	const [projects, setProjects] = useState(null);
+	const [cachedAtMount] = useState(() => getCachedProjectsPageData());
+	const [projects, setProjects] = useState(cachedAtMount);
 
 	useEffect(() => {
-		fetch('/api/projects')
-			.then((r) => {
-				if (!r.ok) throw new Error(`Projects request failed with status ${r.status}`);
-				return r.json();
-			})
-			.then(({ projects: data }) => setProjects(Array.isArray(data) && data.length ? data : FALLBACK))
-			.catch(() => setProjects(FALLBACK));
+		let isActive = true;
+
+		loadProjectsPageData().then((loadedProjects) => {
+			if (isActive) setProjects(loadedProjects);
+		});
+
+		return () => {
+			isActive = false;
+		};
 	}, []);
 
 	return (
@@ -86,9 +91,9 @@ export default function ProjectsPage() {
 
 			<div className="projects-page__grid">
 				{projects === null ? (
-					[362, 378, 340, 362].map((size, i) => <DropCardSkeleton key={i} size={size} />)
+					[362, 378, 340, 362].map((size, i) => <DropCardSkeleton key={i} size={size} enterDelay={i * 90} />)
 				) : (
-					projects.map((project) => (
+					projects.map((project, index) => (
 						<DropCard
 							key={project.id}
 							title={project.title}
@@ -99,6 +104,7 @@ export default function ProjectsPage() {
 							featured={project.featured}
 							gemColor={project.gemColor}
 							className={project.className}
+							enterDelay={index * 90}
 							links={[
 								...(project.github ? [{ label: 'GitHub →', href: project.github }] : []),
 								...(project.live ? [{ label: 'Live Site →', href: project.live }] : []),

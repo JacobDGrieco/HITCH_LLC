@@ -14,6 +14,7 @@ export default function ContactCrystal({
 	size = 180,
 	hue = 'rgba(214, 169, 236, 0.92)',
 	delay = 0,
+	enterDelay = 0,
 }) {
 	const external = href?.startsWith('http');
 
@@ -27,6 +28,7 @@ export default function ContactCrystal({
 				'--contact-crystal-size': `${size}px`,
 				'--contact-crystal-hue': hue,
 				'--contact-crystal-delay': `${delay}s`,
+				'--contact-crystal-enter-delay': `${enterDelay}ms`,
 			}}
 		>
 			<div className="contact-crystal__shell">

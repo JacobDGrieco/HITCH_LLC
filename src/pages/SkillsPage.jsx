@@ -3,6 +3,7 @@ import '../styles/shared.css';
 import '../styles/skills-page.css';
 import '../styles/skill-crystal.css';
 import SkillCrystal from '../components/SkillCrystal';
+import { getCachedSkillsPageData, loadSkillsPageData } from '../lib/pageDataCache';
 
 const CATEGORY_ACCENTS = {
 	Frontend: 'rgba(160, 214, 255, 0.95)',
@@ -64,16 +65,19 @@ function SkillsSkeleton() {
 }
 
 export default function SkillsPage() {
-	const [skills, setSkills] = useState(null);
+	const [cachedAtMount] = useState(() => getCachedSkillsPageData());
+	const [skills, setSkills] = useState(cachedAtMount);
 
 	useEffect(() => {
-		fetch('/api/skills')
-			.then((r) => {
-				if (!r.ok) throw new Error(`Skills request failed with status ${r.status}`);
-				return r.json();
-			})
-			.then(({ skills: data }) => setSkills(Array.isArray(data) && data.length ? data : FALLBACK))
-			.catch(() => setSkills(FALLBACK));
+		let isActive = true;
+
+		loadSkillsPageData().then((loadedSkills) => {
+			if (isActive) setSkills(loadedSkills);
+		});
+
+		return () => {
+			isActive = false;
+		};
 	}, []);
 
 	const grouped = skills ? groupByCategory(skills) : null;
@@ -104,6 +108,7 @@ export default function SkillsPage() {
 										level={skill.level}
 										hue={CATEGORY_ACCENTS[category] ?? 'rgba(200, 200, 255, 0.95)'}
 										delay={groupIndex * 0.35 + index * 0.18}
+										enterDelay={groupIndex * 90 + index * 45}
 									/>
 								))}
 							</div>

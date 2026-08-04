@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import '../styles/shared.css';
 import '../styles/experience-page.css';
 import DropCard from '../components/DropCard';
+import { getCachedExperiencePageData, loadExperiencePageData } from '../lib/pageDataCache';
 
 const FALLBACK = [
 	{
@@ -36,28 +37,32 @@ function buildDesc(item) {
 	return `${item.role}\n${item.dateRange}\n\n${item.desc}`;
 }
 
-function DropCardSkeleton({ size = 390 }) {
+function DropCardSkeleton({ size = 390, enterDelay = 0 }) {
 	return (
 		<div
 			className="drop-card drop-card--skeleton"
 			style={{
 				'--drop-w': `${size}px`,
+				'--drop-enter-delay': `${enterDelay}ms`,
 			}}
 		/>
 	);
 }
 
 export default function ExperiencePage() {
-	const [experience, setExperience] = useState(null);
+	const [cachedAtMount] = useState(() => getCachedExperiencePageData());
+	const [experience, setExperience] = useState(cachedAtMount);
 
 	useEffect(() => {
-		fetch('/api/experience')
-			.then((r) => {
-				if (!r.ok) throw new Error(`Experience request failed with status ${r.status}`);
-				return r.json();
-			})
-			.then(({ experience: data }) => setExperience(Array.isArray(data) && data.length ? data : FALLBACK))
-			.catch(() => setExperience(FALLBACK));
+		let isActive = true;
+
+		loadExperiencePageData().then((loadedExperience) => {
+			if (isActive) setExperience(loadedExperience);
+		});
+
+		return () => {
+			isActive = false;
+		};
 	}, []);
 
 	return (
@@ -69,9 +74,9 @@ export default function ExperiencePage() {
 
 			<div className="page-crystal-row experience-page__crystals">
 				{experience === null ? (
-					[402, 378].map((size, i) => <DropCardSkeleton key={i} size={size} />)
+					[402, 378].map((size, i) => <DropCardSkeleton key={i} size={size} enterDelay={i * 90} />)
 				) : (
-					experience.map((item) => (
+					experience.map((item, index) => (
 						<DropCard
 							key={item.id}
 							size={item.size}
@@ -82,6 +87,7 @@ export default function ExperiencePage() {
 							gemColor={item.gemColor}
 							featured={item.featured}
 							className={item.className}
+							enterDelay={index * 90}
 						/>
 					))
 				)}

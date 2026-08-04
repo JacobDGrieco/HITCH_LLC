@@ -101,9 +101,9 @@ export default function ContactPage() {
 			<div className="contact-page__cluster-shell">
 				<div className="contact-page__cluster">
 					<div className="contact-page__contact-list">
-						{CONTACTS.map((item) => (
+						{CONTACTS.map((item, index) => (
 							<div key={item.title} className="contact-page__orbit">
-								<ContactCrystal {...item} />
+								<ContactCrystal {...item} enterDelay={index * 80} />
 							</div>
 						))}
 					</div>

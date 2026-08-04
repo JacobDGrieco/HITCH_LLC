@@ -3,6 +3,7 @@ import { gsap } from 'gsap';
 import '../styles/shared.css';
 import '../styles/education-page.css';
 import DropCard from '../components/DropCard';
+import { getCachedEducationPageData, loadEducationPageData } from '../lib/pageDataCache';
 
 const FALLBACK = [
 	{
@@ -47,29 +48,33 @@ const FALLBACK = [
 	},
 ];
 
-function DropCardSkeleton({ size = 318 }) {
+function DropCardSkeleton({ size = 318, enterDelay = 0 }) {
 	return (
 		<div
 			className="drop-card drop-card--skeleton"
 			style={{
 				'--drop-w': `${size}px`,
+				'--drop-enter-delay': `${enterDelay}ms`,
 			}}
 		/>
 	);
 }
 
 export default function EducationPage() {
-	const [education, setEducation] = useState(null);
+	const [cachedAtMount] = useState(() => getCachedEducationPageData());
+	const [education, setEducation] = useState(cachedAtMount);
 	const rowRef = useRef(null);
 
 	useEffect(() => {
-		fetch('/api/education')
-			.then((r) => {
-				if (!r.ok) throw new Error(`Education request failed with status ${r.status}`);
-				return r.json();
-			})
-			.then(({ education: data }) => setEducation(Array.isArray(data) && data.length ? data : FALLBACK))
-			.catch(() => setEducation(FALLBACK));
+		let isActive = true;
+
+		loadEducationPageData().then((loadedEducation) => {
+			if (isActive) setEducation(loadedEducation);
+		});
+
+		return () => {
+			isActive = false;
+		};
 	}, []);
 
 	useEffect(() => {
@@ -86,10 +91,10 @@ export default function EducationPage() {
 
 			<div className="page-crystal-row education-page__crystals" ref={rowRef}>
 				{education === null ? (
-					[462, 396, 318, 318].map((size, i) => <DropCardSkeleton key={i} size={size} />)
+					[462, 396, 318, 318].map((size, i) => <DropCardSkeleton key={i} size={size} enterDelay={i * 85} />)
 				) : (
-					education.map((item) => (
-						<DropCard key={item.id} {...item} />
+					education.map((item, index) => (
+						<DropCard key={item.id} {...item} enterDelay={index * 85} />
 					))
 				)}
 			</div>

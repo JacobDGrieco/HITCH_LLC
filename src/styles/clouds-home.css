@@ -46,7 +46,7 @@
 /* ─── Sky & background ─────────────────────────────────────────── */
 
 .clouds-home__sky {
-	position: fixed;
+	position: absolute;
 	inset: calc(var(--home-sky-bleed) * -1);
 	z-index: 0;
 	pointer-events: none;
@@ -79,7 +79,7 @@
 }
 
 .clouds-home__haze {
-	position: fixed;
+	position: absolute;
 	inset: 0;
 	z-index: 1;
 	pointer-events: none;
@@ -94,7 +94,7 @@
 }
 
 .clouds-home__horizon {
-	position: fixed;
+	position: absolute;
 	bottom: 0;
 	left: 0;
 	right: 0;
@@ -113,7 +113,7 @@
 /* ─── Stage layout ────────────────────────────────────────────── */
 
 .clouds-home__stage {
-	position: fixed;
+	position: absolute;
 	inset: 0;
 	z-index: 5;
 	padding: 0;
