@@ -10,6 +10,7 @@
 	--home-zoom-mid-shift-y: 0px;
 	--home-scene-zoom-mid-scale: 1;
 	--home-scene-zoom-scale: 1;
+	--home-sky-bleed: 18vmax;
 	position: relative;
 	width: 100%;
 	height: 100%;
@@ -46,7 +47,7 @@
 
 .clouds-home__sky {
 	position: fixed;
-	inset: 0;
+	inset: calc(var(--home-sky-bleed) * -1);
 	z-index: 0;
 	pointer-events: none;
 	background:
