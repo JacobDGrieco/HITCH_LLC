@@ -12,6 +12,8 @@ const SOUNDCLOUD_WIDGET_FRAME_STYLE = {
 	opacity: 0,
 	pointerEvents: 'none',
 };
+const DEFAULT_MUSIC_VOLUME = 0.6;
+const SOUNDCLOUD_VOLUME_SCALE = 100;
 
 let soundCloudWidgetApiPromise = null;
 
@@ -181,7 +183,7 @@ export function SiteMusicProvider({ children }) {
 
 		const audio = new Audio();
 		audio.preload = 'auto';
-		audio.volume = 0.4;
+		audio.volume = DEFAULT_MUSIC_VOLUME;
 		audioRef.current = audio;
 
 		function handleEnded() {
@@ -241,7 +243,7 @@ export function SiteMusicProvider({ children }) {
 			if (loadId !== soundCloudLoadIdRef.current) return;
 
 			soundCloudReadyRef.current = true;
-			widget.setVolume(40);
+			widget.setVolume(DEFAULT_MUSIC_VOLUME * SOUNDCLOUD_VOLUME_SCALE);
 			resolve(widget);
 		});
 
@@ -417,15 +419,6 @@ export function SiteMusicProvider({ children }) {
 		pauseSoundCloudWidget();
 	}, [pauseSoundCloudWidget]);
 
-	function requestAutoplay() {
-		if (playbackRequestedRef.current) {
-			return;
-		}
-
-		playbackRequestedRef.current = true;
-		void startPlayback();
-	}
-
 	function enableSound() {
 		void startPlayback({ userInitiated: true });
 	}
@@ -479,7 +472,6 @@ export function SiteMusicProvider({ children }) {
 				licenseLabel,
 				licenseUrl,
 				playbackState,
-				requestAutoplay,
 				togglePlayback,
 				trackDisplay,
 			}}

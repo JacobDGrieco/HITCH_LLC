@@ -1,7 +1,6 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Cloud from './Cloud';
-import { useSiteMusic } from '../audio/useSiteMusic';
 import { useSiteChrome } from '../chrome/useSiteChrome';
 import { loadEducationPageData, loadExperiencePageData, loadProjectsPageData, loadSkillsPageData } from '../../lib/pageDataCache';
 import '../../styles/clouds-home.css';
@@ -112,7 +111,6 @@ function createCameraTransitionFromRect(rect) {
 
 export default function CloudsHome() {
 	const navigate = useNavigate();
-	const { requestAutoplay } = useSiteMusic();
 	const { setDasHidden } = useSiteChrome();
 	const cloudRefs = useRef({});
 	const isTransitioningRef = useRef(false);
@@ -132,10 +130,6 @@ export default function CloudsHome() {
 		window.addEventListener('resize', handleResize);
 		return () => window.removeEventListener('resize', handleResize);
 	}, []);
-
-	useEffect(() => {
-		requestAutoplay();
-	}, [requestAutoplay]);
 
 	useEffect(() => {
 		return scheduleBackgroundPreload(() => {
