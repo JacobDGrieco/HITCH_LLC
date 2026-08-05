@@ -44,7 +44,7 @@ const PORTAL_LAYOUT = [
 		liveUrl: 'https://www.halomed.org/',
 		previewImage: '/home/windows/halomed.png',
 		cloudImage: '/home/3d/v2/portal-halomed-back-v2.png',
-		position: [-0.20, -1.24, 0.20],
+		position: [-0.10, -1.24, 0.20],
 		window: {
 			position: [-0.03, -0.01, 0],
 			rotation: [-0.2, 0.3, 0.01],
@@ -570,13 +570,13 @@ function PortalScene({ onOpenProject, reducedMotion }) {
 				{PORTAL_LAYOUT.map((portal) => (
 					<PortalGroup
 						key={portal.id}
-					portal={portal}
-					reducedMotion={reducedMotion}
-					onOpen={(event) => {
-						event.stopPropagation();
-						onOpenProject(portal.liveUrl);
-					}}
-				/>
+						portal={portal}
+						reducedMotion={reducedMotion}
+						onOpen={(event) => {
+							event.stopPropagation();
+							onOpenProject(portal.liveUrl);
+						}}
+					/>
 				))}
 			</group>
 		</>

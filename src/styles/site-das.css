@@ -5,7 +5,7 @@
 	z-index: 40;
 	display: flex;
 	justify-content: center;
-	width: min(calc(100% - 32px), 250px);
+	width: min(calc(100% - 32px), 320px);
 	transform: none;
 	transition: opacity 220ms ease, visibility 220ms ease;
 }
@@ -125,7 +125,7 @@
 }
 
 .site-das__title {
-	max-width: 170px;
+	max-width: 238px;
 	overflow: hidden;
 	color: rgba(255, 248, 251, 0.96);
 	font-size: 11px;
@@ -178,7 +178,7 @@
 	.site-das-shell {
 		bottom: 12px;
 		left: 12px;
-		width: min(calc(100% - 24px), 300px);
+		width: min(calc(100% - 24px), 340px);
 	}
 
 	.site-das {
@@ -194,7 +194,7 @@
 	}
 
 	.site-das__title {
-		max-width: 200px;
+		max-width: 252px;
 		font-size: 11px;
 	}
 }

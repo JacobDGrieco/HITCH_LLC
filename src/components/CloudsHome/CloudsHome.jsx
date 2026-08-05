@@ -1,4 +1,5 @@
 import { lazy, Suspense, useEffect, useMemo, useState } from 'react';
+import { Mail, UserRound, Wrench } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { loadEducationPageData, loadExperiencePageData, loadProjectsPageData, loadSkillsPageData } from '../../lib/pageDataCache';
 import '../../styles/clouds-home.css';
@@ -18,7 +19,7 @@ const FLOATING_NAV_ITEMS = [
 		label: 'About',
 		route: '/about',
 		className: 'home-route-button--about',
-		cloudImage: '/home/3d/route-about.png',
+		cloudImage: '/home/3d/route-about-v2.png',
 		icon: 'person',
 	},
 	{
@@ -26,18 +27,25 @@ const FLOATING_NAV_ITEMS = [
 		label: 'Contact',
 		route: '/contact',
 		className: 'home-route-button--contact',
-		cloudImage: '/home/3d/route-contact.png',
+		cloudImage: '/home/3d/route-contact-v2.png',
 		icon: 'mail',
 	},
 	{
 		id: 'skills',
 		label: 'Skills / Experience',
+		labelLines: ['Skills /', 'Experience'],
 		route: '/skills',
 		className: 'home-route-button--skills',
-		cloudImage: '/home/3d/route-skills.png',
-		icon: 'spark',
+		cloudImage: '/home/3d/route-skills-v2.png',
+		icon: 'tool',
 	},
 ];
+
+const ROUTE_ICONS = {
+	person: UserRound,
+	mail: Mail,
+	tool: Wrench,
+};
 
 const PROJECT_PORTALS = [
 	{
@@ -89,7 +97,7 @@ const STATIC_PAGE_IMAGE_SOURCES = [
 	'/contact/linkedin.png',
 	'/contact/github.png',
 	'/home/3d/v2/logo-cloud-v2.png',
-	'/home/3d/v2/logo-wordmark-v2.png',
+	'/home/logo-wordmark-layer.png',
 	'/home/3d/cta-cloud.png',
 	...FLOATING_NAV_ITEMS.map((item) => item.cloudImage),
 	...PROJECT_PORTALS.map((project) => project.previewImage),
@@ -246,7 +254,6 @@ export default function CloudsHome() {
 
 				<main className="clouds-home__stage">
 					<section className="clouds-home__brand-panel" aria-labelledby="home-brand-title">
-						<div className="clouds-home__eyebrow">Web Dev LLC + Portfolio</div>
 						<div className="clouds-home__logo-scene" aria-hidden="true">
 							<div className="clouds-home__logo-sparkles">
 								{LOGO_SPARKLES.map((sparkle, index) => (
@@ -264,18 +271,20 @@ export default function CloudsHome() {
 								))}
 							</div>
 							<img src="/home/3d/v2/logo-cloud-v2.png" alt="" width="1489" height="895" fetchPriority="high" className="clouds-home__logo-cloud" />
-							<img src="/home/3d/v2/logo-wordmark-v2.png" alt="" width="1457" height="345" fetchPriority="high" className="clouds-home__logo-wordmark" />
+							<img src="/home/logo-wordmark-layer.png" alt="" width="1108" height="214" fetchPriority="high" className="clouds-home__logo-wordmark" />
 						</div>
 						<h1 id="home-brand-title" className="clouds-home__sr-title">HeadInTheCloudsHaven LLC</h1>
-						<h2 className="clouds-home__headline">Cloud Portal Gallery</h2>
-						<p className="clouds-home__intro">
-							Web experiences crafted with imagination and code.
-						</p>
-						<div className="clouds-home__actions">
-							<button type="button" className="clouds-home__primary-action" onClick={(e) => openSceneRoute('/projects', e)}>
-								<img src="/home/3d/cta-cloud.png" alt="" className="clouds-home__button-cloud" aria-hidden="true" />
-								<span>Enter Projects</span>
-							</button>
+						<div className="clouds-home__copy-panel">
+							<h2 className="clouds-home__headline">Website Development Consultation & Portfolio</h2>
+							<p className="clouds-home__intro">
+								Websites crafted with care, blending design and functionality to create memorable digital experiences.
+							</p>
+							<div className="clouds-home__actions">
+								<button type="button" className="clouds-home__primary-action" onClick={(e) => openSceneRoute('/projects', e)}>
+									<img src="/home/3d/cta-cloud.png" alt="" className="clouds-home__button-cloud" aria-hidden="true" />
+									<span>Enter Projects</span>
+								</button>
+							</div>
 						</div>
 					</section>
 
@@ -298,20 +307,28 @@ export default function CloudsHome() {
 					</section>
 
 					<div className="clouds-home__route-field" aria-label="Cloud navigation">
-						{FLOATING_NAV_ITEMS.map((item, index) => (
-							<button
-								key={item.id}
-								type="button"
-								className={`home-route-button ${item.className}`}
-								style={{ '--float-index': index }}
-								onClick={(e) => openSceneRoute(item.route, e)}
-								aria-label={`Open ${item.label}`}
-							>
-								<img src={item.cloudImage} alt="" className="home-route-button__cloud-art" aria-hidden="true" />
-								<span className={`home-route-button__icon home-route-button__icon--${item.icon}`} aria-hidden="true" />
-								<span>{item.label}</span>
-							</button>
-						))}
+						{FLOATING_NAV_ITEMS.map((item, index) => {
+							const RouteIcon = ROUTE_ICONS[item.icon];
+
+							return (
+								<button
+									key={item.id}
+									type="button"
+									className={`home-route-button ${item.className}`}
+									style={{ '--float-index': index }}
+									onClick={(e) => openSceneRoute(item.route, e)}
+									aria-label={`Open ${item.label}`}
+								>
+									<img src={item.cloudImage} alt="" className="home-route-button__cloud-art" aria-hidden="true" />
+									<RouteIcon className="home-route-button__icon" strokeWidth={1.85} aria-hidden="true" />
+									<span className="home-route-button__label">
+										{(item.labelLines ?? [item.label]).map((line) => (
+											<span key={line}>{line}</span>
+										))}
+									</span>
+								</button>
+							);
+						})}
 					</div>
 				</main>
 			</div>
