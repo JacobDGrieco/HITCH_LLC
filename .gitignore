@@ -27,3 +27,4 @@ db/backups/
 
 .vercel
 .env*.local
+.playwright-cli

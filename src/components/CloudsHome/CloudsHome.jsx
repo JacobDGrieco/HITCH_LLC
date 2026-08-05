@@ -1,64 +1,52 @@
-import { useEffect, useMemo, useState } from 'react';
+import { lazy, Suspense, useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Cloud from './Cloud';
 import { loadEducationPageData, loadExperiencePageData, loadProjectsPageData, loadSkillsPageData } from '../../lib/pageDataCache';
 import '../../styles/clouds-home.css';
 
+const CloudPortalStage = lazy(() => import('./CloudPortalStage'));
+
 const TOP_NAV_ITEMS = [
-	{ id: 'projects', label: 'Projects', route: '/projects' },
+	{ id: 'projects', label: 'Projects', route: '/projects', isPrimary: true },
 	{ id: 'about', label: 'About', route: '/about' },
 	{ id: 'skills', label: 'Skills / Experience', route: '/skills' },
 	{ id: 'contact', label: 'Contact', route: '/contact' },
 ];
 
-const SCENE_CLOUDS = [
-	{
-		id: 'projects',
-		label: 'Projects',
-		route: '/projects',
-		className: 'page-cloud--projects',
-		scaleMultiplier: 1.18,
-	},
+const FLOATING_NAV_ITEMS = [
 	{
 		id: 'about',
 		label: 'About',
 		route: '/about',
-		className: 'page-cloud--about',
-		scaleMultiplier: 0.76,
+		className: 'home-route-button--about',
+		cloudImage: '/home/3d/route-about.png',
+		icon: 'person',
 	},
 	{
 		id: 'contact',
 		label: 'Contact',
 		route: '/contact',
-		className: 'page-cloud--contact',
-		scaleMultiplier: 0.82,
+		className: 'home-route-button--contact',
+		cloudImage: '/home/3d/route-contact.png',
+		icon: 'mail',
 	},
 	{
-		id: 'experience',
-		label: 'Experience',
-		route: '/experience',
-		className: 'page-cloud--distant page-cloud--experience',
-		scaleMultiplier: 0.56,
+		id: 'skills',
+		label: 'Skills / Experience',
+		route: '/skills',
+		className: 'home-route-button--skills',
+		cloudImage: '/home/3d/route-skills.png',
+		icon: 'spark',
 	},
 ];
 
-const CLOUD_IMAGE_SOURCES = [
-	{ src: '/home/cloud1.png', width: 412, height: 231 },
-	{ src: '/home/cloud2.png', width: 484, height: 218 },
-	{ src: '/home/cloud3.png', width: 471, height: 271 },
-	{ src: '/home/cloud4.png', width: 498, height: 262 },
-	{ src: '/home/cloud5.png', width: 432, height: 257 },
-	{ src: '/home/cloud6.png', width: 471, height: 228 },
-];
-
-// Swap these paths for curated screenshots when the final samples are ready.
 const PROJECT_PORTALS = [
 	{
 		id: 'asd',
 		title: 'A.S.D.',
 		kicker: 'music + fashion platform',
 		description: 'Stage-led music, fashion, player, and CMS experience.',
-		previewImage: '/projects/asd.png',
+		previewImage: '/home/windows/asd.png',
+		liveUrl: 'https://www.asdrecords.net/',
 		route: '/projects',
 		className: 'project-portal--asd',
 	},
@@ -67,7 +55,8 @@ const PROJECT_PORTALS = [
 		title: 'HaloMed',
 		kicker: 'healthcare brand site',
 		description: 'Warm service hierarchy with animated care-path sections.',
-		previewImage: '/projects/halomed.png',
+		previewImage: '/home/windows/halomed.png',
+		liveUrl: 'https://www.halomed.org/',
 		route: '/projects',
 		className: 'project-portal--halomed',
 	},
@@ -77,6 +66,7 @@ const PROJECT_PORTALS = [
 		kicker: 'product interface',
 		description: 'Graph and timeline editor for structured relationships.',
 		previewImage: '/projects/relatime.png',
+		liveUrl: 'https://www.relatime.org/',
 		route: '/projects',
 		className: 'project-portal--relatime',
 	},
@@ -98,8 +88,10 @@ const STATIC_PAGE_IMAGE_SOURCES = [
 	'/contact/resume.png',
 	'/contact/linkedin.png',
 	'/contact/github.png',
-	'/home/logo-cloud-layer.png',
-	'/home/logo-wordmark-layer.png',
+	'/home/3d/v2/logo-cloud-v2.png',
+	'/home/3d/v2/logo-wordmark-v2.png',
+	'/home/3d/cta-cloud.png',
+	...FLOATING_NAV_ITEMS.map((item) => item.cloudImage),
 	...PROJECT_PORTALS.map((project) => project.previewImage),
 ];
 
@@ -120,22 +112,6 @@ function scheduleBackgroundPreload(callback) {
 
 	const preloadTimer = window.setTimeout(callback, 2200);
 	return () => window.clearTimeout(preloadTimer);
-}
-
-function shuffleCloudImages() {
-	const images = [...CLOUD_IMAGE_SOURCES];
-
-	for (let i = images.length - 1; i > 0; i -= 1) {
-		const j = Math.floor(Math.random() * (i + 1));
-		[images[i], images[j]] = [images[j], images[i]];
-	}
-
-	return SCENE_CLOUDS.map((cloud, index) => ({
-		...cloud,
-		imageSrc: images[index].src,
-		imageWidth: images[index].width,
-		imageHeight: images[index].height,
-	}));
 }
 
 function getViewport() {
@@ -186,7 +162,7 @@ function ProjectPortal({ project, onOpen }) {
 export default function CloudsHome() {
 	const navigate = useNavigate();
 	const [viewport, setViewport] = useState(getViewport);
-	const sceneClouds = useMemo(() => shuffleCloudImages(), []);
+	const [reducedMotion, setReducedMotion] = useState(false);
 
 	useEffect(() => {
 		function handleResize() {
@@ -195,6 +171,18 @@ export default function CloudsHome() {
 
 		window.addEventListener('resize', handleResize);
 		return () => window.removeEventListener('resize', handleResize);
+	}, []);
+
+	useEffect(() => {
+		const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+		function handleMotionChange() {
+			setReducedMotion(motionQuery.matches);
+		}
+
+		handleMotionChange();
+		motionQuery.addEventListener('change', handleMotionChange);
+		return () => motionQuery.removeEventListener('change', handleMotionChange);
 	}, []);
 
 	useEffect(() => {
@@ -214,11 +202,9 @@ export default function CloudsHome() {
 	const scaleVars = useMemo(() => {
 		const sceneScale = Math.min(viewport.width / 1440, viewport.height / 900);
 		const brandScale = clampScale(sceneScale, 0.50, 1.08);
-		const cloudScale = clampScale(sceneScale, 0.50, 1.08) * 0.66;
 
 		return {
 			'--home-logo-width': `${900 * brandScale}px`,
-			'--home-cloud-scale': cloudScale,
 		};
 	}, [viewport]);
 
@@ -227,12 +213,17 @@ export default function CloudsHome() {
 		navigate(route);
 	}
 
+	function openLiveProject(url) {
+		window.open(url, '_blank', 'noopener,noreferrer');
+	}
+
 	return (
 		<div className="clouds-home" style={scaleVars}>
 			<div className="clouds-home__camera">
 				<div className="clouds-home__sky" />
 				<div className="clouds-home__haze" />
 				<div className="clouds-home__horizon" />
+				<div className="clouds-home__sun" aria-hidden="true" />
 
 				<header className="clouds-home__topbar">
 					<Link to="/" className="clouds-home__mark" aria-label="HeadInTheCloudsHaven home">
@@ -241,7 +232,12 @@ export default function CloudsHome() {
 					</Link>
 					<nav className="clouds-home__nav" aria-label="Portfolio sections">
 						{TOP_NAV_ITEMS.map((item) => (
-							<Link key={item.id} to={item.route} className="clouds-home__nav-link">
+							<Link
+								key={item.id}
+								to={item.route}
+								className={`clouds-home__nav-link${item.isPrimary ? ' clouds-home__nav-link--primary' : ''}`}
+							>
+								{item.isPrimary ? <img src="/home/3d/cta-cloud.png" alt="" className="clouds-home__nav-cloud" aria-hidden="true" /> : null}
 								{item.label}
 							</Link>
 						))}
@@ -267,8 +263,8 @@ export default function CloudsHome() {
 									/>
 								))}
 							</div>
-							<img src="/home/logo-cloud-layer.png" alt="" width="1198" height="720" fetchPriority="high" className="clouds-home__logo-cloud" />
-							<img src="/home/logo-wordmark-layer.png" alt="" width="1108" height="214" fetchPriority="high" className="clouds-home__logo-wordmark" />
+							<img src="/home/3d/v2/logo-cloud-v2.png" alt="" width="1489" height="895" fetchPriority="high" className="clouds-home__logo-cloud" />
+							<img src="/home/3d/v2/logo-wordmark-v2.png" alt="" width="1457" height="345" fetchPriority="high" className="clouds-home__logo-wordmark" />
 						</div>
 						<h1 id="home-brand-title" className="clouds-home__sr-title">HeadInTheCloudsHaven LLC</h1>
 						<h2 className="clouds-home__headline">Cloud Portal Gallery</h2>
@@ -277,35 +273,44 @@ export default function CloudsHome() {
 						</p>
 						<div className="clouds-home__actions">
 							<button type="button" className="clouds-home__primary-action" onClick={(e) => openSceneRoute('/projects', e)}>
-								<span className="clouds-home__button-cloud" aria-hidden="true" />
+								<img src="/home/3d/cta-cloud.png" alt="" className="clouds-home__button-cloud" aria-hidden="true" />
 								<span>Enter Projects</span>
 							</button>
 						</div>
 					</section>
 
 					<section className="clouds-home__portal-field" aria-label="Selected project portals">
-						{PROJECT_PORTALS.map((project) => (
-							<ProjectPortal
-								key={project.id}
-								project={project}
-								onOpen={(e) => openSceneRoute(project.route, e)}
-							/>
-						))}
+						<Suspense fallback={null}>
+							<CloudPortalStage onOpenProject={openLiveProject} reducedMotion={reducedMotion} />
+						</Suspense>
+						<div className="clouds-home__mobile-portals">
+							{PROJECT_PORTALS.map((project) => (
+								<ProjectPortal
+									key={project.id}
+									project={project}
+									onOpen={(e) => {
+										e.currentTarget.blur();
+										openLiveProject(project.liveUrl);
+									}}
+								/>
+							))}
+						</div>
 					</section>
 
-					<div className="clouds-home__cloud-field" aria-label="Cloud navigation">
-						{sceneClouds.map((cloud, index) => (
-							<Cloud
-								key={cloud.id}
-								label={cloud.label}
-								imageSrc={cloud.imageSrc}
-								imageWidth={cloud.imageWidth}
-								imageHeight={cloud.imageHeight}
-								scale={scaleVars['--home-cloud-scale'] * cloud.scaleMultiplier}
-								floatIndex={index}
-								className={cloud.className}
-								onClick={(e) => openSceneRoute(cloud.route, e)}
-							/>
+					<div className="clouds-home__route-field" aria-label="Cloud navigation">
+						{FLOATING_NAV_ITEMS.map((item, index) => (
+							<button
+								key={item.id}
+								type="button"
+								className={`home-route-button ${item.className}`}
+								style={{ '--float-index': index }}
+								onClick={(e) => openSceneRoute(item.route, e)}
+								aria-label={`Open ${item.label}`}
+							>
+								<img src={item.cloudImage} alt="" className="home-route-button__cloud-art" aria-hidden="true" />
+								<span className={`home-route-button__icon home-route-button__icon--${item.icon}`} aria-hidden="true" />
+								<span>{item.label}</span>
+							</button>
 						))}
 					</div>
 				</main>

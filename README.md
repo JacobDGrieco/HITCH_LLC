@@ -51,12 +51,13 @@ npm run preview
 ```text
 .
 ├─ api/
+|  ├─ db/
+│     ├─ music_track_metadata.sql
+│     └─ page_content_tables.sql
 │  ├─ contact.py
 │  └─ music/
 │     ├─ playlist.js
 │     └─ stream.js
-├─ db/
-│  └─ music_track_metadata.sql
 ├─ lib/
 │  └─ musicMetadataStore.js
 ├─ public/
