@@ -14,7 +14,7 @@ const PORTAL_LAYOUT = [
 		title: 'A.S.D.',
 		liveUrl: 'https://www.asdrecords.net/',
 		previewImage: '/home/windows/asd.png',
-		cloudImage: '/home/3d/v2/portal-asd-back-v2.png',
+		cloudImage: '/home/throne1.png',
 		position: [1.8, 1.40, -1.34],
 		window: {
 			position: [0, -0.12, 0],
@@ -43,7 +43,7 @@ const PORTAL_LAYOUT = [
 		title: 'HaloMed',
 		liveUrl: 'https://www.halomed.org/',
 		previewImage: '/home/windows/halomed.png',
-		cloudImage: '/home/3d/v2/portal-halomed-back-v2.png',
+		cloudImage: '/home/throne2.png',
 		position: [-0.10, -1.24, 0.20],
 		window: {
 			position: [-0.03, -0.01, 0],
@@ -72,7 +72,7 @@ const PORTAL_LAYOUT = [
 		title: 'RelaTime',
 		liveUrl: 'https://www.relatime.org/',
 		previewImage: '/home/windows/relatime.png',
-		cloudImage: '/home/3d/v2/portal-relatime-back-v2.png',
+		cloudImage: '/home/throne3.png',
 		position: [3.3, -1.25, -0.36],
 		window: {
 			position: [0.02, 0.09, 0.02],
@@ -478,8 +478,8 @@ function ProjectPreview({ portal, imagePosition }) {
 function ProjectTitle({ portal, viewportCenter, viewportSize }) {
 	const [viewportWidth, viewportHeight] = viewportSize;
 	const titlePosition = [
-		viewportCenter[0] - viewportWidth / 2 + 0.20,
-		viewportCenter[1] + viewportHeight / 2 - 0.22,
+		viewportCenter[0] - viewportWidth / 2 + 0.14,
+		viewportCenter[1] + viewportHeight / 2 - 0.16,
 		0.14,
 	];
 
@@ -518,7 +518,7 @@ function GlassPanel({ portal, onOpen }) {
 	);
 }
 
-function PortalGroup({ portal, onOpen, reducedMotion }) {
+function PortalGroup({ portal, onOpen, reducedMotion, sceneScale }) {
 	const groupRef = useRef(null);
 
 	useFrame(({ clock }) => {
@@ -535,32 +535,36 @@ function PortalGroup({ portal, onOpen, reducedMotion }) {
 			position={portal.position}
 			userData={{ id: portal.id }}
 		>
-			<CloudImage
-				url={portal.cloudImage}
-				position={portal.backCloud.position}
-				rotation={portal.backCloud.rotation}
-				scale={portal.backCloud.scale}
-				opacity={0.98}
-				renderOrder={1}
-			/>
 			<group
-				position={portal.window.position}
-				rotation={portal.window.rotation}
-				scale={portal.window.scale}
+				scale={[sceneScale, sceneScale, sceneScale]}
 			>
-				<GlassPanel portal={portal} onOpen={onOpen} />
+				<CloudImage
+					url={portal.cloudImage}
+					position={portal.backCloud.position}
+					rotation={portal.backCloud.rotation}
+					scale={portal.backCloud.scale}
+					opacity={0.98}
+					renderOrder={1}
+				/>
+				<group
+					position={portal.window.position}
+					rotation={portal.window.rotation}
+					scale={portal.window.scale}
+				>
+					<GlassPanel portal={portal} onOpen={onOpen} />
+				</group>
+				<CloudForeground
+					url={portal.cloudImage}
+					position={portal.foregroundCloud.position}
+					rotation={portal.foregroundCloud.rotation}
+					scale={portal.foregroundCloud.scale}
+				/>
 			</group>
-			<CloudForeground
-				url={portal.cloudImage}
-				position={portal.foregroundCloud.position}
-				rotation={portal.foregroundCloud.rotation}
-				scale={portal.foregroundCloud.scale}
-			/>
 		</group>
 	);
 }
 
-function PortalScene({ onOpenProject, reducedMotion }) {
+function PortalScene({ onOpenProject, reducedMotion, sceneScale }) {
 	return (
 		<>
 			<ambientLight intensity={1.15} />
@@ -572,6 +576,7 @@ function PortalScene({ onOpenProject, reducedMotion }) {
 						key={portal.id}
 						portal={portal}
 						reducedMotion={reducedMotion}
+						sceneScale={sceneScale}
 						onOpen={(event) => {
 							event.stopPropagation();
 							onOpenProject(portal.liveUrl);
@@ -583,7 +588,7 @@ function PortalScene({ onOpenProject, reducedMotion }) {
 	);
 }
 
-export default function CloudPortalStage({ onOpenProject, reducedMotion }) {
+export default function CloudPortalStage({ onOpenProject, reducedMotion, sceneScale = 1 }) {
 	return (
 		<div className="cloud-portal-stage" aria-hidden="true">
 			<Canvas
@@ -592,7 +597,7 @@ export default function CloudPortalStage({ onOpenProject, reducedMotion }) {
 				gl={{ alpha: true, antialias: true, powerPreference: 'high-performance' }}
 			>
 				<Suspense fallback={null}>
-					<PortalScene onOpenProject={onOpenProject} reducedMotion={reducedMotion} />
+					<PortalScene onOpenProject={onOpenProject} reducedMotion={reducedMotion} sceneScale={sceneScale} />
 				</Suspense>
 			</Canvas>
 		</div>

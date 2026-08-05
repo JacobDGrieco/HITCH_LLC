@@ -2,9 +2,32 @@
 	position: fixed;
 	inset: 0;
 	background:
-		radial-gradient(ellipse 68% 38% at 50% 52%, rgba(255, 235, 215, 0.88) 0%, rgba(252, 215, 198, 0.78) 30%, rgba(245, 195, 185, 0.50) 55%, transparent 76%),
-		linear-gradient(180deg, #f6ddd4 0%, #f7e0d5 18%, #f8e5d8 36%, #faeadd 56%, #fcf0e5 78%, #fff7f0 100%);
+		linear-gradient(180deg, rgba(3, 15, 36, 0.18) 0%, rgba(7, 25, 55, 0.04) 46%, rgba(255, 165, 94, 0.14) 100%),
+		url('/home/portal-sky.png') center center / cover no-repeat,
+		linear-gradient(180deg, #071a3e 0%, #283e74 48%, #f0a35f 100%);
 	z-index: 0;
+}
+
+.page-shell__sky::before,
+.page-shell__sky::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+}
+
+.page-shell__sky::before {
+	background:
+		radial-gradient(ellipse 64% 28% at 50% 92%, rgba(255, 177, 93, 0.34), transparent 72%),
+		radial-gradient(ellipse 60% 30% at 18% 18%, rgba(238, 149, 178, 0.18), transparent 68%),
+		linear-gradient(180deg, rgba(2, 13, 37, 0.18) 0%, transparent 40%, rgba(21, 21, 58, 0.16) 100%);
+	mix-blend-mode: soft-light;
+}
+
+.page-shell__sky::after {
+	background:
+		radial-gradient(ellipse 94% 22% at 50% 100%, rgba(255, 179, 92, 0.30), transparent 76%),
+		linear-gradient(90deg, rgba(3, 14, 36, 0.34), transparent 22%, transparent 78%, rgba(3, 14, 36, 0.24));
 }
 
 .page-shell__overlay {
@@ -12,8 +35,8 @@
 	inset: 0;
 	z-index: 25;
 	background:
-		radial-gradient(ellipse 60% 34% at 50% 48%, rgba(255, 248, 240, 0.96) 0%, rgba(255, 228, 210, 0.90) 28%, rgba(252, 200, 195, 0.78) 52%, rgba(244, 175, 190, 0.52) 72%, transparent 100%),
-		linear-gradient(160deg, #fff8f2 0%, #fff0e8 18%, #fde0d8 42%, #f9cfd4 68%, #f5c4d2 100%);
+		radial-gradient(ellipse 80% 42% at 50% 96%, rgba(255, 171, 87, 0.16), transparent 74%),
+		linear-gradient(180deg, rgba(4, 17, 42, 0.20) 0%, rgba(9, 25, 57, 0.05) 42%, rgba(40, 24, 64, 0.13) 100%);
 	transition: opacity 0.4s ease;
 	overflow: hidden;
 	display: flex;
@@ -27,8 +50,8 @@
 	z-index: 4;
 	pointer-events: none;
 	background:
-		radial-gradient(ellipse 60% 34% at 50% 48%, rgba(255, 248, 240, 0.96) 0%, rgba(255, 228, 210, 0.90) 28%, rgba(252, 200, 195, 0.78) 52%, rgba(244, 175, 190, 0.52) 72%, transparent 100%),
-		linear-gradient(160deg, #fff8f2 0%, #fff0e8 18%, #fde0d8 42%, #f9cfd4 68%, #f5c4d2 100%);
+		radial-gradient(ellipse 64% 38% at 50% 48%, rgba(255, 225, 196, 0.76) 0%, rgba(250, 178, 171, 0.44) 38%, transparent 76%),
+		linear-gradient(160deg, rgba(255, 242, 224, 0.92) 0%, rgba(252, 198, 185, 0.56) 42%, rgba(21, 28, 72, 0.18) 100%);
 	animation: pageShellGradientVeil 1.08s cubic-bezier(0.22, 1, 0.36, 1) 0.02s both;
 }
 
@@ -51,7 +74,38 @@
 	inset: 0;
 	pointer-events: none;
 	z-index: 1;
-	background: radial-gradient(ellipse 60% 25% at 20% 15%, rgba(255, 255, 255, 0.5) 0%, transparent 60%), radial-gradient(ellipse 40% 20% at 80% 80%, rgba(240, 220, 255, 0.35) 0%, transparent 55%);
+	background:
+		radial-gradient(ellipse 24% 11% at 8% 22%, rgba(255, 175, 169, 0.44) 0%, transparent 70%),
+		radial-gradient(ellipse 22% 9% at 88% 18%, rgba(255, 185, 157, 0.28) 0%, transparent 70%),
+		radial-gradient(ellipse 38% 14% at 66% 86%, rgba(255, 166, 100, 0.18) 0%, transparent 74%);
+}
+
+.page-shell__wisps::before,
+.page-shell__wisps::after {
+	content: '';
+	position: absolute;
+	pointer-events: none;
+	background: url('/home/route1.png') center center / contain no-repeat;
+	filter:
+		drop-shadow(0 18px 28px rgba(6, 18, 48, 0.24))
+		drop-shadow(0 0 18px rgba(255, 175, 151, 0.18));
+	opacity: 0.38;
+}
+
+.page-shell__wisps::before {
+	top: 13vh;
+	left: -5vw;
+	width: min(30vw, 470px);
+	aspect-ratio: 3 / 1.55;
+	transform: rotate(-7deg);
+}
+
+.page-shell__wisps::after {
+	right: -4vw;
+	bottom: 8vh;
+	width: min(34vw, 540px);
+	aspect-ratio: 3 / 1.55;
+	transform: rotate(5deg);
 }
 
 .page-shell__back {
@@ -61,28 +115,57 @@
 	display: flex;
 	align-items: center;
 	gap: 8px;
-	padding: 7px 16px;
-	border-radius: 20px;
+	padding: 9px 18px;
+	border-radius: 999px;
 	z-index: 30;
-	background: rgba(255, 255, 255, 0.75);
-	border: 1px solid rgba(200, 150, 180, 0.4);
-	box-shadow: 0 2px 10px rgba(200, 150, 180, 0.2);
+	background:
+		linear-gradient(145deg, rgba(255, 232, 226, 0.24), rgba(37, 48, 93, 0.46)),
+		radial-gradient(circle at 18% 18%, rgba(255, 238, 224, 0.34), transparent 42%);
+	border: 1px solid rgba(255, 217, 220, 0.62);
+	box-shadow:
+		0 14px 34px rgba(6, 16, 42, 0.26),
+		0 0 22px rgba(255, 178, 163, 0.18),
+		inset 0 1px 0 rgba(255, 255, 255, 0.52);
+	backdrop-filter: blur(18px) saturate(1.16);
 	font-size: 12px;
-	font-weight: 700;
-	letter-spacing: 1px;
-	color: rgba(160, 80, 130, 0.9);
-	text-transform: uppercase;
+	font-weight: 760;
+	letter-spacing: 0.02em;
+	color: rgba(255, 229, 218, 0.95);
+	text-transform: none;
+	text-shadow: 0 2px 9px rgba(17, 24, 58, 0.48);
 	cursor: pointer;
-	transition: background 0.2s, box-shadow 0.2s;
+	transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+
+.page-shell__back::before {
+	content: '←';
+	font-size: 17px;
+	line-height: 1;
+	color: rgba(255, 226, 203, 0.96);
+	text-shadow: 0 0 10px rgba(255, 185, 142, 0.74);
+}
+
+.page-shell__back::after {
+	content: '';
+	width: 22px;
+	height: 16px;
+	background: url('/home/cta-cloud.png') center center / contain no-repeat;
+	filter: drop-shadow(0 0 9px rgba(255, 194, 160, 0.60));
 }
 
 .page-shell__back:hover {
-	background: rgba(255, 255, 255, 0.95);
-	box-shadow: 0 4px 16px rgba(200, 140, 180, 0.3);
+	background:
+		linear-gradient(145deg, rgba(255, 232, 226, 0.34), rgba(44, 56, 106, 0.54)),
+		radial-gradient(circle at 18% 18%, rgba(255, 238, 224, 0.44), transparent 42%);
+	box-shadow:
+		0 18px 38px rgba(6, 16, 42, 0.32),
+		0 0 30px rgba(255, 178, 163, 0.26),
+		inset 0 1px 0 rgba(255, 255, 255, 0.56);
+	transform: translateY(-1px);
 }
 
 .page-shell__back:focus-visible {
-	outline: 3px solid rgba(160, 80, 130, 0.58);
+	outline: 3px solid rgba(255, 214, 203, 0.68);
 	outline-offset: 3px;
 }
 
@@ -93,15 +176,44 @@
 	transform: translateX(-50%);
 	display: flex;
 	align-items: center;
-	gap: 8px;
+	gap: 10px;
 	max-width: calc(100% - 32px);
-	padding: 6px;
+	padding: 8px 12px;
 	border-radius: 999px;
 	z-index: 30;
-	background: rgba(255, 255, 255, 0.72);
-	border: 1px solid rgba(200, 150, 180, 0.4);
-	box-shadow: 0 12px 28px rgba(200, 150, 180, 0.18);
-	backdrop-filter: blur(16px);
+	background:
+		linear-gradient(150deg, rgba(255, 249, 253, 0.32), rgba(180, 190, 224, 0.13) 42%, rgba(16, 34, 75, 0.48)),
+		radial-gradient(circle at 6% 18%, rgba(255, 239, 232, 0.34), transparent 34%),
+		radial-gradient(circle at 96% 50%, rgba(255, 190, 176, 0.22), transparent 30%);
+	border: 1px solid rgba(255, 223, 230, 0.72);
+	box-shadow:
+		0 18px 44px rgba(4, 15, 42, 0.30),
+		0 0 0 1px rgba(255, 255, 255, 0.10),
+		0 0 34px rgba(255, 178, 181, 0.22),
+		inset 0 1px 0 rgba(255, 255, 255, 0.58),
+		inset 0 -1px 0 rgba(255, 170, 170, 0.22);
+	backdrop-filter: blur(20px) saturate(1.18);
+}
+
+.page-shell__nav::before {
+	content: '';
+	position: absolute;
+	right: 54px;
+	bottom: -3px;
+	left: 28px;
+	height: 2px;
+	border-radius: 999px;
+	background: linear-gradient(90deg, transparent, rgba(255, 207, 183, 0.84) 16%, rgba(255, 240, 220, 0.9) 50%, rgba(255, 176, 180, 0.52) 82%, transparent);
+	box-shadow: 0 0 14px rgba(255, 188, 172, 0.72);
+	pointer-events: none;
+}
+
+.page-shell__nav-cloud {
+	flex: 0 0 auto;
+	width: 30px;
+	height: 22px;
+	background: url('/home/cta-cloud.png') center center / contain no-repeat;
+	filter: drop-shadow(0 0 10px rgba(255, 196, 166, 0.58));
 }
 
 .page-shell__nav-links {
@@ -119,14 +231,15 @@
 	padding: 7px 12px;
 	border-radius: 999px;
 	font-size: 12px;
-	font-weight: 800;
-	letter-spacing: 0.8px;
+	font-weight: 760;
+	letter-spacing: 0.03em;
 	line-height: 1;
 	text-decoration: none;
-	color: rgba(160, 80, 130, 0.9);
-	text-transform: uppercase;
+	color: rgba(255, 232, 226, 0.88);
+	text-transform: none;
 	white-space: nowrap;
-	transition: background 0.2s, box-shadow 0.2s, color 0.2s;
+	text-shadow: 0 2px 9px rgba(13, 24, 58, 0.40);
+	transition: background 0.2s, box-shadow 0.2s, color 0.2s, transform 0.2s;
 }
 
 .page-shell__nav-link {
@@ -136,17 +249,54 @@
 
 .page-shell__nav-link:hover,
 .page-shell__nav-link--active {
-	background: rgba(255, 255, 255, 0.95);
-	box-shadow: 0 4px 16px rgba(200, 140, 180, 0.3);
+	background: rgba(255, 229, 222, 0.14);
+	box-shadow:
+		inset 0 0 0 1px rgba(255, 235, 226, 0.18),
+		0 0 18px rgba(255, 189, 166, 0.22);
+	transform: translateY(-1px);
 }
 
 .page-shell__nav-link--active {
-	color: rgba(115, 54, 105, 0.98);
+	color: rgba(255, 244, 230, 0.98);
 }
 
 .page-shell__nav-link:focus-visible {
-	outline: 3px solid rgba(160, 80, 130, 0.58);
+	outline: 3px solid rgba(255, 214, 203, 0.68);
 	outline-offset: 3px;
+}
+
+.page-shell__nav-orb {
+	position: relative;
+	display: grid;
+	flex: 0 0 auto;
+	place-items: center;
+	width: 38px;
+	aspect-ratio: 1;
+	border: 1px solid rgba(255, 225, 230, 0.82);
+	border-radius: 50%;
+	background:
+		radial-gradient(circle at 44% 35%, rgba(255, 249, 239, 0.72), transparent 28%),
+		linear-gradient(145deg, rgba(255, 236, 230, 0.28), rgba(231, 128, 157, 0.22) 52%, rgba(31, 49, 91, 0.28));
+	box-shadow:
+		0 0 20px rgba(255, 194, 178, 0.62),
+		0 0 40px rgba(255, 171, 167, 0.24),
+		inset 0 1px 0 rgba(255, 255, 255, 0.60),
+		inset 0 -1px 0 rgba(255, 168, 164, 0.24);
+}
+
+.page-shell__nav-orb::before {
+	content: '';
+	width: 22px;
+	aspect-ratio: 1;
+	background:
+		radial-gradient(circle, rgba(255, 250, 238, 1) 0 9%, rgba(255, 226, 201, 0.94) 10% 18%, transparent 19%),
+		linear-gradient(90deg, transparent 0 36%, rgba(255, 239, 215, 0.98) 42% 58%, transparent 64% 100%),
+		linear-gradient(0deg, transparent 0 36%, rgba(255, 239, 215, 0.98) 42% 58%, transparent 64% 100%);
+	clip-path: polygon(50% 0, 61% 36%, 100% 50%, 61% 64%, 50% 100%, 39% 64%, 0 50%, 39% 36%);
+	filter:
+		drop-shadow(0 0 4px rgba(255, 243, 222, 0.98))
+		drop-shadow(0 0 13px rgba(255, 179, 139, 0.88))
+		drop-shadow(0 0 22px rgba(255, 132, 143, 0.38));
 }
 
 .page-shell__content {
@@ -174,56 +324,6 @@
 	transform: translateY(0);
 }
 
-
-.page-shell__sky--projects {
-	background:
-		radial-gradient(ellipse 68% 38% at 50% 52%, rgba(255, 235, 215, 0.88) 0%, rgba(252, 215, 198, 0.78) 30%, rgba(245, 195, 185, 0.50) 55%, transparent 76%),
-		linear-gradient(180deg, #f6ddd4 0%, #f7e0d5 18%, #f8e5d8 36%, #faeadd 56%, #fcf0e5 78%, #fff7f0 100%);
-}
-
-.page-shell__overlay--projects {
-	background:
-		radial-gradient(ellipse 60% 34% at 50% 48%, rgba(255, 248, 240, 0.96) 0%, rgba(255, 228, 210, 0.90) 28%, rgba(252, 200, 195, 0.78) 52%, rgba(244, 175, 190, 0.52) 72%, transparent 100%),
-		linear-gradient(160deg, #fff8f2 0%, #fff0e8 18%, #fde0d8 42%, #f9cfd4 68%, #f5c4d2 100%);
-}
-
-.page-shell__overlay--projects .page-shell__wisps {
-	background:
-		radial-gradient(ellipse 60% 25% at 20% 15%, rgba(255, 255, 255, 0.46) 0%, transparent 60%),
-		radial-gradient(ellipse 40% 20% at 80% 80%, rgba(255, 235, 245, 0.38) 0%, transparent 55%),
-		radial-gradient(ellipse 48% 24% at 50% 52%, rgba(255, 226, 238, 0.44) 0%, transparent 68%);
-}
-
-.page-shell__sky--skills,
-.page-shell__sky--education,
-.page-shell__sky--experience,
-.page-shell__sky--contact,
-.page-shell__sky--about {
-	background:
-		radial-gradient(ellipse 68% 38% at 50% 52%, rgba(255, 235, 215, 0.88) 0%, rgba(252, 215, 198, 0.78) 30%, rgba(245, 195, 185, 0.50) 55%, transparent 76%),
-		linear-gradient(180deg, #f6ddd4 0%, #f7e0d5 18%, #f8e5d8 36%, #faeadd 56%, #fcf0e5 78%, #fff7f0 100%);
-}
-
-.page-shell__overlay--skills,
-.page-shell__overlay--education,
-.page-shell__overlay--experience,
-.page-shell__overlay--contact,
-.page-shell__overlay--about {
-	background:
-		radial-gradient(ellipse 60% 34% at 50% 48%, rgba(255, 248, 240, 0.96) 0%, rgba(255, 228, 210, 0.90) 28%, rgba(252, 200, 195, 0.78) 52%, rgba(244, 175, 190, 0.52) 72%, transparent 100%),
-		linear-gradient(160deg, #fff8f2 0%, #fff0e8 18%, #fde0d8 42%, #f9cfd4 68%, #f5c4d2 100%);
-}
-
-.page-shell__overlay--skills .page-shell__wisps,
-.page-shell__overlay--education .page-shell__wisps,
-.page-shell__overlay--experience .page-shell__wisps,
-.page-shell__overlay--contact .page-shell__wisps,
-.page-shell__overlay--about .page-shell__wisps {
-	background:
-		radial-gradient(ellipse 60% 25% at 20% 15%, rgba(255, 255, 255, 0.46) 0%, transparent 60%),
-		radial-gradient(ellipse 40% 20% at 80% 80%, rgba(255, 235, 245, 0.38) 0%, transparent 55%),
-		radial-gradient(ellipse 48% 24% at 50% 52%, rgba(255, 226, 238, 0.44) 0%, transparent 68%);
-}
 
 @keyframes pageShellGradientVeil {
 	0%, 44% {
@@ -259,6 +359,7 @@
 		max-width: calc(100% - 24px);
 		overflow-x: auto;
 		scrollbar-width: none;
+		padding: 7px 10px;
 	}
 
 	.page-shell__nav::-webkit-scrollbar {
@@ -273,7 +374,7 @@
 	}
 
 	.page-shell__content {
-		padding: 88px 24px 28px;
+		padding: 92px 24px 28px;
 		justify-content: flex-start;
 	}
 }
@@ -293,6 +394,11 @@
 		top: 50px;
 		transform: none;
 		justify-content: flex-start;
+	}
+
+	.page-shell__nav-cloud,
+	.page-shell__nav-orb {
+		display: none;
 	}
 
 	.page-shell__nav-link {

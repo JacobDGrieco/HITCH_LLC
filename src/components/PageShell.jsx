@@ -50,6 +50,7 @@ export default function PageShell({ children, section = 'default' }) {
 				</button>
 
 				<nav className="page-shell__nav" aria-label="Page sections">
+					<span className="page-shell__nav-cloud" aria-hidden="true" />
 					<div className="page-shell__nav-links">
 						{PAGE_NAV_ITEMS.map((item) => (
 							<NavLink
@@ -61,6 +62,7 @@ export default function PageShell({ children, section = 'default' }) {
 							</NavLink>
 						))}
 					</div>
+					<span className="page-shell__nav-orb" aria-hidden="true" />
 				</nav>
 
 				<div className={`page-shell__content ${contentVisible ? 'page-shell__content--visible' : 'page-shell__content--hidden'}`}>

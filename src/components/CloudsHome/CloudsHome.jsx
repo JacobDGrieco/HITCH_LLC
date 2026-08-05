@@ -7,8 +7,8 @@ import '../../styles/clouds-home.css';
 const CloudPortalStage = lazy(() => import('./CloudPortalStage'));
 
 const TOP_NAV_ITEMS = [
-	{ id: 'projects', label: 'Projects', route: '/projects', isPrimary: true },
 	{ id: 'about', label: 'About', route: '/about' },
+	{ id: 'projects', label: 'Projects', route: '/projects', isPrimary: true },
 	{ id: 'skills', label: 'Skills / Experience', route: '/skills' },
 	{ id: 'contact', label: 'Contact', route: '/contact' },
 ];
@@ -19,7 +19,7 @@ const FLOATING_NAV_ITEMS = [
 		label: 'About',
 		route: '/about',
 		className: 'home-route-button--about',
-		cloudImage: '/home/3d/route-about-v2.png',
+		cloudImage: '/home/route1.png',
 		icon: 'person',
 	},
 	{
@@ -27,7 +27,7 @@ const FLOATING_NAV_ITEMS = [
 		label: 'Contact',
 		route: '/contact',
 		className: 'home-route-button--contact',
-		cloudImage: '/home/3d/route-contact-v2.png',
+		cloudImage: '/home/route2.png',
 		icon: 'mail',
 	},
 	{
@@ -36,7 +36,7 @@ const FLOATING_NAV_ITEMS = [
 		labelLines: ['Skills /', 'Experience'],
 		route: '/skills',
 		className: 'home-route-button--skills',
-		cloudImage: '/home/3d/route-skills-v2.png',
+		cloudImage: '/home/route3.png',
 		icon: 'tool',
 	},
 ];
@@ -51,8 +51,6 @@ const PROJECT_PORTALS = [
 	{
 		id: 'asd',
 		title: 'A.S.D.',
-		kicker: 'music + fashion platform',
-		description: 'Stage-led music, fashion, player, and CMS experience.',
 		previewImage: '/home/windows/asd.png',
 		liveUrl: 'https://www.asdrecords.net/',
 		route: '/projects',
@@ -61,8 +59,6 @@ const PROJECT_PORTALS = [
 	{
 		id: 'halomed',
 		title: 'HaloMed',
-		kicker: 'healthcare brand site',
-		description: 'Warm service hierarchy with animated care-path sections.',
 		previewImage: '/home/windows/halomed.png',
 		liveUrl: 'https://www.halomed.org/',
 		route: '/projects',
@@ -71,8 +67,6 @@ const PROJECT_PORTALS = [
 	{
 		id: 'relatime',
 		title: 'RelaTime',
-		kicker: 'product interface',
-		description: 'Graph and timeline editor for structured relationships.',
 		previewImage: '/projects/relatime.png',
 		liveUrl: 'https://www.relatime.org/',
 		route: '/projects',
@@ -96,9 +90,9 @@ const STATIC_PAGE_IMAGE_SOURCES = [
 	'/contact/resume.png',
 	'/contact/linkedin.png',
 	'/contact/github.png',
-	'/home/3d/v2/logo-cloud-v2.png',
-	'/home/logo-wordmark-layer.png',
-	'/home/3d/cta-cloud.png',
+	'/home/logo-cloud.png',
+	'/home/logo-wordmark.png',
+	'/home/cta-cloud.png',
 	...FLOATING_NAV_ITEMS.map((item) => item.cloudImage),
 	...PROJECT_PORTALS.map((project) => project.previewImage),
 ];
@@ -207,12 +201,22 @@ export default function CloudsHome() {
 		window.sessionStorage.removeItem('cloudsHomeReturnSection');
 	}, []);
 
-	const scaleVars = useMemo(() => {
-		const sceneScale = Math.min(viewport.width / 1440, viewport.height / 900);
-		const brandScale = clampScale(sceneScale, 0.50, 1.08);
+	const { portalSceneScale, scaleVars } = useMemo(() => {
+		const isCompactLayout = viewport.width <= 820;
+		const sceneFitScale = isCompactLayout
+			? 1
+			: clampScale(Math.min(viewport.width / 1680, viewport.height / 920), 0.72, 1);
+		const logoFitScale = isCompactLayout
+			? clampScale(Math.min(viewport.width / 1440, viewport.height / 900), 0.50, 1.08)
+			: sceneFitScale;
 
 		return {
-			'--home-logo-width': `${900 * brandScale}px`,
+			portalSceneScale: sceneFitScale,
+			scaleVars: {
+				'--home-logo-width': `${900 * logoFitScale}px`,
+				'--home-copy-scale': sceneFitScale,
+				'--home-route-scale': sceneFitScale,
+			},
 		};
 	}, [viewport]);
 
@@ -245,11 +249,12 @@ export default function CloudsHome() {
 								to={item.route}
 								className={`clouds-home__nav-link${item.isPrimary ? ' clouds-home__nav-link--primary' : ''}`}
 							>
-								{item.isPrimary ? <img src="/home/3d/cta-cloud.png" alt="" className="clouds-home__nav-cloud" aria-hidden="true" /> : null}
+								{item.isPrimary ? <img src="/home/cta-cloud.png" alt="" className="clouds-home__nav-cloud" aria-hidden="true" /> : null}
 								{item.label}
 							</Link>
 						))}
 					</nav>
+					<span className="clouds-home__nav-orb" aria-hidden="true" />
 				</header>
 
 				<main className="clouds-home__stage">
@@ -270,8 +275,8 @@ export default function CloudsHome() {
 									/>
 								))}
 							</div>
-							<img src="/home/3d/v2/logo-cloud-v2.png" alt="" width="1489" height="895" fetchPriority="high" className="clouds-home__logo-cloud" />
-							<img src="/home/logo-wordmark-layer.png" alt="" width="1108" height="214" fetchPriority="high" className="clouds-home__logo-wordmark" />
+							<img src="/home/logo-cloud.png" alt="" width="1489" height="895" fetchPriority="high" className="clouds-home__logo-cloud" />
+							<img src="/home/logo-wordmark.png" alt="" width="1108" height="214" fetchPriority="high" className="clouds-home__logo-wordmark" />
 						</div>
 						<h1 id="home-brand-title" className="clouds-home__sr-title">HeadInTheCloudsHaven LLC</h1>
 						<div className="clouds-home__copy-panel">
@@ -281,7 +286,7 @@ export default function CloudsHome() {
 							</p>
 							<div className="clouds-home__actions">
 								<button type="button" className="clouds-home__primary-action" onClick={(e) => openSceneRoute('/projects', e)}>
-									<img src="/home/3d/cta-cloud.png" alt="" className="clouds-home__button-cloud" aria-hidden="true" />
+									<img src="/home/cta-cloud.png" alt="" className="clouds-home__button-cloud" aria-hidden="true" />
 									<span>Enter Projects</span>
 								</button>
 							</div>
@@ -290,7 +295,7 @@ export default function CloudsHome() {
 
 					<section className="clouds-home__portal-field" aria-label="Selected project portals">
 						<Suspense fallback={null}>
-							<CloudPortalStage onOpenProject={openLiveProject} reducedMotion={reducedMotion} />
+							<CloudPortalStage onOpenProject={openLiveProject} reducedMotion={reducedMotion} sceneScale={portalSceneScale} />
 						</Suspense>
 						<div className="clouds-home__mobile-portals">
 							{PROJECT_PORTALS.map((project) => (
