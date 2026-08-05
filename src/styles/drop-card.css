@@ -6,12 +6,12 @@
 	--drop-color-pale: rgba(160, 212, 246, 0.28);
 	--drop-color-soft: rgba(160, 212, 246, 0.52);
 	--drop-color-deep: rgba(96, 158, 220, 0.88);
-	--drop-desc-stroke-color: rgba(255, 255, 255, 1);
-	--drop-desc-stroke-width: 2.5px;
-	--drop-title-color: rgba(51, 83, 132, 0.94);
-	--drop-title-shadow: 0 1px 5px rgba(255, 255, 255, 0.82);
-	--drop-title-stroke-color: rgba(255, 255, 255, 1);
-	--drop-title-stroke-width: 0.85px;
+	--drop-desc-stroke-color: rgba(17, 18, 45, 0.7);
+	--drop-desc-stroke-width: 0;
+	--drop-title-color: rgba(255, 226, 206, 0.98);
+	--drop-title-shadow: 0 1px 12px rgba(255, 163, 118, 0.38), 0 8px 18px rgba(5, 8, 28, 0.46);
+	--drop-title-stroke-color: transparent;
+	--drop-title-stroke-width: 0;
 	position: relative;
 	width: var(--drop-render-w);
 	height: var(--drop-h);
@@ -20,6 +20,32 @@
 	animation-delay: var(--drop-float-delay, 0s);
 	filter: var(--drop-filter);
 	flex-shrink: 0;
+}
+
+.drop-card::before,
+.drop-card::after {
+	content: '';
+	position: absolute;
+	border-radius: 50%;
+	pointer-events: none;
+	z-index: -1;
+}
+
+.drop-card::before {
+	inset: 10% 6% 1%;
+	background: radial-gradient(ellipse at 50% 82%, rgba(255, 157, 113, 0.42), transparent 66%);
+	filter: blur(18px);
+	opacity: 0.74;
+}
+
+.drop-card::after {
+	left: 23%;
+	right: 23%;
+	bottom: 7%;
+	height: 18%;
+	background: rgba(255, 208, 159, 0.22);
+	filter: blur(20px);
+	opacity: 0.72;
 }
 
 .drop-card__shape {
@@ -40,29 +66,32 @@
 }
 
 .drop-card__body {
-	fill: var(--drop-color-soft);
+	fill: rgba(21, 28, 66, 0.82);
 }
 
 .drop-card__inner {
-	fill: var(--drop-color);
-	opacity: 0.76;
+	fill: rgba(15, 17, 39, 0.76);
+	opacity: 0.92;
 }
 
 .drop-card__bottom {
-	fill: var(--drop-color-deep);
-	opacity: 0.42;
+	fill: rgba(255, 139, 104, 0.2);
+	opacity: 0.86;
 }
 
 .drop-card__gloss {
-	fill: rgba(255, 255, 255, 0.62);
-	opacity: 0.34;
+	fill: rgba(255, 222, 207, 0.66);
+	opacity: 0.24;
 }
 
 .drop-card__rim {
 	fill: none;
-	stroke: rgba(255, 255, 255, 0.64);
-	stroke-width: 2.6;
+	stroke: rgba(255, 191, 153, 0.9);
+	stroke-width: 2.9;
 	vector-effect: non-scaling-stroke;
+	filter:
+		drop-shadow(0 0 7px rgba(255, 166, 115, 0.72))
+		drop-shadow(0 0 19px rgba(255, 120, 96, 0.3));
 }
 
 .drop-card__sparkle {
@@ -71,7 +100,7 @@
 	width: calc(var(--drop-render-w) * 0.12);
 	height: calc(var(--drop-render-w) * 0.12);
 	pointer-events: none;
-	filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.76));
+	filter: drop-shadow(0 0 10px rgba(255, 197, 151, 0.78));
 }
 
 .drop-card__sparkle::before,
@@ -80,8 +109,8 @@
 	position: absolute;
 	inset: 0;
 	background:
-		linear-gradient(90deg, transparent 42%, rgba(255, 255, 255, 0.96) 48%, rgba(255, 255, 255, 0.96) 52%, transparent 58%),
-		linear-gradient(0deg, transparent 42%, rgba(255, 255, 255, 0.96) 48%, rgba(255, 255, 255, 0.96) 52%, transparent 58%);
+		linear-gradient(90deg, transparent 42%, rgba(255, 223, 185, 0.96) 48%, rgba(255, 223, 185, 0.96) 52%, transparent 58%),
+		linear-gradient(0deg, transparent 42%, rgba(255, 223, 185, 0.96) 48%, rgba(255, 223, 185, 0.96) 52%, transparent 58%);
 }
 
 .drop-card__sparkle::after {
@@ -161,7 +190,9 @@
 	width: calc(var(--drop-render-w) * 0.25);
 	height: calc(var(--drop-render-w) * 0.25);
 	object-fit: contain;
-	filter: drop-shadow(0 2px 7px rgba(255, 255, 255, 0.58));
+	filter:
+		drop-shadow(0 2px 7px rgba(255, 206, 162, 0.4))
+		drop-shadow(0 8px 14px rgba(4, 7, 28, 0.32));
 	flex-shrink: 0;
 }
 
@@ -187,13 +218,14 @@
 .drop-card__desc {
 	max-width: 92%;
 	font-size: 12.25px;
-	color: rgba(26, 46, 76, 0.94);
+	color: rgba(247, 218, 197, 0.9);
 	text-align: center;
 	line-height: 1.42;
 	letter-spacing: 0.16px;
 	-webkit-text-stroke: var(--drop-desc-stroke-width) var(--drop-desc-stroke-color);
 	paint-order: stroke fill;
 	text-wrap: balance;
+	text-shadow: 0 2px 10px rgba(3, 5, 24, 0.52);
 	white-space: pre-wrap;
 	overflow-wrap: normal;
 	word-break: normal;
@@ -214,9 +246,9 @@
 	line-height: 1.1;
 	padding: 4px 8px;
 	border-radius: 999px;
-	background: rgba(246, 251, 255, 0.94);
-	border: 1px solid rgba(201, 229, 249, 0.94);
-	color: rgba(35, 78, 136, 0.92);
+	background: rgba(10, 16, 42, 0.42);
+	border: 1px solid rgba(255, 183, 134, 0.42);
+	color: rgba(255, 223, 197, 0.9);
 	letter-spacing: 0.3px;
 	text-align: center;
 	text-wrap: balance;
@@ -245,11 +277,11 @@
 	letter-spacing: 1px;
 	line-height: 1.1;
 	text-transform: uppercase;
-	color: rgba(35, 83, 148, 0.96);
+	color: rgba(255, 229, 205, 0.96);
 	padding: 5px 10px;
 	border-radius: 999px;
-	border: 1px solid rgba(177, 215, 244, 0.94);
-	background: rgba(240, 249, 255, 0.94);
+	border: 1px solid rgba(255, 187, 142, 0.54);
+	background: linear-gradient(135deg, rgba(255, 168, 123, 0.34), rgba(78, 43, 82, 0.46));
 	cursor: pointer;
 	text-decoration: none;
 	text-align: center;
@@ -261,14 +293,14 @@
 }
 
 .drop-card__link:focus-visible {
-	outline: 2px solid rgba(70, 120, 190, 0.62);
+	outline: 2px solid rgba(255, 184, 135, 0.72);
 	outline-offset: 3px;
 }
 
 .drop-card--skeleton {
 	background:
-		radial-gradient(ellipse 48% 28% at 36% 36%, rgba(255, 255, 255, 0.44), transparent 70%),
-		linear-gradient(170deg, rgba(232, 245, 255, 0.34), rgba(203, 219, 235, 0.16));
+		radial-gradient(ellipse 48% 28% at 36% 36%, rgba(255, 208, 178, 0.28), transparent 70%),
+		linear-gradient(170deg, rgba(37, 42, 86, 0.64), rgba(12, 17, 42, 0.42));
 	clip-path: polygon(50% 0%, 61% 18%, 78% 42%, 91% 64%, 84% 88%, 66% 100%, 34% 100%, 16% 88%, 9% 64%, 22% 42%, 39% 18%);
 	animation: pulse 1.6s ease-in-out infinite;
 }

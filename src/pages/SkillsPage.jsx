@@ -16,11 +16,12 @@ const CATEGORY_ACCENTS = {
 const SKELETON_GROUPS = ['Web Development', 'Programming Languages', 'Backend'];
 const GOLDEN_ANGLE_DEG = 137.508;
 const DROP_ASPECT_RATIO = 1.32;
+const SKILL_CLUSTER_SCALE = 0.46;
 const DROP_COLLISION_GAP = 2;
 const DROP_RADIUS_X_FACTOR = 0.44;
 const DROP_RADIUS_Y_FACTOR = 0.4;
-const ORBIT_PADDING = 8;
-const MIN_ORBIT_SIZE = 220;
+const ORBIT_PADDING = 6;
+const MIN_ORBIT_SIZE = 132;
 
 function groupByCategory(skills) {
 	return skills.reduce((acc, skill) => {
@@ -43,7 +44,7 @@ function getOrbitSize(count, maxDropSize) {
 
 	return Math.ceil(Math.max(
 		MIN_ORBIT_SIZE,
-		118 + Math.sqrt(count) * 62 + count * 5 + maxDropSize * 0.36,
+		58 + Math.sqrt(count) * 32 + count * 2.5 + maxDropSize * 0.28,
 	));
 }
 
@@ -78,7 +79,7 @@ function findDropPosition({ category, index, orbitSize, radius, placedDrops }) {
 
 function getSkillGroupLayout(category, skills) {
 	const dropMetrics = skills.map((skill, index) => {
-		const width = getStandardSkillDropSize(skill.level);
+		const width = Math.round(getStandardSkillDropSize(skill.level) * SKILL_CLUSTER_SCALE);
 		return {
 			index,
 			width,
@@ -231,6 +232,7 @@ export default function SkillsPage() {
 										<SkillCrystal
 											name={skill.name}
 											level={skill.level}
+											size={layout.placements[index].width}
 											hue={CATEGORY_ACCENTS[category] ?? 'rgba(200, 200, 255, 0.95)'}
 											delay={groupIndex * 0.35 + index * 0.18}
 											enterDelay={groupIndex * 90 + index * 45}

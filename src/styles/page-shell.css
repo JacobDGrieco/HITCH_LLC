@@ -138,7 +138,7 @@
 }
 
 .page-shell__back::before {
-	content: '←';
+	content: '<';
 	font-size: 17px;
 	line-height: 1;
 	color: rgba(255, 226, 203, 0.96);
@@ -214,6 +214,12 @@
 	height: 22px;
 	background: url('/home/cta-cloud.png') center center / contain no-repeat;
 	filter: drop-shadow(0 0 10px rgba(255, 196, 166, 0.58));
+	cursor: pointer;
+}
+
+.page-shell__nav-cloud:focus,
+.page-shell__nav-cloud:focus-visible {
+	outline: none;
 }
 
 .page-shell__nav-links {
@@ -393,7 +399,8 @@
 		right: 12px;
 		top: 50px;
 		transform: none;
-		justify-content: flex-start;
+		justify-content: center;
+		overflow: visible;
 	}
 
 	.page-shell__nav-cloud,
@@ -403,11 +410,17 @@
 
 	.page-shell__nav-link {
 		min-height: 26px;
-		padding: 6px 9px;
-		font-size: 10px;
+		padding: 6px 8px;
+		font-size: 9.5px;
+	}
+
+	.page-shell__nav-links {
+		flex-wrap: wrap;
+		justify-content: center;
+		row-gap: 2px;
 	}
 
 	.page-shell__content {
-		padding: 116px 16px calc(118px + env(safe-area-inset-bottom, 0px));
+		padding: 138px 16px calc(118px + env(safe-area-inset-bottom, 0px));
 	}
 }

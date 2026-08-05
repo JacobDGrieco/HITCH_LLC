@@ -1,17 +1,10 @@
 import { useEffect, useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import SectionNav from './SectionNav';
 import { useSiteChrome } from './chrome/useSiteChrome';
 import '../styles/page-shell.css';
 
 const RETURN_SECTION_STORAGE_KEY = 'cloudsHomeReturnSection';
-const PAGE_NAV_ITEMS = [
-	{ section: 'projects', label: 'Projects', route: '/projects' },
-	{ section: 'about', label: 'About', route: '/about' },
-	{ section: 'skills', label: 'Skills', route: '/skills' },
-	{ section: 'education', label: 'Education', route: '/education' },
-	{ section: 'experience', label: 'Experience', route: '/experience' },
-	{ section: 'contact', label: 'Contact', route: '/contact' },
-];
 
 export default function PageShell({ children, section = 'default' }) {
 	const navigate = useNavigate();
@@ -46,24 +39,10 @@ export default function PageShell({ children, section = 'default' }) {
 				<div className="page-shell__wisps" />
 
 				<button type="button" onClick={handleBack} className="page-shell__back">
-					Back to the sky
+					Back to the Haven
 				</button>
 
-				<nav className="page-shell__nav" aria-label="Page sections">
-					<span className="page-shell__nav-cloud" aria-hidden="true" />
-					<div className="page-shell__nav-links">
-						{PAGE_NAV_ITEMS.map((item) => (
-							<NavLink
-								key={item.section}
-								to={item.route}
-								className={({ isActive }) => `page-shell__nav-link${isActive ? ' page-shell__nav-link--active' : ''}`}
-							>
-								{item.label}
-							</NavLink>
-						))}
-					</div>
-					<span className="page-shell__nav-orb" aria-hidden="true" />
-				</nav>
+				<SectionNav activeSection={section} />
 
 				<div className={`page-shell__content ${contentVisible ? 'page-shell__content--visible' : 'page-shell__content--hidden'}`}>
 					{children}

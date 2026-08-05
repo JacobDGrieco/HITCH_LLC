@@ -1,102 +1,100 @@
+import '@fontsource/cormorant-garamond/500.css';
+import '@fontsource/cormorant-garamond/600.css';
+import '@fontsource/cormorant-garamond/700.css';
+import { FileText, Mail } from 'lucide-react';
 import '../styles/shared.css';
 import '../styles/about-page.css';
+import ContactPage from './ContactPage';
 
-const HIGHLIGHTS = [
-	'Computer Science major at the University of Kentucky with a Mathematics minor.',
-	'Focused on building full-stack products with React, FastAPI, PostgreSQL, and practical UX.',
-	'Currently building a staffing platform for UK HealthCare with scheduling, automation, and role-aware workflows.',
-];
-
-const FOCUS = [
-	'Turning messy real-world processes into clear software.',
-	'Designing interfaces that feel polished but still practical to use every day.',
-	'Building tools that connect frontend clarity with reliable backend systems.',
+const CONTACT_LINKS = [
+	{
+		title: 'Email',
+		subtitle: 'contact@headinthe\ncloudshaven.com',
+		href: 'mailto:contact@headinthecloudshaven.com',
+		Icon: Mail,
+	},
+	{
+		title: 'Resume',
+		subtitle: 'Download PDF',
+		href: '/contact/resume.pdf',
+		Icon: FileText,
+		external: true,
+	},
+	{
+		title: 'LinkedIn',
+		subtitle: 'Professional Profile',
+		href: 'https://linkedin.com/in/jacob-grieco',
+		iconImage: '/contact/linkedin.png',
+		external: true,
+	},
+	{
+		title: 'GitHub',
+		subtitle: 'Code Profile',
+		href: 'https://github.com/JacobDGrieco',
+		iconImage: '/contact/github.png',
+		external: true,
+	},
 ];
 
 export default function AboutPage() {
 	return (
-		<div className="page-section about-page">
-			<div className="page-header">
-				<div className="page-title">About</div>
-				<div className="page-subtitle">the person behind the clouds</div>
-			</div>
+		<main className="about-page" aria-labelledby="about-contact-title">
+			<div className="about-page__stars" aria-hidden="true" />
+			<header className="about-page__header">
+				<h1 id="about-contact-title" className="about-page__title">About &amp; Contact</h1>
+				<p className="about-page__subtitle">Let&apos;s build something meaningful.</p>
+			</header>
 
-			<div className="about-page__hero">
-				<section className="about-page__portrait-stage" aria-label="Portrait">
-					<div className="about-page__portrait-cloud">
-						<div className="about-page__portrait-mist about-page__portrait-mist--one" />
-						<div className="about-page__portrait-mist about-page__portrait-mist--two" />
-						<div className="about-page__portrait-mist about-page__portrait-mist--three" />
-						<div className="about-page__portrait-core">
-							<div className="about-page__portrait-ring">
-								<img src="/headshot.jpg" alt="Jacob Grieco" width="4254" height="3429" loading="lazy" className="about-page__portrait-image" />
-							</div>
+			<div className="about-page__scene">
+				<section className="about-page__portrait-stage" aria-label="Portrait of Jacob Grieco">
+					<div className="about-page__portrait-orbit">
+						<div className="about-page__portrait-cloud" aria-hidden="true">
+							<img src="/about/portrait-cloud-wreath.png" alt="" width="1254" height="1254" className="about-page__portrait-cloud-art" />
 						</div>
-						<div className="about-page__portrait-caption">Jacob Grieco</div>
+						<div className="about-page__portrait-ring">
+							<img src="/headshot.jpg" alt="Jacob Grieco" width="4254" height="3429" loading="eager" className="about-page__portrait-image" />
+						</div>
+					</div>
+					<div className="about-page__contact-links contact-page__cloud-links" aria-label="Contact links">
+						{CONTACT_LINKS.map(({ title, subtitle, href, Icon, iconImage, external }) => (
+							<a
+								key={title}
+								href={href}
+								target={external ? '_blank' : undefined}
+								rel={external ? 'noopener noreferrer' : undefined}
+								className="contact-page__cloud-link"
+							>
+								<img src="/home/route1.png" alt="" className="contact-page__cloud-art" aria-hidden="true" />
+								<span className="contact-page__cloud-content">
+									{Icon ? (
+										<Icon className="contact-page__cloud-icon" strokeWidth={1.8} aria-hidden="true" />
+									) : (
+										<img src={iconImage} alt="" width="32" height="32" loading="lazy" className="contact-page__cloud-icon-image" />
+									)}
+									<span className="contact-page__cloud-title">{title}</span>
+									<span className="contact-page__cloud-subtitle">{subtitle}</span>
+								</span>
+							</a>
+						))}
 					</div>
 				</section>
 
-				<section className="about-page__scroll-shell" aria-label="About me">
-					<div className="about-page__scroll">
-						<div className="about-page__scroll-rod about-page__scroll-rod--left" />
-						<div className="about-page__scroll-rod about-page__scroll-rod--right" />
-						<div className="about-page__scroll-paper">
-							<div className="about-page__scroll-content">
-								<div className="about-page__eyebrow">About Me</div>
-								<h2 className="about-page__headline">
-									I like building software that feels thoughtful, useful, and finished.
-								</h2>
-								<p className="about-page__copy">
-									I&apos;m a developer with a strong interest in full-stack product work, especially the
-									space where interface design, system logic, and real-world workflow all meet. I like
-									projects that start with a messy process and end with something people can actually rely on.
-								</p>
-								<p className="about-page__copy">
-									My background combines computer science, mathematics, and exposure to artificial
-									intelligence and cybersecurity. That mix pushes me toward work that is both technically
-									sound and practical for the people using it.
-								</p>
-								<p className="about-page__copy">
-									Right now I&apos;m most interested in building polished tools with React, FastAPI, and
-									PostgreSQL, especially products that balance clean frontend presentation with strong
-									backend structure.
-								</p>
-
-								<div className="about-page__divider" />
-
-								<div className="about-page__facts">
-									<div className="about-page__fact-group">
-										<div className="about-page__fact-title">Highlights</div>
-										<ul className="about-page__list">
-											{HIGHLIGHTS.map((item) => (
-												<li key={item}>{item}</li>
-											))}
-										</ul>
-									</div>
-
-									<div className="about-page__fact-group">
-										<div className="about-page__fact-title">What I Care About</div>
-										<ul className="about-page__list">
-											{FOCUS.map((item) => (
-												<li key={item}>{item}</li>
-											))}
-										</ul>
-									</div>
-								</div>
-
-								<div className="about-page__actions">
-									<a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="about-page__button about-page__button--primary">
-										View Resume
-									</a>
-									<a href="/contact" className="about-page__button about-page__button--secondary">
-										Get In Touch
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
+				<section className="about-page__copy-panel" aria-label="About Jacob Grieco">
+					<h2 className="about-page__name">Jacob Grieco</h2>
+					<p className="about-page__lead">
+						Building websites made just for you.
+					</p>
+					<p className="about-page__copy">
+						I enjoy helping people create the promotion and services they need. A portfolio site, a Content Management System, whatever. I welcome the challenge.
+					</p>
+					<p className="about-page__copy">
+						On the off chance I'm not coding something, I'm reading and keeping up on topics like gaming, TV, and movies.
+					</p>
+					<div className="about-page__divider" aria-hidden="true" />
 				</section>
+
+				<ContactPage />
 			</div>
-		</div>
+		</main>
 	);
 }

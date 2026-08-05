@@ -11,6 +11,7 @@
 		"preview": "vite preview"
 	},
 	"dependencies": {
+		"@fontsource/cormorant-garamond": "^5.3.0",
 		"@gsap/react": "^2.1.2",
 		"@neondatabase/serverless": "^1.0.2",
 		"@react-three/drei": "^10.7.7",

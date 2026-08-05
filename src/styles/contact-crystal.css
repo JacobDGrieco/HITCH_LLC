@@ -5,8 +5,8 @@
 	aspect-ratio: 100 / 132;
 	text-decoration: none;
 	filter:
-		drop-shadow(0 14px 28px rgba(182, 124, 192, 0.2))
-		drop-shadow(0 4px 10px rgba(132, 160, 218, 0.18));
+		drop-shadow(0 16px 30px rgba(255, 139, 104, 0.24))
+		drop-shadow(0 6px 16px rgba(4, 9, 34, 0.42));
 	animation: contactCrystalFloat 7.2s ease-in-out infinite;
 	animation-delay: var(--contact-crystal-delay, 0s);
 }
@@ -47,30 +47,33 @@
 }
 
 .contact-crystal__body {
-	fill: color-mix(in srgb, var(--contact-crystal-hue) 52%, rgba(255, 245, 252, 0.94));
-	opacity: 0.58;
+	fill: rgba(20, 28, 67, 0.82);
+	opacity: 0.92;
 }
 
 .contact-crystal__inner {
-	fill: color-mix(in srgb, var(--contact-crystal-hue) 38%, rgba(255, 252, 255, 0.96));
-	opacity: 0.76;
+	fill: rgba(13, 16, 40, 0.76);
+	opacity: 0.94;
 }
 
 .contact-crystal__bottom {
-	fill: color-mix(in srgb, var(--contact-crystal-hue) 80%, rgba(216, 168, 222, 0.88));
-	opacity: 0.28;
+	fill: rgba(255, 139, 104, 0.18);
+	opacity: 0.86;
 }
 
 .contact-crystal__gloss {
-	fill: rgba(255, 255, 255, 0.58);
-	opacity: 0.68;
+	fill: rgba(255, 222, 207, 0.66);
+	opacity: 0.24;
 }
 
 .contact-crystal__rim {
 	fill: none;
-	stroke: rgba(255, 255, 255, 0.72);
+	stroke: rgba(255, 191, 153, 0.9);
 	stroke-width: 2.8;
 	vector-effect: non-scaling-stroke;
+	filter:
+		drop-shadow(0 0 6px rgba(255, 166, 115, 0.72))
+		drop-shadow(0 0 18px rgba(255, 120, 96, 0.3));
 }
 
 .contact-crystal__content {
@@ -88,14 +91,17 @@
 .contact-crystal__icon {
 	font-size: 52px;
 	line-height: 1;
-	filter: drop-shadow(0 1px 4px rgba(255, 255, 255, 0.65));
+	color: rgba(255, 221, 190, 0.96);
+	filter: drop-shadow(0 1px 8px rgba(255, 162, 116, 0.42));
 }
 
 .contact-crystal__icon-image {
 	width: calc(var(--contact-crystal-size) * 0.34);
 	height: calc(var(--contact-crystal-size) * 0.34);
 	object-fit: contain;
-	filter: drop-shadow(0 2px 6px rgba(255, 255, 255, 0.55));
+	filter:
+		drop-shadow(0 2px 6px rgba(255, 205, 162, 0.42))
+		drop-shadow(0 8px 14px rgba(4, 7, 28, 0.32));
 }
 
 .contact-crystal__title {
@@ -105,10 +111,12 @@
 	letter-spacing: 1px;
 	line-height: 1.1;
 	text-transform: uppercase;
-	color: rgba(115, 73, 132, 0.94);
+	color: rgba(255, 226, 205, 0.96);
 	text-align: center;
 	text-wrap: balance;
-	text-shadow: 0 1px 6px rgba(255, 255, 255, 0.72);
+	text-shadow:
+		0 1px 10px rgba(255, 162, 116, 0.34),
+		0 8px 16px rgba(2, 5, 24, 0.48);
 	overflow-wrap: normal;
 	word-break: normal;
 	hyphens: manual;
@@ -118,7 +126,7 @@
 	max-width: 88%;
 	font-size: 11px;
 	line-height: 1.35;
-	color: rgb(107, 77, 126);
+	color: rgba(247, 218, 197, 0.84);
 	text-align: center;
 	text-wrap: balance;
 	overflow-wrap: normal;

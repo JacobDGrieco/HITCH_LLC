@@ -1,17 +1,11 @@
 import { lazy, Suspense, useEffect, useMemo, useState } from 'react';
-import { Mail, UserRound, Wrench } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { GraduationCap, UserRound, Wrench } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import SectionNav from '../SectionNav';
 import { loadEducationPageData, loadExperiencePageData, loadProjectsPageData, loadSkillsPageData } from '../../lib/pageDataCache';
 import '../../styles/clouds-home.css';
 
 const CloudPortalStage = lazy(() => import('./CloudPortalStage'));
-
-const TOP_NAV_ITEMS = [
-	{ id: 'about', label: 'About', route: '/about' },
-	{ id: 'projects', label: 'Projects', route: '/projects', isPrimary: true },
-	{ id: 'skills', label: 'Skills / Experience', route: '/skills' },
-	{ id: 'contact', label: 'Contact', route: '/contact' },
-];
 
 const FLOATING_NAV_ITEMS = [
 	{
@@ -23,28 +17,27 @@ const FLOATING_NAV_ITEMS = [
 		icon: 'person',
 	},
 	{
-		id: 'contact',
-		label: 'Contact',
-		route: '/contact',
+		id: 'experience',
+		label: 'Experience',
+		route: '/experience',
 		className: 'home-route-button--contact',
 		cloudImage: '/home/route2.png',
-		icon: 'mail',
+		icon: 'tool',
 	},
 	{
-		id: 'skills',
-		label: 'Skills / Experience',
-		labelLines: ['Skills /', 'Experience'],
-		route: '/skills',
+		id: 'education',
+		label: 'Education',
+		route: '/education',
 		className: 'home-route-button--skills',
 		cloudImage: '/home/route3.png',
-		icon: 'tool',
+		icon: 'graduation',
 	},
 ];
 
 const ROUTE_ICONS = {
 	person: UserRound,
-	mail: Mail,
 	tool: Wrench,
+	graduation: GraduationCap,
 };
 
 const PROJECT_PORTALS = [
@@ -191,9 +184,9 @@ export default function CloudsHome() {
 		return scheduleBackgroundPreload(() => {
 			preloadStaticPageImages();
 			void loadProjectsPageData()
+				.then(() => loadExperiencePageData())
 				.then(() => loadSkillsPageData())
-				.then(() => loadEducationPageData())
-				.then(() => loadExperiencePageData());
+				.then(() => loadEducationPageData());
 		});
 	}, []);
 
@@ -237,25 +230,7 @@ export default function CloudsHome() {
 				<div className="clouds-home__horizon" />
 				<div className="clouds-home__sun" aria-hidden="true" />
 
-				<header className="clouds-home__topbar">
-					<Link to="/" className="clouds-home__mark" aria-label="HeadInTheCloudsHaven home">
-						<span className="clouds-home__mark-cloud" aria-hidden="true" />
-						<span>HeadInTheCloudsHaven</span>
-					</Link>
-					<nav className="clouds-home__nav" aria-label="Portfolio sections">
-						{TOP_NAV_ITEMS.map((item) => (
-							<Link
-								key={item.id}
-								to={item.route}
-								className={`clouds-home__nav-link${item.isPrimary ? ' clouds-home__nav-link--primary' : ''}`}
-							>
-								{item.isPrimary ? <img src="/home/cta-cloud.png" alt="" className="clouds-home__nav-cloud" aria-hidden="true" /> : null}
-								{item.label}
-							</Link>
-						))}
-					</nav>
-					<span className="clouds-home__nav-orb" aria-hidden="true" />
-				</header>
+				<SectionNav ariaLabel="Portfolio sections" />
 
 				<main className="clouds-home__stage">
 					<section className="clouds-home__brand-panel" aria-labelledby="home-brand-title">

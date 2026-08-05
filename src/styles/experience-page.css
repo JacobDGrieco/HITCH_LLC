@@ -1,3 +1,11 @@
+.experience-page-stack {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: clamp(64px, 8vh, 104px);
+	width: 100%;
+}
+
 .experience-page__crystals {
 	align-items: stretch;
 	gap: 44px;
@@ -19,8 +27,8 @@
 	font-size: 14px;
 	line-height: 1.42;
 	letter-spacing: 0.14px;
-	color: rgba(26, 46, 76, 0.96);
-	text-shadow: 0 1px 5px rgba(255, 255, 255, 0.82);
+	color: rgba(247, 218, 197, 0.9);
+	text-shadow: 0 2px 10px rgba(3, 5, 24, 0.52);
 }
 
 .experience-page__crystal .drop-card__desc-section {
@@ -45,10 +53,10 @@
 	font-size: 9px;
 	line-height: 1.1;
 	padding: 5px 9px;
-	background: rgba(244, 249, 255, 0.94);
-	border-color: rgba(196, 224, 255, 0.94);
-	color: rgba(12, 47, 112, 0.96);
-	box-shadow: 0 6px 14px rgba(5, 13, 38, 0.16);
+	background: rgba(10, 16, 42, 0.42);
+	border-color: rgba(255, 183, 134, 0.42);
+	color: rgba(255, 223, 197, 0.9);
+	box-shadow: 0 6px 14px rgba(5, 13, 38, 0.18);
 	text-shadow: none;
 }
 

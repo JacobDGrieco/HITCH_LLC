@@ -5,8 +5,8 @@
 	animation: skillCrystalFloat var(--skill-float-duration, 6s) ease-in-out infinite;
 	animation-delay: var(--skill-delay, 0s);
 	filter:
-		drop-shadow(0 12px 26px rgba(162, 145, 214, 0.24))
-		drop-shadow(0 3px 9px rgba(126, 164, 222, 0.18));
+		drop-shadow(0 16px 30px rgba(255, 139, 104, 0.22))
+		drop-shadow(0 7px 18px rgba(4, 9, 34, 0.44));
 }
 
 .skill-crystal__shell {
@@ -35,13 +35,13 @@
 }
 
 .skill-crystal__body {
-	fill: color-mix(in srgb, var(--skill-hue) 42%, rgba(250, 252, 255, 0.92));
-	opacity: 0.48;
+	fill: rgba(20, 28, 67, 0.82);
+	opacity: 0.92;
 }
 
 .skill-crystal__inner {
-	fill: color-mix(in srgb, var(--skill-hue) 26%, rgba(250, 252, 255, 0.96));
-	opacity: 0.56;
+	fill: rgba(13, 16, 40, 0.76);
+	opacity: 0.94;
 }
 
 .skill-crystal__liquid {
@@ -51,12 +51,12 @@
 }
 
 .skill-crystal__liquid-body {
-	fill: color-mix(in srgb, var(--skill-hue) 82%, rgba(246, 229, 255, 0.96));
-	opacity: 0.9;
+	fill: color-mix(in srgb, var(--skill-hue) 54%, rgba(255, 139, 104, 0.86));
+	opacity: 0.52;
 }
 
 .skill-crystal__bubble {
-	fill: rgba(255, 255, 255, 0.42);
+	fill: rgba(255, 230, 196, 0.45);
 	transform-box: fill-box;
 	transform-origin: center;
 	animation: skillBubbleRise 5.2s linear infinite;
@@ -75,15 +75,18 @@
 }
 
 .skill-crystal__bottom {
-	fill: color-mix(in srgb, var(--skill-hue) 76%, rgba(160, 187, 236, 0.84));
-	opacity: 0.28;
+	fill: rgba(255, 139, 104, 0.18);
+	opacity: 0.86;
 }
 
 .skill-crystal__rim {
 	fill: none;
-	stroke: rgba(255, 255, 255, 0.72);
-	stroke-width: 2.8;
+	stroke: rgba(255, 191, 153, 0.9);
+	stroke-width: 2.7;
 	vector-effect: non-scaling-stroke;
+	filter:
+		drop-shadow(0 0 6px rgba(255, 166, 115, 0.72))
+		drop-shadow(0 0 18px rgba(255, 120, 96, 0.3));
 }
 
 .skill-crystal__content {
@@ -105,12 +108,12 @@
 	line-height: var(--skill-name-line-height, 1.12);
 	font-weight: 800;
 	letter-spacing: 0.45px;
-	color: rgba(62, 74, 126, 0.96);
+	color: rgba(255, 226, 205, 0.96);
 	text-align: center;
 	text-wrap: balance;
 	text-shadow:
-		0 1px 7px rgba(255, 255, 255, 0.82),
-		0 -1px 8px rgba(255, 255, 255, 0.42);
+		0 1px 10px rgba(255, 162, 116, 0.34),
+		0 8px 16px rgba(2, 5, 24, 0.48);
 	overflow-wrap: normal;
 	word-break: normal;
 	hyphens: manual;

@@ -5,10 +5,8 @@ import { SiteMusicProvider } from './components/audio/SiteMusicProvider';
 import PersistentDas from './components/chrome/PersistentDas';
 import { SiteChromeProvider } from './components/chrome/SiteChromeProvider';
 import ProjectsPage from './pages/ProjectsPage';
-import SkillsPage from './pages/SkillsPage';
 import EducationPage from './pages/EducationPage';
 import ExperiencePage from './pages/ExperiencePage';
-import ContactPage from './pages/ContactPage';
 import AboutPage from './pages/AboutPage';
 
 export default function App() {
@@ -18,12 +16,10 @@ export default function App() {
 				<BrowserRouter>
 					<Routes>
 						<Route path="/" element={<CloudsHome />} />
-						<Route path="/projects" element={<PageShell section="projects"><ProjectsPage /></PageShell>} />
-						<Route path="/skills" element={<PageShell section="skills"><SkillsPage /></PageShell>} />
-						<Route path="/education" element={<PageShell section="education"><EducationPage /></PageShell>} />
-						<Route path="/experience" element={<PageShell section="experience"><ExperiencePage /></PageShell>} />
-						<Route path="/contact" element={<PageShell section="contact"><ContactPage /></PageShell>} />
 						<Route path="/about" element={<PageShell section="about"><AboutPage /></PageShell>} />
+						<Route path="/projects" element={<PageShell section="projects"><ProjectsPage /></PageShell>} />
+						<Route path="/experience" element={<PageShell section="experience"><ExperiencePage /></PageShell>} />
+						<Route path="/education" element={<PageShell section="education"><EducationPage /></PageShell>} />
 					</Routes>
 					<PersistentDas />
 				</BrowserRouter>

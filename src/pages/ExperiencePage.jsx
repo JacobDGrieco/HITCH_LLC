@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import '../styles/shared.css';
 import '../styles/experience-page.css';
 import DropCard from '../components/DropCard';
+import SkillsPage from './SkillsPage';
 import { getCachedExperiencePageData, loadExperiencePageData } from '../lib/pageDataCache';
 
 function buildDesc(item) {
@@ -37,32 +38,36 @@ export default function ExperiencePage() {
 	}, []);
 
 	return (
-		<div className="page-section">
-			<div className="page-header">
-				<div className="page-title">Experience</div>
-				<div className="page-subtitle">where I&apos;ve contributed</div>
+		<div className="experience-page-stack">
+			<div className="page-section">
+				<div className="page-header">
+					<div className="page-title">Experience</div>
+					<div className="page-subtitle">where I&apos;ve contributed</div>
+				</div>
+
+				<div className="page-crystal-row experience-page__crystals">
+					{experience === null ? (
+						[402, 378].map((size, i) => <DropCardSkeleton key={i} size={size} enterDelay={i * 90} />)
+					) : (
+						experience.map((item, index) => (
+							<DropCard
+								key={item.id}
+								size={item.size}
+								title={item.title}
+								desc={buildDesc(item)}
+								tags={item.tags}
+								iconImage={item.iconImage}
+								gemColor={item.gemColor}
+								featured={item.featured}
+								className={item.className}
+								enterDelay={index * 90}
+							/>
+						))
+					)}
+				</div>
 			</div>
 
-			<div className="page-crystal-row experience-page__crystals">
-				{experience === null ? (
-					[402, 378].map((size, i) => <DropCardSkeleton key={i} size={size} enterDelay={i * 90} />)
-				) : (
-					experience.map((item, index) => (
-						<DropCard
-							key={item.id}
-							size={item.size}
-							title={item.title}
-							desc={buildDesc(item)}
-							tags={item.tags}
-							iconImage={item.iconImage}
-							gemColor={item.gemColor}
-							featured={item.featured}
-							className={item.className}
-							enterDelay={index * 90}
-						/>
-					))
-				)}
-			</div>
+			<SkillsPage />
 		</div>
 	);
 }

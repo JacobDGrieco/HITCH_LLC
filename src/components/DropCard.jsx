@@ -60,17 +60,11 @@ function getDropTitleStyle(color) {
 	const channels = parseColorChannels(color);
 	const isDarkDrop = channels ? getRelativeLuminance(channels) < 0.34 : false;
 
-	return isDarkDrop
-		? {
-			'--drop-title-color': 'rgba(250, 253, 255, 0.98)',
-			'--drop-title-shadow': '0 1px 9px rgba(4, 18, 54, 0.52), 0 0 10px rgba(255, 255, 255, 0.2)',
-			'--drop-title-stroke-color': 'rgba(7, 23, 68, 1)',
-		}
-		: {
-			'--drop-title-color': 'rgba(51, 83, 132, 0.94)',
-			'--drop-title-shadow': '0 1px 5px rgba(255, 255, 255, 0.82)',
-			'--drop-title-stroke-color': 'rgba(255, 255, 255, 1)',
-		};
+	return {
+		'--drop-title-color': isDarkDrop ? 'rgba(255, 234, 216, 0.98)' : 'rgba(255, 226, 206, 0.98)',
+		'--drop-title-shadow': '0 1px 12px rgba(255, 163, 118, 0.38), 0 8px 18px rgba(5, 8, 28, 0.46)',
+		'--drop-title-stroke-color': 'transparent',
+	};
 }
 
 export default function DropCard({
@@ -102,7 +96,7 @@ export default function DropCard({
 				'--drop-float-duration': `${featured ? 6 : 5}s`,
 				'--drop-float-delay': featured ? '-1.8s' : '0s',
 				'--drop-enter-delay': `${enterDelay}ms`,
-				'--drop-filter': `drop-shadow(0 ${featured ? 18 : 14}px ${featured ? 38 : 30}px rgba(84, 146, 196, ${featured ? 0.42 : 0.34})) drop-shadow(0 5px 12px rgba(122, 168, 216, 0.24))`,
+				'--drop-filter': `drop-shadow(0 ${featured ? 20 : 16}px ${featured ? 42 : 32}px rgba(255, 137, 104, ${featured ? 0.34 : 0.26})) drop-shadow(0 8px 18px rgba(5, 10, 34, 0.42))`,
 				...dropTitleStyle,
 			}}
 		>
