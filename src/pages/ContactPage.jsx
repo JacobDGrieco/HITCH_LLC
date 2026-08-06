@@ -162,7 +162,7 @@ function findProjectedContactControl(formElement, pointX, pointY) {
 		.sort((firstControl, secondControl) => getContactControlPriority(firstControl) - getContactControlPriority(secondControl))[0] || null;
 }
 
-export default function ContactPage() {
+export default function ContactPage({ formSceneScale = 1 }) {
 	const [form, setForm] = useState({ name: '', email: '', subject: '', message: '', company: '' });
 	const [status, setStatus] = useState(null);
 	const [errorMessage, setErrorMessage] = useState('');
@@ -269,7 +269,7 @@ export default function ContactPage() {
 
 	return (
 		<section className="contact-page" aria-label="Contact Jacob Grieco">
-			<AboutContactFormStage>
+			<AboutContactFormStage sceneScale={formSceneScale}>
 				<div className="contact-page__form-card">
 					<div className="contact-page__heading">
 						<h2 className="contact-page__title">Send a Message</h2>

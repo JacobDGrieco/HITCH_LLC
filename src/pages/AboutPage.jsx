@@ -54,6 +54,10 @@ function clampScale(scale, min, max) {
 	return Math.min(Math.max(scale, min), max);
 }
 
+function isMobileAboutViewport(viewport) {
+	return viewport.width <= 820 || (viewport.width <= 960 && viewport.height <= 520);
+}
+
 export default function AboutPage() {
 	const [viewport, setViewport] = useState(getViewport);
 
@@ -70,19 +74,20 @@ export default function AboutPage() {
 		const usableHeight = Math.max(1, viewport.height - ABOUT_DESKTOP_CANVAS.shellTopReserve);
 		const stageScale = clampScale(Math.min(viewport.width / ABOUT_DESKTOP_CANVAS.width, usableHeight / (ABOUT_DESKTOP_CANVAS.height - ABOUT_DESKTOP_CANVAS.shellTopReserve)), 0.42, 1);
 		const shortDesktopAdjustment = clampScale((0.62 - stageScale) / 0.2, 0, 1);
-		const contactFormMaxScale = 1.64 - (shortDesktopAdjustment * 0.28);
-		const contactFormScale = clampScale((1 + ((1 - stageScale) * 3)) * (0.9 - (shortDesktopAdjustment * 0.2)), 1, contactFormMaxScale);
-		const contactFormGrowth = contactFormScale - 1;
+		const sceneOffsetY = -92 * shortDesktopAdjustment;
+		const contactFormOffsetX = -shortDesktopAdjustment * 74;
+		const contactFormOffsetY = -shortDesktopAdjustment * 34;
 
 		return {
 			'--about-stage-scale': stageScale,
 			'--about-header-offset-y': `${Number((-25 * shortDesktopAdjustment).toFixed(2))}px`,
-			'--about-stage-offset-y': `${Number((-92 * shortDesktopAdjustment).toFixed(2))}px`,
-			'--about-contact-form-scale': contactFormScale,
-			'--about-contact-form-offset-x': `${Number(((contactFormGrowth * 260) - (shortDesktopAdjustment * 74)).toFixed(2))}px`,
-			'--about-contact-form-offset-y': `${Number(((contactFormGrowth * 210) - (shortDesktopAdjustment * 34)).toFixed(2))}px`,
+			'--about-stage-offset-y': `${Number(sceneOffsetY.toFixed(2))}px`,
+			'--about-contact-form-offset-x': `${Number(contactFormOffsetX.toFixed(2))}px`,
+			'--about-contact-form-offset-y': `${Number(contactFormOffsetY.toFixed(2))}px`,
 		};
 	}, [viewport]);
+	const shouldShowContactForm = !isMobileAboutViewport(viewport);
+	const contactFormSceneScale = shouldShowContactForm ? clampScale(0.98 / Number(aboutScaleVars['--about-stage-scale']), 1, 1.58) : 1;
 
 	return (
 		<main className="about-page" style={aboutScaleVars} aria-labelledby="about-contact-title">
@@ -140,7 +145,7 @@ export default function AboutPage() {
 					<div className="about-page__divider" aria-hidden="true" />
 				</section>
 
-				<ContactPage />
+				{shouldShowContactForm && <ContactPage formSceneScale={contactFormSceneScale} />}
 			</div>
 		</main>
 	);

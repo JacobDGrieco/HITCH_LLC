@@ -9,7 +9,7 @@ const CONTACT_FORM_SCENE = {
 	group: {
 		position: [-0.46, -0.18, 0],
 		rotation: [0.0, -0.4, 0],
-		scale: 0.28,
+		scale: 0.31,
 	},
 	// Pixel-space controls inside the shared Three object.
 	frame: {
@@ -26,7 +26,7 @@ const CONTACT_FORM_SCENE = {
 	},
 };
 
-function ContactPanelHtml({ children }) {
+function ContactPanelHtml({ children, sceneScale }) {
 	const [frameWidth, frameHeight] = CONTACT_FORM_SCENE.frame.size;
 	const [frameX, frameY, frameZ] = CONTACT_FORM_SCENE.frame.position;
 	const [frameRotationX, frameRotationY, frameRotationZ] = CONTACT_FORM_SCENE.frame.rotation;
@@ -41,7 +41,7 @@ function ContactPanelHtml({ children }) {
 			center
 			position={CONTACT_FORM_SCENE.group.position}
 			rotation={CONTACT_FORM_SCENE.group.rotation}
-			scale={CONTACT_FORM_SCENE.group.scale}
+			scale={CONTACT_FORM_SCENE.group.scale * sceneScale}
 			zIndexRange={[20, 10]}
 		>
 			<div
@@ -77,18 +77,18 @@ function ContactPanelHtml({ children }) {
 	);
 }
 
-function ContactFormScene({ children }) {
+function ContactFormScene({ children, sceneScale }) {
 	return (
 		<>
 			<ambientLight intensity={1.15} />
 			<pointLight position={[1.6, 2.4, 5]} intensity={3.8} color="#ffd2a2" />
 			<pointLight position={[-2.2, -1.8, 4]} intensity={1.6} color="#ff9a9f" />
-			<ContactPanelHtml>{children}</ContactPanelHtml>
+			<ContactPanelHtml sceneScale={sceneScale}>{children}</ContactPanelHtml>
 		</>
 	);
 }
 
-export default function AboutContactFormStage({ children }) {
+export default function AboutContactFormStage({ children, sceneScale = 1 }) {
 	return (
 		<div className="contact-page__three-stage">
 			<Canvas
@@ -97,7 +97,7 @@ export default function AboutContactFormStage({ children }) {
 				gl={{ alpha: true, antialias: true, powerPreference: 'high-performance' }}
 			>
 				<Suspense fallback={null}>
-					<ContactFormScene>{children}</ContactFormScene>
+					<ContactFormScene sceneScale={sceneScale}>{children}</ContactFormScene>
 				</Suspense>
 			</Canvas>
 		</div>
