@@ -80,13 +80,24 @@ export default function DropCard({
 	featured = false,
 	enterDelay = 0,
 	animateEntry = true,
+	visualVariant = 'svg',
+	shellImage,
 }) {
 	const dropWidth = resolveScaledDropSize(size, STANDARD_DROP_WIDTH);
 	const dropTitleStyle = getDropTitleStyle(gemColor);
+	const usesImageShell = visualVariant === 'reference-rain' && shellImage;
+	const variantTitleStyle = usesImageShell ? {
+		'--drop-title-color': 'rgba(255, 232, 209, 0.98)',
+		'--drop-title-shadow': '0 1px 10px rgba(255, 185, 137, 0.42), 0 8px 22px rgba(3, 7, 26, 0.58)',
+		'--drop-title-stroke-color': 'transparent',
+	} : dropTitleStyle;
+	const dropFilter = usesImageShell
+		? 'drop-shadow(0 18px 38px rgba(255, 127, 91, 0.28)) drop-shadow(0 10px 28px rgba(5, 9, 31, 0.52))'
+		: `drop-shadow(0 ${featured ? 20 : 16}px ${featured ? 42 : 32}px rgba(255, 137, 104, ${featured ? 0.34 : 0.26})) drop-shadow(0 8px 18px rgba(5, 10, 34, 0.42))`;
 
 	return (
 		<div
-			className={`drop-card${animateEntry ? ' drop-card--entering' : ''}${className ? ` ${className}` : ''}`}
+			className={`drop-card${animateEntry ? ' drop-card--entering' : ''}${usesImageShell ? ' drop-card--reference-rain' : ''}${className ? ` ${className}` : ''}`}
 			style={{
 				'--drop-w': `${dropWidth}px`,
 				'--drop-color': gemColor,
@@ -96,18 +107,22 @@ export default function DropCard({
 				'--drop-float-duration': `${featured ? 6 : 5}s`,
 				'--drop-float-delay': featured ? '-1.8s' : '0s',
 				'--drop-enter-delay': `${enterDelay}ms`,
-				'--drop-filter': `drop-shadow(0 ${featured ? 20 : 16}px ${featured ? 42 : 32}px rgba(255, 137, 104, ${featured ? 0.34 : 0.26})) drop-shadow(0 8px 18px rgba(5, 10, 34, 0.42))`,
-				...dropTitleStyle,
+				'--drop-filter': dropFilter,
+				...variantTitleStyle,
 			}}
 		>
 			<div className="drop-card__shape">
-				<svg className="drop-card__vessel" viewBox="0 0 100 132" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-					<path className="drop-card__body" d={DROP_PATH} />
-					<path className="drop-card__inner" d={DROP_INNER_PATH} />
-					<path className="drop-card__bottom" d={DROP_BOTTOM_PATH} />
-					<path className="drop-card__gloss" d={DROP_GLOSS_PATH} />
-					<path className="drop-card__rim" d={DROP_PATH} />
-				</svg>
+				{usesImageShell ? (
+					<img src={shellImage} alt="" aria-hidden="true" className="drop-card__shell-image" loading="lazy" />
+				) : (
+					<svg className="drop-card__vessel" viewBox="0 0 100 132" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+						<path className="drop-card__body" d={DROP_PATH} />
+						<path className="drop-card__inner" d={DROP_INNER_PATH} />
+						<path className="drop-card__bottom" d={DROP_BOTTOM_PATH} />
+						<path className="drop-card__gloss" d={DROP_GLOSS_PATH} />
+						<path className="drop-card__rim" d={DROP_PATH} />
+					</svg>
+				)}
 
 				<div className="drop-card__sparkle drop-card__sparkle--one" />
 				<div className="drop-card__sparkle drop-card__sparkle--two" />

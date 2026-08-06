@@ -15,7 +15,7 @@ const PORTAL_LAYOUT = [
 		liveUrl: 'https://www.asdrecords.net/',
 		previewImage: '/home/windows/asd.png',
 		cloudImage: '/home/throne1.png',
-		position: [1.8, 1.40, -1.34],
+		position: [1.8, 1.25, -1.34],
 		window: {
 			position: [0, -0.12, 0],
 			rotation: [0.03, -0.16, 0.018],
@@ -44,7 +44,7 @@ const PORTAL_LAYOUT = [
 		liveUrl: 'https://www.halomed.org/',
 		previewImage: '/home/windows/halomed.png',
 		cloudImage: '/home/throne2.png',
-		position: [-0.10, -1.24, 0.20],
+		position: [-0.10, -1.14, 0.20],
 		window: {
 			position: [-0.03, -0.01, 0],
 			rotation: [-0.2, 0.3, 0.01],
@@ -73,7 +73,7 @@ const PORTAL_LAYOUT = [
 		liveUrl: 'https://www.relatime.org/',
 		previewImage: '/home/windows/relatime.png',
 		cloudImage: '/home/throne3.png',
-		position: [3.3, -1.25, -0.36],
+		position: [3.08, -1.15, -0.36],
 		window: {
 			position: [0.02, 0.09, 0.02],
 			rotation: [-0.25, -0.70, -0.088],

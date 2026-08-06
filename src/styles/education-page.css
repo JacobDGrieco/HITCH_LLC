@@ -118,11 +118,17 @@
 }
 
 .education-page__crystals {
-	gap: 20px;
+	gap: clamp(28px, 2.4vw, 36px);
+	width: min(1320px, 100%);
+	padding-top: 4px;
 }
 
 .drop-card.education-page__crystal {
-	--drop-render-w: min(var(--drop-w), 210px);
+	--drop-render-w: min(var(--drop-w), 286px);
+}
+
+.drop-card.education-page__crystal.drop-card--reference-rain {
+	--drop-render-w: min(var(--drop-w), 286px);
 }
 
 .drop-card.education-page__crystal--major {
@@ -138,23 +144,29 @@
 }
 
 .education-page__crystal .drop-card__content {
-	padding: calc(var(--drop-render-w) * 0.17) calc(var(--drop-render-w) * 0.14) calc(var(--drop-render-w) * 0.10);
-	row-gap: calc(var(--drop-render-w) * 0.026);
+	padding: calc(var(--drop-render-w) * 0.19) calc(var(--drop-render-w) * 0.12) calc(var(--drop-render-w) * 0.12);
+	row-gap: calc(var(--drop-render-w) * 0.022);
 }
 
 .education-page__crystal .drop-card__title {
-	font-size: 10.8px;
-	letter-spacing: 0.75px;
+	font-size: 16px;
+	font-weight: 800;
+	letter-spacing: 0.02em;
+	line-height: 1.08;
+	text-transform: uppercase;
 	color: var(--drop-title-color);
 	text-shadow: var(--drop-title-shadow);
 }
 
 .education-page__crystal .drop-card__desc {
-	font-size: 8.6px;
-	line-height: 1.2;
-	letter-spacing: 0.18px;
-	color: rgba(247, 218, 197, 0.9);
-	text-shadow: 0 2px 10px rgba(3, 5, 24, 0.52);
+	font-size: 14px;
+	font-weight: 680;
+	line-height: 1.26;
+	letter-spacing: 0.01em;
+	color: rgba(255, 233, 214, 0.9);
+	text-shadow:
+		0 2px 9px rgba(2, 5, 24, 0.68),
+		0 0 12px rgba(255, 178, 128, 0.12);
 }
 
 .education-page__crystal .drop-card__desc-section {
@@ -166,7 +178,22 @@
 }
 
 .education-page__crystal .drop-card__title-section {
-	max-width: 78%;
+	max-width: 84%;
+}
+
+.education-page__crystal .drop-card__icon-section {
+	min-height: calc(var(--drop-render-w) * 0.22);
+	padding-top: calc(var(--drop-render-w) * 0.065);
+}
+
+.education-page__crystal .drop-card__icon-image {
+	width: calc(var(--drop-render-w) * 0.23);
+	height: calc(var(--drop-render-w) * 0.23);
+}
+
+.education-page__crystal .drop-card__tag {
+	font-size: 8.4px;
+	padding: 4px 8px;
 }
 
 .education-page__crystal--major .drop-card__title,
@@ -184,8 +211,8 @@
 
 .education-page__crystal--major .drop-card__desc,
 .education-page__crystal--minor .drop-card__desc {
-	font-size: 11px;
-	line-height: 1.34;
+	font-size: 12.3px;
+	line-height: 1.26;
 }
 
 .education-page__crystal--major .drop-card__desc-section,
@@ -207,13 +234,13 @@
 }
 
 .education-page__crystal--certificate .drop-card__desc {
-	font-size: 9.6px;
-	line-height: 1.24;
+	font-size: 11.4px;
+	line-height: 1.26;
 }
 
 @media (max-width: 1600px) {
 	.education-page__crystals {
-		gap: 28px 24px;
+		gap: 28px 22px;
 		align-items: flex-start;
 	}
 
@@ -230,23 +257,27 @@
 	}
 
 	.education-page__crystal .drop-card__content {
-		padding: calc(var(--drop-render-w) * 0.17) calc(var(--drop-render-w) * 0.13) calc(var(--drop-render-w) * 0.10);
-		row-gap: calc(var(--drop-render-w) * 0.024);
+		padding: calc(var(--drop-render-w) * 0.19) calc(var(--drop-render-w) * 0.12) calc(var(--drop-render-w) * 0.12);
+		row-gap: calc(var(--drop-render-w) * 0.022);
+	}
+
+	.education-page__crystal .drop-card__icon-section {
+		padding-top: calc(var(--drop-render-w) * 0.065);
 	}
 
 	.education-page__crystal .drop-card__icon-image {
-		width: 72px;
-		height: 72px;
+		width: calc(var(--drop-render-w) * 0.23);
+		height: calc(var(--drop-render-w) * 0.23);
 	}
 
 	.education-page__crystal .drop-card__title {
-		font-size: 10.8px;
-		letter-spacing: 0.75px;
+		font-size: 16px;
+		letter-spacing: 0.02em;
 	}
 
 	.education-page__crystal .drop-card__desc {
-		font-size: 8.6px;
-		line-height: 1.2;
+		font-size: 12.3px;
+		line-height: 1.26;
 	}
 
 	.education-page__crystal .drop-card__desc-section {
@@ -260,8 +291,8 @@
 
 	.education-page__crystal--major .drop-card__desc,
 	.education-page__crystal--minor .drop-card__desc {
-		font-size: 11px;
-		line-height: 1.34;
+		font-size: 12.3px;
+		line-height: 1.26;
 	}
 
 	.education-page__crystal--major .drop-card__desc-section,
@@ -274,8 +305,8 @@
 	}
 
 	.education-page__crystal--certificate .drop-card__desc {
-		font-size: 9.6px;
-		line-height: 1.24;
+		font-size: 11.4px;
+		line-height: 1.26;
 	}
 
 	.education-page__crystal--certificate .drop-card__desc-section {
@@ -363,5 +394,3 @@
 		padding: 5px 12px;
 	}
 }
-
-

@@ -5,8 +5,11 @@ import DropCard from '../components/DropCard';
 import SkillsPage from './SkillsPage';
 import { getCachedExperiencePageData, loadExperiencePageData } from '../lib/pageDataCache';
 
+const REFERENCE_RAIN_SHELL = '/raindrops/reference-glass-drop.png';
+
 function buildDesc(item) {
-	return [item.role, item.dateRange, item.desc].filter(Boolean).join('\n');
+	const heading = [item.role, item.dateRange].filter(Boolean).join('\n');
+	return [heading, item.desc].filter(Boolean).join('\n\n');
 }
 
 function DropCardSkeleton({ size = 390, enterDelay = 0 }) {
@@ -39,7 +42,8 @@ export default function ExperiencePage() {
 
 	return (
 		<div className="experience-page-stack">
-			<div className="page-section">
+			<div className="experience-page__layout">
+				<section className="page-section experience-page__experience-panel">
 				<div className="page-header">
 					<div className="page-title">Experience</div>
 					<div className="page-subtitle">where I&apos;ve contributed</div>
@@ -61,13 +65,16 @@ export default function ExperiencePage() {
 								featured={item.featured}
 								className={item.className}
 								enterDelay={index * 90}
+								visualVariant="reference-rain"
+								shellImage={REFERENCE_RAIN_SHELL}
 							/>
 						))
 					)}
 				</div>
-			</div>
+				</section>
 
-			<SkillsPage />
+				<SkillsPage />
+			</div>
 		</div>
 	);
 }

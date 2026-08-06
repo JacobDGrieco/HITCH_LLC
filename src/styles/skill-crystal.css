@@ -5,14 +5,16 @@
 	animation: skillCrystalFloat var(--skill-float-duration, 6s) ease-in-out infinite;
 	animation-delay: var(--skill-delay, 0s);
 	filter:
-		drop-shadow(0 16px 30px rgba(255, 139, 104, 0.22))
-		drop-shadow(0 7px 18px rgba(4, 9, 34, 0.44));
+		drop-shadow(0 16px 34px rgba(255, 127, 91, 0.24))
+		drop-shadow(0 8px 20px rgba(4, 9, 34, 0.5));
 }
 
 .skill-crystal__shell {
 	position: relative;
+	display: grid;
+	place-items: center;
 	width: 100%;
-	aspect-ratio: 100 / 132;
+	aspect-ratio: 1 / 1.6;
 	isolation: isolate;
 	transform-origin: 50% 92%;
 }
@@ -22,71 +24,21 @@
 	will-change: transform, opacity;
 }
 
-.skill-crystal__vessel,
+.skill-crystal__shell-image,
 .skill-crystal__content {
 	position: absolute;
 	inset: 0;
 }
 
-.skill-crystal__vessel {
+.skill-crystal__shell-image {
 	z-index: 0;
-	overflow: visible;
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
 	pointer-events: none;
-}
-
-.skill-crystal__body {
-	fill: rgba(20, 28, 67, 0.82);
-	opacity: 0.92;
-}
-
-.skill-crystal__inner {
-	fill: rgba(13, 16, 40, 0.76);
-	opacity: 0.94;
-}
-
-.skill-crystal__liquid {
-	transform-origin: 50% var(--skill-liquid-y);
-	animation: skillLiquidTilt 6.2s ease-in-out infinite;
-	animation-delay: var(--skill-delay, 0s);
-}
-
-.skill-crystal__liquid-body {
-	fill: color-mix(in srgb, var(--skill-hue) 54%, rgba(255, 139, 104, 0.86));
-	opacity: 0.52;
-}
-
-.skill-crystal__bubble {
-	fill: rgba(255, 230, 196, 0.45);
-	transform-box: fill-box;
-	transform-origin: center;
-	animation: skillBubbleRise 5.2s linear infinite;
-}
-
-.skill-crystal__bubble--1 {
-	animation-delay: -0.5s;
-}
-
-.skill-crystal__bubble--2 {
-	animation-delay: -2.1s;
-}
-
-.skill-crystal__bubble--3 {
-	animation-delay: -3.4s;
-}
-
-.skill-crystal__bottom {
-	fill: rgba(255, 139, 104, 0.18);
-	opacity: 0.86;
-}
-
-.skill-crystal__rim {
-	fill: none;
-	stroke: rgba(255, 191, 153, 0.9);
-	stroke-width: 2.7;
-	vector-effect: non-scaling-stroke;
-	filter:
-		drop-shadow(0 0 6px rgba(255, 166, 115, 0.72))
-		drop-shadow(0 0 18px rgba(255, 120, 96, 0.3));
+	user-select: none;
+	transform: scaleX(1.18);
+	transform-origin: 50% 58%;
 }
 
 .skill-crystal__content {
@@ -94,26 +46,31 @@
 	box-sizing: border-box;
 	display: grid;
 	place-items: center;
-	padding: 28% 10% 22%;
+	align-content: center;
+	justify-content: center;
+	padding: 34% 7% 16%;
 	text-align: center;
 	pointer-events: none;
 }
 
 .skill-crystal__name {
 	display: block;
+	place-self: center;
 	width: min(100%, var(--skill-name-max-width, 76%));
 	max-width: 100%;
 	margin-inline: auto;
+	font-family: Georgia, 'Times New Roman', serif;
 	font-size: var(--skill-name-font-size, 12px);
 	line-height: var(--skill-name-line-height, 1.12);
 	font-weight: 800;
-	letter-spacing: 0.45px;
-	color: rgba(255, 226, 205, 0.96);
+	letter-spacing: 0.01em;
+	text-transform: uppercase;
+	color: rgba(255, 232, 209, 0.98);
 	text-align: center;
 	text-wrap: balance;
 	text-shadow:
-		0 1px 10px rgba(255, 162, 116, 0.34),
-		0 8px 16px rgba(2, 5, 24, 0.48);
+		0 1px 10px rgba(255, 185, 137, 0.42),
+		0 8px 22px rgba(3, 7, 26, 0.58);
 	overflow-wrap: normal;
 	word-break: normal;
 	hyphens: manual;
@@ -151,34 +108,8 @@
 	}
 }
 
-@keyframes skillLiquidTilt {
-	0%, 100% {
-		transform: rotate(-1deg) scaleX(1.01);
-	}
-
-	50% {
-		transform: rotate(1.8deg) scaleX(0.99);
-	}
-}
-
-@keyframes skillBubbleRise {
-	0% {
-		transform: translateY(0) scale(0.7);
-		opacity: 0;
-	}
-
-	12% {
-		opacity: 0.9;
-	}
-
-	100% {
-		transform: translateY(-34px) scale(1);
-		opacity: 0;
-	}
-}
-
 @media (max-width: 640px) {
 	.skill-crystal__content {
-		padding: 29% 11% 22%;
+		padding: 34% 11% 16%;
 	}
 }

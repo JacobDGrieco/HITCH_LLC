@@ -5,6 +5,8 @@ import '../styles/education-page.css';
 import DropCard from '../components/DropCard';
 import { getCachedEducationPageData, loadEducationPageData } from '../lib/pageDataCache';
 
+const REFERENCE_RAIN_SHELL = '/raindrops/reference-glass-drop.png';
+
 function DropCardSkeleton({ size = 318, enterDelay = 0 }) {
 	return (
 		<div
@@ -51,7 +53,13 @@ export default function EducationPage() {
 					[462, 396, 318, 318].map((size, i) => <DropCardSkeleton key={i} size={size} enterDelay={i * 85} />)
 				) : (
 					education.map((item, index) => (
-						<DropCard key={item.id} {...item} enterDelay={index * 85} />
+						<DropCard
+							key={item.id}
+							{...item}
+							enterDelay={index * 85}
+							visualVariant="reference-rain"
+							shellImage={REFERENCE_RAIN_SHELL}
+						/>
 					))
 				)}
 			</div>
