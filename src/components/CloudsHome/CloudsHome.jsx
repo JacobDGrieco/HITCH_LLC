@@ -194,25 +194,32 @@ export default function CloudsHome() {
 		window.sessionStorage.removeItem('cloudsHomeReturnSection');
 	}, []);
 
+	const isPortraitTablet = viewport.width >= 768 && viewport.width <= 1024 && viewport.height > viewport.width;
+	const shouldRenderPortalStage = viewport.width >= 1024 && viewport.height >= 620 && !isPortraitTablet;
+
 	const { portalSceneScale, scaleVars } = useMemo(() => {
-		const isCompactLayout = viewport.width <= 820;
-		const sceneFitScale = isCompactLayout
-			? 1
-			: clampScale(Math.min(viewport.width / 1680, viewport.height / 920), 0.72, 1);
-		const logoFitScale = isCompactLayout
-			? clampScale(Math.min(viewport.width / 1440, viewport.height / 900), 0.50, 1.08)
-			: sceneFitScale;
+		const isPhoneLayout = viewport.width < 768;
+		const isCardPortalLayout = !shouldRenderPortalStage;
+		const desktopStageScale = shouldRenderPortalStage
+			? clampScale(Math.min(viewport.width / 2560, viewport.height / 1440), 0.32, 1)
+			: 1;
+		const sceneFitScale = shouldRenderPortalStage ? 1 : desktopStageScale;
+		const logoFitScale = isPhoneLayout
+			? clampScale(Math.min(viewport.width / 430, viewport.height / 820), 0.62, 0.86)
+			: isCardPortalLayout
+				? clampScale(Math.min(viewport.width / 1180, viewport.height / 1060), 0.68, 0.92)
+				: 1;
 
 		return {
 			portalSceneScale: sceneFitScale,
 			scaleVars: {
+				'--home-stage-scale': desktopStageScale,
 				'--home-logo-width': `${900 * logoFitScale}px`,
 				'--home-copy-scale': sceneFitScale,
 				'--home-route-scale': sceneFitScale,
 			},
 		};
-	}, [viewport]);
-	const shouldRenderPortalStage = viewport.width > 820;
+	}, [shouldRenderPortalStage, viewport]);
 
 	function openSceneRoute(route, e) {
 		e.currentTarget.blur();

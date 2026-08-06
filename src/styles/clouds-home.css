@@ -1,4 +1,5 @@
 .clouds-home {
+	--home-stage-scale: 1;
 	--home-logo-width: 900px;
 	--home-copy-scale: 1;
 	--home-route-scale: 1;
@@ -287,18 +288,23 @@
 
 .clouds-home__stage {
 	position: absolute;
-	inset: 0;
+	top: 50%;
+	left: 50%;
 	z-index: 5;
+	width: 2560px;
+	height: 1440px;
 	pointer-events: none;
+	transform: translate(-50%, -50%) scale(var(--home-stage-scale));
+	transform-origin: center;
 }
 
 .clouds-home__brand-panel {
 	position: absolute;
-	top: 4.2vh;
-	left: 5.3vw;
+	top: 60px;
+	left: 136px;
 	z-index: 8;
-	width: min(53vw, 960px);
-	height: 72vh;
+	width: 960px;
+	height: 1036px;
 	pointer-events: auto;
 }
 
@@ -325,9 +331,9 @@
 
 .clouds-home__logo-scene {
 	position: absolute;
-	top: 11.5vh;
-	left: -0.8vw;
-	width: min(calc(var(--home-logo-width) * 1.08), 52vw, 920px);
+	top: 166px;
+	left: -20px;
+	width: min(calc(var(--home-logo-width) * 1.08), 920px);
 	max-width: none;
 	aspect-ratio: 1489 / 895;
 	pointer-events: none;
@@ -413,7 +419,7 @@
 .clouds-home__copy-panel {
 	position: absolute;
 	left: 64px;
-	top: 53vh;
+	top: 763px;
 	z-index: 9;
 	display: flex;
 	flex-direction: column;
@@ -522,7 +528,7 @@
 	left: 0;
 	z-index: 7;
 	width: 100%;
-	height: 100vh;
+	height: 100%;
 	pointer-events: none;
 	perspective: 1500px;
 	perspective-origin: 64% 45%;
@@ -1028,22 +1034,22 @@
 }
 
 .home-route-button--about {
-	top: 20.8vh;
-	left: 39.4vw;
+	top: 300px;
+	left: 1009px;
 	--route-cloud-rotate: -4deg;
 	--route-cloud-width: 232px;
 }
 
 .home-route-button--contact {
-	top: 12.2vh;
-	right: 6.4vw;
+	top: 176px;
+	right: 164px;
 	--route-cloud-rotate: 4deg;
 	--route-cloud-width: 262px;
 }
 
 .home-route-button--skills {
-	top: 37.3vh;
-	right: 6.2vw;
+	top: 537px;
+	right: 159px;
 	min-width: 196px;
 	min-height: 118px;
 	font-size: 13px;
@@ -1445,37 +1451,7 @@
 	}
 }
 
-@media (max-width: 1180px) {
-	.clouds-home__topbar {
-		width: calc(100vw - 34px);
-		gap: 12px;
-	}
-
-	.clouds-home__nav {
-		overflow-x: auto;
-		justify-content: flex-start;
-		scrollbar-width: none;
-	}
-
-	.clouds-home__nav::-webkit-scrollbar {
-		display: none;
-	}
-
-	.clouds-home__brand-panel {
-		width: min(50vw, 660px);
-	}
-
-	.clouds-home__copy-panel {
-		top: 50vh;
-		width: min(52vw, 620px);
-	}
-
-	.project-portal__copy em {
-		display: none;
-	}
-}
-
-@media (max-width: 820px) {
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
 	.clouds-home {
 		height: 100dvh;
 		min-height: 100dvh;
@@ -1483,90 +1459,259 @@
 		overscroll-behavior: none;
 	}
 
-	.clouds-home__topbar {
-		top: 12px;
-		grid-template-columns: 1fr;
-		gap: 8px;
-		padding: 10px 12px;
-		border-radius: 24px;
-	}
-
-	.clouds-home__nav-orb {
-		display: none;
-	}
-
-	.clouds-home__topbar::before {
-		right: 18px;
-		left: 18px;
-	}
-
-	.clouds-home__mark {
-		justify-content: center;
-		font-size: 12px;
-	}
-
-	.clouds-home__nav {
-		justify-content: flex-start;
-	}
-
-	.clouds-home__nav-link {
-		min-height: 30px;
-		padding: 6px 10px;
-		font-size: 11px;
-	}
-
-	.clouds-home__brand-panel {
-		top: 118px;
-		right: 16px;
-		left: 16px;
+	.clouds-home__stage {
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
 		width: auto;
-		height: 410px;
-	}
-
-	.clouds-home__eyebrow {
-		margin-left: 0;
-		padding: 7px 12px;
-		font-size: 9px;
-		letter-spacing: 0.16em;
-	}
-
-	.clouds-home__logo-scene {
-		top: -28px;
-		left: -18px;
-		width: min(104vw, 500px);
-		max-width: none;
-		margin: 0;
-	}
-
-	.clouds-home__copy-panel {
-		top: 318px;
-		left: 16px;
-		gap: 12px;
-		width: min(92vw, 430px);
+		height: auto;
 		transform: none;
 	}
 
+	.clouds-home .page-shell__nav {
+		top: calc(14px + env(safe-area-inset-top, 0px));
+		max-width: calc(100% - 32px);
+		padding: 8px 12px;
+	}
+
+	.clouds-home .page-shell__nav-link {
+		min-height: 32px;
+		padding: 7px 12px;
+		font-size: 12px;
+	}
+
+	.clouds-home .page-shell__nav-orb {
+		display: none;
+	}
+
+	.clouds-home__brand-panel {
+		top: clamp(82px, 8.8dvh, 126px);
+		right: clamp(28px, 6vw, 72px);
+		left: clamp(28px, 6vw, 72px);
+		width: auto;
+		height: 56dvh;
+		pointer-events: auto;
+	}
+
+	.clouds-home__logo-scene {
+		top: clamp(-18px, 1.8dvh, 26px);
+		left: 50%;
+		width: min(calc(var(--home-logo-width) * 1.05), 76vw, 660px);
+		translate: -50% 0;
+		transform-origin: center top;
+	}
+
+	.clouds-home__copy-panel {
+		top: clamp(390px, 45dvh, 560px);
+		left: 50%;
+		align-items: center;
+		width: min(82vw, 640px);
+		text-align: center;
+		translate: -50% 0;
+		transform: none;
+		transform-origin: center top;
+	}
+
 	.clouds-home__headline {
-		max-width: 16ch;
-		font-size: clamp(25px, 7.2vw, 31px);
+		max-width: 18ch;
+		font-size: clamp(34px, 5.2vw, 46px);
+		line-height: 0.98;
+	}
+
+	.clouds-home__intro {
+		max-width: 38ch;
+		font-size: clamp(16px, 2.1vw, 20px);
+	}
+
+	.clouds-home__primary-action {
+		min-height: 46px;
+		min-width: 214px;
+		font-size: 16px;
+	}
+
+	.clouds-home__portal-field {
+		top: auto;
+		right: 0;
+		bottom: calc(84px + env(safe-area-inset-bottom, 0px));
+		left: 0;
+		height: clamp(226px, 23dvh, 310px);
+		min-height: 0;
+		overflow: visible;
+		pointer-events: auto;
+		perspective: none;
+	}
+
+	.cloud-portal-stage {
+		display: none;
+	}
+
+	.clouds-home__mobile-portals {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: clamp(14px, 2vw, 22px);
+		width: 100%;
+		height: 100%;
+		padding: 18px clamp(22px, 5vw, 56px) 20px;
+	}
+
+	.project-portal,
+	.project-portal--asd,
+	.project-portal--halomed,
+	.project-portal--relatime {
+		position: relative;
+		top: auto;
+		right: auto;
+		bottom: auto;
+		left: auto;
+		width: auto;
+		animation: none;
+	}
+
+	.project-portal__window {
+		border-radius: 18px;
+	}
+
+	.project-portal__cloud {
+		inset: -14% -11% -18%;
+	}
+
+	.project-portal__chrome {
+		height: 28px;
+	}
+
+	.project-portal__copy {
+		padding: 0 12px 12px;
+	}
+
+	.project-portal__copy strong {
+		font-size: clamp(16px, 2.2vw, 20px);
+	}
+
+	.project-portal__copy small,
+	.project-portal__copy em {
+		display: none;
+	}
+
+	.home-route-button {
+		display: none;
+		transform: none;
+	}
+
+	.page-cloud--projects,
+	.page-cloud--about,
+	.page-cloud--contact,
+	.page-cloud--experience {
+		display: none;
+	}
+}
+
+@media (max-width: 767px) {
+	.clouds-home {
+		height: 100dvh;
+		min-height: 100dvh;
+		overflow: clip;
+		overscroll-behavior: none;
+	}
+
+	.clouds-home__stage {
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		width: auto;
+		height: auto;
+		transform: none;
+	}
+
+	.clouds-home .page-shell__nav {
+		top: calc(10px + env(safe-area-inset-top, 0px));
+		right: 10px;
+		left: 10px;
+		max-width: none;
+		padding: 8px 9px;
+		border-radius: 22px;
+		transform: none;
+	}
+
+	.clouds-home .page-shell__nav-cloud,
+	.clouds-home .page-shell__nav-orb {
+		display: none;
+	}
+
+	.clouds-home .page-shell__nav-links {
+		flex-wrap: wrap;
+		justify-content: center;
+		row-gap: 3px;
+		width: 100%;
+	}
+
+	.clouds-home .page-shell__nav-link {
+		min-height: 28px;
+		padding: 6px 9px;
+		font-size: clamp(9px, 2.55vw, 11px);
+		letter-spacing: 0.02em;
+	}
+
+	.clouds-home__brand-panel {
+		top: clamp(72px, 13dvh, 116px);
+		right: 14px;
+		left: 14px;
+		width: auto;
+		height: clamp(286px, 55dvh, 470px);
+		pointer-events: auto;
+	}
+
+	.clouds-home__logo-scene {
+		top: clamp(-34px, -3.8dvh, -8px);
+		left: 50%;
+		width: min(calc(var(--home-logo-width) * 1.02), 94vw, 430px);
+		max-width: none;
+		margin: 0;
+		translate: -50% 0;
+		transform-origin: center top;
+	}
+
+	.clouds-home__copy-panel {
+		top: clamp(224px, 38dvh, 318px);
+		left: 50%;
+		align-items: center;
+		gap: clamp(8px, 1.4dvh, 12px);
+		width: min(calc(100vw - 28px), 430px);
+		text-align: center;
+		translate: -50% 0;
+		transform: none;
+		transform-origin: center top;
+	}
+
+	.clouds-home__headline {
+		max-width: 17ch;
+		font-size: clamp(23px, 7.2vw, 31px);
 		line-height: 1;
 	}
 
 	.clouds-home__intro {
-		max-width: 30ch;
-		font-size: 15px;
-		line-height: 1.32;
+		max-width: 31ch;
+		font-size: clamp(13px, 3.55vw, 15px);
+		line-height: 1.28;
 	}
 
 	.clouds-home__actions {
-		gap: 14px;
+		justify-content: center;
+		gap: 10px;
+		width: 100%;
 	}
 
 	.clouds-home__primary-action {
-		min-width: 156px;
+		min-width: 168px;
 		min-height: 42px;
 		padding: 0 18px;
 		font-size: 13px;
+	}
+
+	.clouds-home__button-cloud {
+		width: 31px;
+		height: 21px;
 	}
 
 	.clouds-home__text-action {
@@ -1576,10 +1721,10 @@
 	.clouds-home__portal-field {
 		top: auto;
 		right: 0;
-		bottom: 76px;
+		bottom: calc(64px + env(safe-area-inset-bottom, 0px));
 		left: 0;
 		width: 100%;
-		height: 196px;
+		height: clamp(124px, 21dvh, 184px);
 		min-height: 0;
 		padding: 0;
 		overflow: visible;
@@ -1593,11 +1738,288 @@
 
 	.clouds-home__mobile-portals {
 		display: flex;
-		gap: 18px;
+		gap: clamp(12px, 4vw, 18px);
 		width: 100%;
 		height: 100%;
-		padding: 18px 18px 22px;
+		padding: 12px 14px 18px;
 		overflow-x: auto;
+		scrollbar-width: none;
+		scroll-padding-inline: 14px;
+	}
+
+	.clouds-home__mobile-portals::-webkit-scrollbar {
+		display: none;
+	}
+
+	.project-portal,
+	.project-portal--asd,
+	.project-portal--halomed,
+	.project-portal--relatime {
+		position: relative;
+		top: auto;
+		right: auto;
+		bottom: auto;
+		left: auto;
+		flex: 0 0 min(78vw, 330px);
+		width: auto;
+		animation: none;
+	}
+
+	.project-portal__window {
+		border-radius: 16px;
+	}
+
+	.project-portal__cloud {
+		inset: -12% -8% -16%;
+	}
+
+	.project-portal__chrome {
+		height: 24px;
+		padding-inline: 12px;
+	}
+
+	.project-portal__chrome span {
+		width: 8px;
+		height: 8px;
+	}
+
+	.project-portal__media {
+		margin: 0 9px 9px;
+	}
+
+	.project-portal__copy {
+		padding: 0 11px 10px;
+	}
+
+	.project-portal__copy strong {
+		font-size: 16px;
+	}
+
+	.project-portal__copy small,
+	.project-portal__copy em {
+		display: none;
+	}
+
+	.home-route-button {
+		display: none;
+		transform: none;
+	}
+
+	.page-cloud--projects,
+	.page-cloud--about,
+	.page-cloud--contact,
+	.page-cloud--experience {
+		display: none;
+	}
+}
+
+@media (max-width: 480px) {
+	.clouds-home .page-shell__nav {
+		padding: 7px 7px;
+	}
+
+	.clouds-home .page-shell__nav-link {
+		min-height: 26px;
+		padding: 5px 7px;
+	}
+
+	.clouds-home__brand-panel {
+		top: clamp(68px, 12.4dvh, 104px);
+		right: 12px;
+		left: 12px;
+		height: clamp(276px, 53dvh, 438px);
+	}
+
+	.clouds-home__logo-scene {
+		top: clamp(-42px, -4.6dvh, -18px);
+		width: min(calc(var(--home-logo-width) * 1.03), 102vw, 390px);
+	}
+
+	.clouds-home__copy-panel {
+		top: clamp(214px, 37dvh, 304px);
+		gap: clamp(7px, 1.2dvh, 10px);
+		width: calc(100vw - 24px);
+	}
+
+	.clouds-home__headline {
+		max-width: 16ch;
+		font-size: clamp(21px, 7.2vw, 29px);
+	}
+
+	.clouds-home__intro {
+		max-width: 29ch;
+		font-size: clamp(12.5px, 3.65vw, 14px);
+	}
+
+	.clouds-home__primary-action {
+		min-width: 154px;
+		min-height: 40px;
+		padding: 0 16px;
+		font-size: 12.5px;
+	}
+
+	.clouds-home__portal-field {
+		bottom: calc(60px + env(safe-area-inset-bottom, 0px));
+		height: clamp(116px, 21dvh, 172px);
+	}
+
+	.clouds-home__mobile-portals {
+		padding: 10px 12px 16px;
+	}
+
+	.project-portal,
+	.project-portal--asd,
+	.project-portal--halomed,
+	.project-portal--relatime {
+		flex-basis: min(82vw, 310px);
+	}
+}
+
+@media (max-width: 360px) {
+	.clouds-home .page-shell__nav-link {
+		padding-inline: 6px;
+		font-size: 8.7px;
+	}
+
+	.clouds-home__copy-panel {
+		top: clamp(204px, 36dvh, 286px);
+	}
+
+	.clouds-home__headline {
+		font-size: clamp(20px, 7vw, 24px);
+	}
+
+	.clouds-home__intro {
+		font-size: 12px;
+	}
+
+	.clouds-home__portal-field {
+		height: clamp(108px, 20dvh, 138px);
+	}
+}
+
+@media (max-width: 960px) and (max-height: 520px) and (orientation: landscape) {
+	.clouds-home {
+		height: 100dvh;
+		min-height: 100dvh;
+		overflow: clip;
+		overscroll-behavior: none;
+	}
+
+	.clouds-home__stage {
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		width: auto;
+		height: auto;
+		transform: none;
+	}
+
+	.clouds-home .page-shell__nav {
+		top: calc(8px + env(safe-area-inset-top, 0px));
+		right: 10px;
+		left: 10px;
+		max-width: none;
+		padding: 6px 8px;
+		border-radius: 999px;
+		transform: none;
+	}
+
+	.clouds-home .page-shell__nav-cloud,
+	.clouds-home .page-shell__nav-orb {
+		display: none;
+	}
+
+	.clouds-home .page-shell__nav-links {
+		flex-wrap: nowrap;
+		justify-content: center;
+		width: 100%;
+	}
+
+	.clouds-home .page-shell__nav-link {
+		min-height: 26px;
+		padding: 5px 8px;
+		font-size: 10px;
+	}
+
+	.clouds-home__brand-panel {
+		top: clamp(54px, 16dvh, 72px);
+		right: auto;
+		left: clamp(12px, 3vw, 28px);
+		width: min(45vw, 390px);
+		height: calc(100dvh - 112px);
+	}
+
+	.clouds-home__logo-scene {
+		top: clamp(-50px, -12dvh, -30px);
+		left: 0;
+		width: min(calc(var(--home-logo-width) * 0.72), 38vw, 290px);
+		opacity: 0.92;
+		translate: none;
+		transform: none;
+	}
+
+	.clouds-home__copy-panel {
+		top: clamp(94px, 30dvh, 130px);
+		left: 0;
+		align-items: flex-start;
+		gap: 7px;
+		width: min(44vw, 360px);
+		text-align: left;
+		translate: none;
+		transform: none;
+	}
+
+	.clouds-home__headline {
+		max-width: 16ch;
+		font-size: clamp(20px, 3.5vw, 27px);
+		line-height: 0.98;
+	}
+
+	.clouds-home__intro {
+		max-width: 31ch;
+		font-size: clamp(11px, 1.9vw, 13px);
+		line-height: 1.24;
+	}
+
+	.clouds-home__primary-action {
+		min-width: 148px;
+		min-height: 36px;
+		padding: 0 14px;
+		font-size: 12px;
+	}
+
+	.clouds-home__button-cloud {
+		width: 28px;
+		height: 19px;
+	}
+
+	.clouds-home__portal-field {
+		top: clamp(54px, 16dvh, 70px);
+		right: 10px;
+		bottom: auto;
+		left: auto;
+		width: min(46vw, 410px);
+		height: calc(100dvh - 126px);
+		min-height: 160px;
+		overflow: visible;
+		pointer-events: auto;
+		perspective: none;
+	}
+
+	.cloud-portal-stage {
+		display: none;
+	}
+
+	.clouds-home__mobile-portals {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		width: 100%;
+		height: 100%;
+		padding: 0 8px 0 0;
+		overflow-y: auto;
 		scrollbar-width: none;
 	}
 
@@ -1614,114 +2036,45 @@
 		right: auto;
 		bottom: auto;
 		left: auto;
-		flex: 0 0 min(78vw, 340px);
-		width: auto;
+		flex: 0 0 auto;
+		width: 100%;
 		animation: none;
 	}
 
 	.project-portal__window {
-		border-radius: 18px;
-	}
-
-	.project-portal__cloud {
-		inset: -12% -8% -16%;
+		display: grid;
+		grid-template-columns: minmax(92px, 42%) minmax(0, 1fr);
+		align-items: center;
+		border-radius: 14px;
 	}
 
 	.project-portal__chrome {
-		height: 26px;
-	}
-
-	.project-portal__copy {
-		padding: 0 12px 12px;
-	}
-
-	.project-portal__copy strong {
-		font-size: 17px;
-	}
-
-	.project-portal__copy small {
-		font-size: 8px;
-	}
-
-	.home-route-button {
 		display: none;
-		transform: none;
-	}
-
-	.page-cloud--projects {
-		right: 10px;
-		bottom: 42vh;
-		left: auto;
-	}
-
-	.page-cloud--about,
-	.page-cloud--contact,
-	.page-cloud--experience {
-		display: none;
-	}
-}
-
-@media (max-width: 480px) {
-	.clouds-home__brand-panel {
-		top: 112px;
-		height: 404px;
-	}
-
-	.clouds-home__logo-scene {
-		top: -40px;
-		left: -18px;
-		width: 104vw;
-		margin: 0;
-	}
-
-	.clouds-home__copy-panel {
-		top: 334px;
-		left: 12px;
-		gap: 10px;
-		width: calc(100vw - 24px);
-	}
-
-	.clouds-home__headline {
-		font-size: clamp(23px, 7.2vw, 29px);
-	}
-
-	.clouds-home__intro {
-		max-width: 28ch;
-		font-size: 14px;
-	}
-
-	.clouds-home__actions {
-		align-items: flex-start;
-		flex-direction: column;
-		gap: 8px;
-	}
-
-	.clouds-home__text-action {
-		min-height: 34px;
-	}
-
-	.clouds-home__portal-field {
-		bottom: 68px;
-		height: 176px;
-		min-height: 0;
-	}
-
-	.clouds-home__mobile-portals {
-		padding-inline: 14px;
-	}
-
-	.project-portal,
-	.project-portal--asd,
-	.project-portal--halomed,
-	.project-portal--relatime {
-		flex-basis: 82vw;
 	}
 
 	.project-portal__media {
-		margin: 0 10px 10px;
+		margin: 8px;
+		border-radius: 12px;
 	}
 
-	.page-cloud--projects {
+	.project-portal__copy {
+		padding: 8px 10px 8px 0;
+	}
+
+	.project-portal__copy strong {
+		font-size: clamp(14px, 2.5vw, 17px);
+	}
+
+	.project-portal__copy small,
+	.project-portal__copy em {
+		display: none;
+	}
+
+	.home-route-button,
+	.page-cloud--projects,
+	.page-cloud--about,
+	.page-cloud--contact,
+	.page-cloud--experience {
 		display: none;
 	}
 }
