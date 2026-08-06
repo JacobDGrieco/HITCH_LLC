@@ -2,7 +2,7 @@ import '../styles/skill-crystal.css';
 import { getStandardSkillDropSize, resolveScaledDropSize } from '../lib/dropSizing';
 import { renderTextWithDelimiterBreaks } from '../lib/textBreaks.jsx';
 
-const REFERENCE_RAIN_SHELL = '/raindrops/reference-glass-drop.webp';
+const REFERENCE_RAIN_SHELL = '/assets/raindrop.webp';
 
 function clamp(value, min, max) {
 	return Math.min(max, Math.max(min, value));

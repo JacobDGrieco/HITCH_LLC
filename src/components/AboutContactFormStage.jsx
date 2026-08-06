@@ -2,7 +2,7 @@ import { Html } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import { Suspense } from 'react';
 
-const CLOUD_FRAME_TEXTURE = '/about/contact-cloud-frame.webp';
+const CLOUD_FRAME_TEXTURE = '/assets/contact-frame.webp';
 
 // Transform arrays are [x, y, z]. Rotation values are radians.
 const CONTACT_FORM_SCENE = {
@@ -47,16 +47,16 @@ function ContactPanelHtml({ children }) {
 			<div
 				className="contact-page__message-shell"
 				style={{
-					'--contact-cloud-frame-width': `${frameWidth}px`,
-					'--contact-cloud-frame-height': `${frameHeight}px`,
-					'--contact-cloud-frame-x': `${frameX}px`,
-					'--contact-cloud-frame-y': `${frameY}px`,
-					'--contact-cloud-frame-z': `${frameZ}px`,
-					'--contact-cloud-frame-rotation-x': `${frameRotationX}rad`,
-					'--contact-cloud-frame-rotation-y': `${frameRotationY}rad`,
-					'--contact-cloud-frame-rotation-z': `${frameRotationZ}rad`,
-					'--contact-cloud-frame-scale-x': frameScaleX,
-					'--contact-cloud-frame-scale-y': frameScaleY,
+					'--contact-frame-width': `${frameWidth}px`,
+					'--contact-frame-height': `${frameHeight}px`,
+					'--contact-frame-x': `${frameX}px`,
+					'--contact-frame-y': `${frameY}px`,
+					'--contact-frame-z': `${frameZ}px`,
+					'--contact-frame-rotation-x': `${frameRotationX}rad`,
+					'--contact-frame-rotation-y': `${frameRotationY}rad`,
+					'--contact-frame-rotation-z': `${frameRotationZ}rad`,
+					'--contact-frame-scale-x': frameScaleX,
+					'--contact-frame-scale-y': frameScaleY,
 					'--contact-panel-width': `${panelWidth}px`,
 					'--contact-panel-height': `${panelHeight}px`,
 					'--contact-panel-x': `${panelX}px`,

@@ -13,7 +13,7 @@ const FLOATING_NAV_ITEMS = [
 		label: 'About',
 		route: '/about',
 		className: 'home-route-button--about',
-		cloudImage: '/home/route1.webp',
+		cloudImage: '/assets/route1.webp',
 		icon: 'person',
 	},
 	{
@@ -21,7 +21,7 @@ const FLOATING_NAV_ITEMS = [
 		label: 'Experience',
 		route: '/experience',
 		className: 'home-route-button--contact',
-		cloudImage: '/home/route2.webp',
+		cloudImage: '/assets/route2.webp',
 		icon: 'tool',
 	},
 	{
@@ -29,7 +29,7 @@ const FLOATING_NAV_ITEMS = [
 		label: 'Education',
 		route: '/education',
 		className: 'home-route-button--skills',
-		cloudImage: '/home/route3.webp',
+		cloudImage: '/assets/route3.webp',
 		icon: 'graduation',
 	},
 ];
@@ -44,7 +44,7 @@ const PROJECT_PORTALS = [
 	{
 		id: 'asd',
 		title: 'A.S.D.',
-		previewImage: '/home/windows/asd.webp',
+		previewImage: '/projects/window1.webp',
 		liveUrl: 'https://www.asdrecords.net/',
 		route: '/projects',
 		className: 'project-portal--asd',
@@ -52,7 +52,7 @@ const PROJECT_PORTALS = [
 	{
 		id: 'halomed',
 		title: 'HaloMed',
-		previewImage: '/home/windows/halomed.webp',
+		previewImage: '/projects/window2.webp',
 		liveUrl: 'https://www.halomed.org/',
 		route: '/projects',
 		className: 'project-portal--halomed',
@@ -60,7 +60,7 @@ const PROJECT_PORTALS = [
 	{
 		id: 'relatime',
 		title: 'RelaTime',
-		previewImage: '/home/windows/relatime.webp',
+		previewImage: '/projects/window3.webp',
 		liveUrl: 'https://www.relatime.org/',
 		route: '/projects',
 		className: 'project-portal--relatime',
@@ -148,9 +148,9 @@ const STATIC_PAGE_IMAGE_SOURCES = [
 	'/contact/resume.png',
 	'/contact/linkedin.png',
 	'/contact/github.png',
-	'/home/logo-cloud.webp',
-	'/home/logo-wordmark.webp',
-	'/home/cta-cloud.webp',
+	'/assets/logo-cloud.webp',
+	'/assets/logo-wordmark.webp',
+	'/assets/cta-cloud.webp',
 	...FLOATING_NAV_ITEMS.map((item) => item.cloudImage),
 	...PROJECT_PORTALS.map((project) => project.previewImage),
 ];
@@ -452,8 +452,8 @@ export default function CloudsHome() {
 									/>
 								))}
 							</div>
-							<img src="/home/logo-cloud.webp" alt="" width="1489" height="895" fetchPriority="high" className="clouds-home__logo-cloud" />
-							<img src="/home/logo-wordmark.webp" alt="" width="1108" height="214" fetchPriority="high" className="clouds-home__logo-wordmark" />
+							<img src="/assets/logo-cloud.webp" alt="" width="1489" height="895" fetchPriority="high" className="clouds-home__logo-cloud" />
+							<img src="/assets/logo-wordmark.webp" alt="" width="1108" height="214" fetchPriority="high" className="clouds-home__logo-wordmark" />
 						</div>
 						<h1 id="home-brand-title" className="clouds-home__sr-title">HeadInTheCloudsHaven LLC</h1>
 						<div className="clouds-home__copy-panel">
@@ -463,7 +463,7 @@ export default function CloudsHome() {
 							</p>
 							<div className="clouds-home__actions">
 								<button type="button" className="clouds-home__primary-action" onClick={(e) => openSceneRoute('/projects', e)}>
-									<img src="/home/cta-cloud.webp" alt="" className="clouds-home__button-cloud" aria-hidden="true" />
+									<img src="/assets/cta-cloud.webp" alt="" className="clouds-home__button-cloud" aria-hidden="true" />
 									<span>Enter Projects</span>
 								</button>
 							</div>

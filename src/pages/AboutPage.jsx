@@ -96,7 +96,7 @@ export default function AboutPage() {
 				<section className="about-page__portrait-stage" aria-label="Portrait of Jacob Grieco">
 					<div className="about-page__portrait-orbit">
 						<div className="about-page__portrait-cloud" aria-hidden="true">
-							<img src="/about/portrait-cloud-wreath.webp" alt="" width="1254" height="1254" className="about-page__portrait-cloud-art" />
+							<img src="/assets/portrait-wreath.webp" alt="" width="1254" height="1254" className="about-page__portrait-cloud-art" />
 						</div>
 						<div className="about-page__portrait-ring">
 							<img src="/headshot.webp" alt="Jacob Grieco" width="1400" height="1129" loading="eager" className="about-page__portrait-image" />
@@ -111,7 +111,7 @@ export default function AboutPage() {
 								rel={external ? 'noopener noreferrer' : undefined}
 								className="contact-page__cloud-link"
 							>
-								<img src="/home/route1.webp" alt="" className="contact-page__cloud-art" aria-hidden="true" />
+								<img src="/assets/route1.webp" alt="" className="contact-page__cloud-art" aria-hidden="true" />
 								<span className="contact-page__cloud-content">
 									{Icon ? (
 										<Icon className="contact-page__cloud-icon" strokeWidth={1.8} aria-hidden="true" />

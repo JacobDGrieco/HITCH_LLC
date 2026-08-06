@@ -7,9 +7,9 @@ import { getProjectLane } from '../lib/projectWindowLanes';
 const GLASS_SHELL_CANVAS = { width: 1024, height: 660 };
 const GLASS_SHELL_VIEWPORT = { x: 68, y: 82, width: 888, height: 504, radius: 28 };
 const LANE_CLOUDS = {
-	left: '/home/throne2.webp',
-	middle: '/home/throne1.webp',
-	right: '/home/throne3.webp',
+	left: '/assets/throne2.webp',
+	middle: '/assets/throne1.webp',
+	right: '/assets/throne3.webp',
 };
 
 // Lane templates are the single source of truth for every repeated row.
