@@ -106,6 +106,18 @@ function shuffleTracks(tracks) {
 	return nextTracks;
 }
 
+function scheduleIdleTask(callback) {
+	if (typeof window === 'undefined') return () => {};
+
+	if ('requestIdleCallback' in window) {
+		const idleId = window.requestIdleCallback(callback, { timeout: 5000 });
+		return () => window.cancelIdleCallback(idleId);
+	}
+
+	const timerId = window.setTimeout(callback, 2500);
+	return () => window.clearTimeout(timerId);
+}
+
 export function SiteMusicProvider({ children }) {
 	const audioRef = useRef(null);
 	const playbackRequestedRef = useRef(false);
@@ -167,10 +179,11 @@ export function SiteMusicProvider({ children }) {
 			}
 		}
 
-		loadPlaylist();
+		const cancelScheduledLoad = scheduleIdleTask(loadPlaylist);
 
 		return () => {
 			cancelled = true;
+			cancelScheduledLoad();
 		};
 	}, []);
 
@@ -182,7 +195,7 @@ export function SiteMusicProvider({ children }) {
 		}
 
 		const audio = new Audio();
-		audio.preload = 'auto';
+		audio.preload = 'none';
 		audio.volume = DEFAULT_MUSIC_VOLUME;
 		audioRef.current = audio;
 
@@ -378,11 +391,6 @@ export function SiteMusicProvider({ children }) {
 
 			if (playbackRequestedRef.current && playbackState !== 'paused') {
 				void startPlayback();
-			} else {
-				void prepareSoundCloudWidget(track).catch((error) => {
-					setPlaybackState('error');
-					setErrorMessage(error instanceof Error ? error.message : 'Unable to load SoundCloud track');
-				});
 			}
 
 			return;
@@ -394,16 +402,10 @@ export function SiteMusicProvider({ children }) {
 			return;
 		}
 
-		const nextUrl = getTrackUrl(track);
-		if (nextUrl && audio.src !== nextUrl) {
-			audio.src = nextUrl;
-			audio.load();
-		}
-
 		if (playbackRequestedRef.current && playbackState !== 'paused') {
 			void startPlayback();
 		}
-	}, [currentIndex, pauseSoundCloudWidget, playbackState, playlist, prepareSoundCloudWidget, startPlayback]);
+	}, [currentIndex, pauseSoundCloudWidget, playbackState, playlist, startPlayback]);
 
 	useEffect(() => () => {
 		const widget = soundCloudWidgetRef.current;

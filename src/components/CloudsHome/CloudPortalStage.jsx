@@ -13,8 +13,8 @@ const PORTAL_LAYOUT = [
 		id: 'asd',
 		title: 'A.S.D.',
 		liveUrl: 'https://www.asdrecords.net/',
-		previewImage: '/home/windows/asd.png',
-		cloudImage: '/home/throne1.png',
+		previewImage: '/home/windows/asd.webp',
+		cloudImage: '/home/throne1.webp',
 		position: [1.8, 1.25, -1.34],
 		window: {
 			position: [0, -0.12, 0],
@@ -42,8 +42,8 @@ const PORTAL_LAYOUT = [
 		id: 'halomed',
 		title: 'HaloMed',
 		liveUrl: 'https://www.halomed.org/',
-		previewImage: '/home/windows/halomed.png',
-		cloudImage: '/home/throne2.png',
+		previewImage: '/home/windows/halomed.webp',
+		cloudImage: '/home/throne2.webp',
 		position: [-0.10, -1.14, 0.20],
 		window: {
 			position: [-0.03, -0.01, 0],
@@ -71,8 +71,8 @@ const PORTAL_LAYOUT = [
 		id: 'relatime',
 		title: 'RelaTime',
 		liveUrl: 'https://www.relatime.org/',
-		previewImage: '/home/windows/relatime.png',
-		cloudImage: '/home/throne3.png',
+		previewImage: '/home/windows/relatime.webp',
+		cloudImage: '/home/throne3.webp',
 		position: [3.08, -1.15, -0.36],
 		window: {
 			position: [0.02, 0.09, 0.02],

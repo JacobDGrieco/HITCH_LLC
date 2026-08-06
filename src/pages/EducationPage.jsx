@@ -5,7 +5,7 @@ import '../styles/education-page.css';
 import DropCard from '../components/DropCard';
 import { getCachedEducationPageData, loadEducationPageData } from '../lib/pageDataCache';
 
-const REFERENCE_RAIN_SHELL = '/raindrops/reference-glass-drop.png';
+const REFERENCE_RAIN_SHELL = '/raindrops/reference-glass-drop.webp';
 
 function DropCardSkeleton({ size = 318, enterDelay = 0 }) {
 	return (

@@ -1,5 +1,6 @@
 import { getDb } from '../lib/db.js';
 import { dedupeRowsByTitle } from '../lib/contentDedupe.js';
+import { getOptimizedAssetPath } from '../lib/optimizedAssetPath.js';
 
 export default async function handler(req, res) {
 	if (req.method !== 'GET') return res.status(405).end();
@@ -17,7 +18,7 @@ export default async function handler(req, res) {
 			title: r.title,
 			desc: r.desc,
 			gemColor: r.color_hex ?? undefined,
-			iconImage: r.icon_image,
+			iconImage: getOptimizedAssetPath(r.icon_image),
 			size: r.size ?? 1,
 			featured: false,
 			className: 'education-page__crystal',

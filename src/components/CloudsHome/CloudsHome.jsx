@@ -13,7 +13,7 @@ const FLOATING_NAV_ITEMS = [
 		label: 'About',
 		route: '/about',
 		className: 'home-route-button--about',
-		cloudImage: '/home/route1.png',
+		cloudImage: '/home/route1.webp',
 		icon: 'person',
 	},
 	{
@@ -21,7 +21,7 @@ const FLOATING_NAV_ITEMS = [
 		label: 'Experience',
 		route: '/experience',
 		className: 'home-route-button--contact',
-		cloudImage: '/home/route2.png',
+		cloudImage: '/home/route2.webp',
 		icon: 'tool',
 	},
 	{
@@ -29,7 +29,7 @@ const FLOATING_NAV_ITEMS = [
 		label: 'Education',
 		route: '/education',
 		className: 'home-route-button--skills',
-		cloudImage: '/home/route3.png',
+		cloudImage: '/home/route3.webp',
 		icon: 'graduation',
 	},
 ];
@@ -44,7 +44,7 @@ const PROJECT_PORTALS = [
 	{
 		id: 'asd',
 		title: 'A.S.D.',
-		previewImage: '/home/windows/asd.png',
+		previewImage: '/home/windows/asd.webp',
 		liveUrl: 'https://www.asdrecords.net/',
 		route: '/projects',
 		className: 'project-portal--asd',
@@ -52,7 +52,7 @@ const PROJECT_PORTALS = [
 	{
 		id: 'halomed',
 		title: 'HaloMed',
-		previewImage: '/home/windows/halomed.png',
+		previewImage: '/home/windows/halomed.webp',
 		liveUrl: 'https://www.halomed.org/',
 		route: '/projects',
 		className: 'project-portal--halomed',
@@ -60,7 +60,7 @@ const PROJECT_PORTALS = [
 	{
 		id: 'relatime',
 		title: 'RelaTime',
-		previewImage: '/projects/relatime.png',
+		previewImage: '/projects/relatime.webp',
 		liveUrl: 'https://www.relatime.org/',
 		route: '/projects',
 		className: 'project-portal--relatime',
@@ -79,13 +79,13 @@ const LOGO_SPARKLES = [
 ];
 
 const STATIC_PAGE_IMAGE_SOURCES = [
-	'/headshot.jpg',
+	'/headshot.webp',
 	'/contact/resume.png',
 	'/contact/linkedin.png',
 	'/contact/github.png',
-	'/home/logo-cloud.png',
-	'/home/logo-wordmark.png',
-	'/home/cta-cloud.png',
+	'/home/logo-cloud.webp',
+	'/home/logo-wordmark.webp',
+	'/home/cta-cloud.webp',
 	...FLOATING_NAV_ITEMS.map((item) => item.cloudImage),
 	...PROJECT_PORTALS.map((project) => project.previewImage),
 ];
@@ -212,6 +212,7 @@ export default function CloudsHome() {
 			},
 		};
 	}, [viewport]);
+	const shouldRenderPortalStage = viewport.width > 820;
 
 	function openSceneRoute(route, e) {
 		e.currentTarget.blur();
@@ -250,8 +251,8 @@ export default function CloudsHome() {
 									/>
 								))}
 							</div>
-							<img src="/home/logo-cloud.png" alt="" width="1489" height="895" fetchPriority="high" className="clouds-home__logo-cloud" />
-							<img src="/home/logo-wordmark.png" alt="" width="1108" height="214" fetchPriority="high" className="clouds-home__logo-wordmark" />
+							<img src="/home/logo-cloud.webp" alt="" width="1489" height="895" fetchPriority="high" className="clouds-home__logo-cloud" />
+							<img src="/home/logo-wordmark.webp" alt="" width="1108" height="214" fetchPriority="high" className="clouds-home__logo-wordmark" />
 						</div>
 						<h1 id="home-brand-title" className="clouds-home__sr-title">HeadInTheCloudsHaven LLC</h1>
 						<div className="clouds-home__copy-panel">
@@ -261,7 +262,7 @@ export default function CloudsHome() {
 							</p>
 							<div className="clouds-home__actions">
 								<button type="button" className="clouds-home__primary-action" onClick={(e) => openSceneRoute('/projects', e)}>
-									<img src="/home/cta-cloud.png" alt="" className="clouds-home__button-cloud" aria-hidden="true" />
+									<img src="/home/cta-cloud.webp" alt="" className="clouds-home__button-cloud" aria-hidden="true" />
 									<span>Enter Projects</span>
 								</button>
 							</div>
@@ -269,9 +270,11 @@ export default function CloudsHome() {
 					</section>
 
 					<section className="clouds-home__portal-field" aria-label="Selected project portals">
-						<Suspense fallback={null}>
-							<CloudPortalStage onOpenProject={openLiveProject} reducedMotion={reducedMotion} sceneScale={portalSceneScale} />
-						</Suspense>
+						{shouldRenderPortalStage ? (
+							<Suspense fallback={null}>
+								<CloudPortalStage onOpenProject={openLiveProject} reducedMotion={reducedMotion} sceneScale={portalSceneScale} />
+							</Suspense>
+						) : null}
 						<div className="clouds-home__mobile-portals">
 							{PROJECT_PORTALS.map((project) => (
 								<ProjectPortal

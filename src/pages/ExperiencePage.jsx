@@ -5,7 +5,7 @@ import DropCard from '../components/DropCard';
 import SkillsPage from './SkillsPage';
 import { getCachedExperiencePageData, loadExperiencePageData } from '../lib/pageDataCache';
 
-const REFERENCE_RAIN_SHELL = '/raindrops/reference-glass-drop.png';
+const REFERENCE_RAIN_SHELL = '/raindrops/reference-glass-drop.webp';
 
 function buildDesc(item) {
 	const heading = [item.role, item.dateRange].filter(Boolean).join('\n');

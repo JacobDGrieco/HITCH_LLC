@@ -142,17 +142,17 @@
 }
 
 .projects-page__skeleton--left {
-	--project-skeleton-cloud: url('/home/throne2.png');
+	--project-skeleton-cloud: url('/home/throne2.webp');
 	transform: rotate(-2.4deg);
 }
 
 .projects-page__skeleton--middle {
-	--project-skeleton-cloud: url('/home/throne1.png');
+	--project-skeleton-cloud: url('/home/throne1.webp');
 	transform: translateY(-12px) rotate(1.2deg);
 }
 
 .projects-page__skeleton--right {
-	--project-skeleton-cloud: url('/home/throne3.png');
+	--project-skeleton-cloud: url('/home/throne3.webp');
 	transform: rotate(2.6deg);
 }
 
@@ -197,15 +197,15 @@
 }
 
 .projects-page__mobile-card--left {
-	--project-mobile-cloud: url('/home/throne2.png');
+	--project-mobile-cloud: url('/home/throne2.webp');
 }
 
 .projects-page__mobile-card--middle {
-	--project-mobile-cloud: url('/home/throne1.png');
+	--project-mobile-cloud: url('/home/throne1.webp');
 }
 
 .projects-page__mobile-card--right {
-	--project-mobile-cloud: url('/home/throne3.png');
+	--project-mobile-cloud: url('/home/throne3.webp');
 }
 
 .projects-page__mobile-window {

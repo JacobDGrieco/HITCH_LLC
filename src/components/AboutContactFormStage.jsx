@@ -2,7 +2,7 @@ import { Html } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import { Suspense } from 'react';
 
-const CLOUD_FRAME_TEXTURE = '/about/contact-cloud-frame.png';
+const CLOUD_FRAME_TEXTURE = '/about/contact-cloud-frame.webp';
 
 // Transform arrays are [x, y, z]. Rotation values are radians.
 const CONTACT_FORM_SCENE = {
