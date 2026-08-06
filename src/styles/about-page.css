@@ -563,3 +563,209 @@
 		padding-inline: 2px;
 	}
 }
+
+@media (min-width: 1081px) {
+	.page-shell__overlay--about .page-shell__content {
+		overflow: hidden;
+	}
+
+	.about-page {
+		width: 100vw;
+		height: calc(100dvh - 92px);
+		min-height: 0;
+		padding-bottom: 0;
+		overflow: visible;
+	}
+
+	.about-page__header {
+		position: absolute;
+		top: 0;
+		left: 50%;
+		width: 2560px;
+		padding-top: 28px;
+		transform: translate(-50%, var(--about-header-offset-y)) scale(var(--about-stage-scale));
+		transform-origin: center top;
+	}
+
+	.about-page__title {
+		font-size: 94px;
+	}
+
+	.about-page__title::before,
+	.about-page__title::after {
+		font-size: 28px;
+	}
+
+	.about-page__subtitle {
+		font-size: 22px;
+	}
+
+	.about-page__scene {
+		position: absolute;
+		top: 152px;
+		left: 50%;
+		width: 1900px;
+		min-height: 780px;
+		margin: 0;
+		padding: 52px 34px 0;
+		gap: 42px;
+		transform: translate(-50%, var(--about-stage-offset-y)) scale(var(--about-stage-scale));
+		transform-origin: center top;
+	}
+
+	.about-page__portrait-stage {
+		flex: 0 0 610px;
+		min-height: 535px;
+	}
+
+	.about-page__portrait-orbit {
+		width: 610px;
+	}
+
+	.about-page__portrait-ring {
+		width: 368px;
+		padding: 9px;
+	}
+
+	.about-page__copy-panel {
+		flex: 0 0 460px;
+		max-width: 460px;
+		padding-top: 18px;
+	}
+
+	.about-page__name {
+		margin-bottom: 20px;
+		font-size: 68px;
+	}
+
+	.about-page__lead {
+		margin-bottom: 26px;
+		font-size: 31px;
+	}
+
+	.about-page__copy {
+		font-size: 17px;
+		line-height: 1.36;
+	}
+
+	.about-page__copy+.about-page__copy {
+		margin-top: 18px;
+	}
+
+	.about-page .contact-page {
+		display: contents;
+		min-height: 0;
+	}
+
+	.about-page .contact-page__three-stage {
+		flex: 0 0 780px;
+		width: 780px;
+		height: 760px;
+		min-width: 0;
+		min-height: 720px;
+		transform:
+			translateX(15%) translate(var(--about-contact-form-manual-x, var(--about-contact-form-offset-x)),
+				var(--about-contact-form-manual-y, var(--about-contact-form-offset-y))) scale(var(--about-contact-form-manual-scale, var(--about-contact-form-scale)));
+		transform-origin: center;
+	}
+
+	.about-page .contact-page__message-paper {
+		padding: 34px 36px 30px;
+		border-radius: 26px;
+	}
+
+	.about-page .contact-page__heading {
+		gap: 8px;
+		margin-bottom: 18px;
+	}
+
+	.about-page .contact-page__title {
+		font-size: 32px;
+	}
+
+	.about-page .contact-page__form {
+		gap: 14px;
+	}
+
+	.about-page .contact-page__label {
+		font-size: 11px;
+		letter-spacing: 3px;
+	}
+
+	.about-page .contact-page__input {
+		min-height: 43px;
+		padding: 9px 14px;
+	}
+
+	.about-page .contact-page__textarea {
+		min-height: 150px;
+		padding: 11px 14px;
+	}
+
+	.about-page .contact-page__button {
+		min-height: 54px;
+		margin-top: 2px;
+		padding: 13px 24px;
+		font-size: 13px;
+	}
+
+	.about-page .contact-page__cloud-links {
+		grid-template-columns: repeat(2, 232px);
+		gap: 0;
+	}
+
+	.about-page .contact-page__cloud-link {
+		min-height: 172px;
+	}
+
+	.about-page .contact-page__cloud-content {
+		gap: 6px;
+		padding: 42px 24px 22px;
+	}
+
+	.about-page .contact-page__cloud-icon,
+	.about-page .contact-page__cloud-icon-image {
+		width: 42px;
+		height: 42px;
+	}
+
+	.about-page .contact-page__cloud-title {
+		font-size: 15px;
+	}
+
+	.about-page .contact-page__cloud-subtitle {
+		font-size: 12.5px;
+	}
+}
+
+@media (min-width: 1800px) and (max-width: 1950px) and (min-height: 1000px) and (max-height: 1120px) {
+	.about-page {
+		--about-contact-form-manual-scale: 1.6;
+		--about-contact-form-manual-x: 220px;
+		--about-contact-form-manual-y: 140px;
+	}
+}
+
+@media (min-width: 1450px) and (max-width: 1700px) and (min-height: 820px) and (max-height: 940px) {
+	.about-page {
+		--about-contact-form-manual-scale: 1.6;
+		--about-contact-form-manual-x: 220px;
+		--about-contact-form-manual-y: 140px;
+	}
+}
+
+@media (min-width: 1320px) and (max-width: 1449px) and (min-height: 730px) and (max-height: 820px) {
+	.about-page {
+		--about-contact-form-manual-scale: 2.2;
+		--about-contact-form-manual-x: 460px;
+		--about-contact-form-manual-y: 380px;
+	}
+}
+
+@media (min-width: 1250px) and (max-width: 1319px) and (min-height: 680px) and (max-height: 740px) {
+	.about-page {
+		--about-contact-form-manual-scale: 2.4;
+		--about-contact-form-manual-x: 490px;
+		--about-contact-form-manual-y: 500px;
+	}
+}

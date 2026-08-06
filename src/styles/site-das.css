@@ -183,6 +183,43 @@
 	}
 }
 
+@media (min-width: 1081px) and (max-height: 820px) {
+	.site-das-shell {
+		bottom: 24px;
+		left: 28px;
+		width: 292px;
+		transform: scale(0.82);
+		transform-origin: left bottom;
+	}
+
+	.site-das {
+		grid-template-columns: 31px minmax(0, 1fr);
+		min-height: 44px;
+		gap: 10px;
+		padding: 6px 11px 6px 6px;
+	}
+
+	.site-das__mute {
+		width: 31px;
+		height: 31px;
+	}
+
+	.site-das__context {
+		font-size: 7px;
+	}
+
+	.site-das__title {
+		max-width: 216px;
+		font-size: 10px;
+	}
+
+	.site-das__sound-on {
+		min-height: 44px;
+		padding: 8px 15px;
+		font-size: 10px;
+	}
+}
+
 @media (max-width: 640px) {
 	.site-das-shell {
 		bottom: calc(10px + env(safe-area-inset-bottom, 0px));

@@ -2,9 +2,10 @@ import '@fontsource/cormorant-garamond/500.css';
 import '@fontsource/cormorant-garamond/600.css';
 import '@fontsource/cormorant-garamond/700.css';
 import { FileText, Mail } from 'lucide-react';
+import { useEffect, useMemo, useState } from 'react';
 import '../styles/shared.css';
-import '../styles/about-page.css';
 import ContactPage from './ContactPage';
+import '../styles/about-page.css';
 
 const CONTACT_LINKS = [
 	{
@@ -36,9 +37,55 @@ const CONTACT_LINKS = [
 	},
 ];
 
+const ABOUT_DESKTOP_CANVAS = {
+	width: 2560,
+	height: 1440,
+	shellTopReserve: 92,
+};
+
+function getViewport() {
+	return {
+		width: window.innerWidth,
+		height: window.innerHeight,
+	};
+}
+
+function clampScale(scale, min, max) {
+	return Math.min(Math.max(scale, min), max);
+}
+
 export default function AboutPage() {
+	const [viewport, setViewport] = useState(getViewport);
+
+	useEffect(() => {
+		function handleResize() {
+			setViewport(getViewport());
+		}
+
+		window.addEventListener('resize', handleResize);
+		return () => window.removeEventListener('resize', handleResize);
+	}, []);
+
+	const aboutScaleVars = useMemo(() => {
+		const usableHeight = Math.max(1, viewport.height - ABOUT_DESKTOP_CANVAS.shellTopReserve);
+		const stageScale = clampScale(Math.min(viewport.width / ABOUT_DESKTOP_CANVAS.width, usableHeight / (ABOUT_DESKTOP_CANVAS.height - ABOUT_DESKTOP_CANVAS.shellTopReserve)), 0.42, 1);
+		const shortDesktopAdjustment = clampScale((0.62 - stageScale) / 0.2, 0, 1);
+		const contactFormMaxScale = 1.64 - (shortDesktopAdjustment * 0.28);
+		const contactFormScale = clampScale((1 + ((1 - stageScale) * 3)) * (0.9 - (shortDesktopAdjustment * 0.2)), 1, contactFormMaxScale);
+		const contactFormGrowth = contactFormScale - 1;
+
+		return {
+			'--about-stage-scale': stageScale,
+			'--about-header-offset-y': `${Number((-25 * shortDesktopAdjustment).toFixed(2))}px`,
+			'--about-stage-offset-y': `${Number((-92 * shortDesktopAdjustment).toFixed(2))}px`,
+			'--about-contact-form-scale': contactFormScale,
+			'--about-contact-form-offset-x': `${Number(((contactFormGrowth * 260) - (shortDesktopAdjustment * 74)).toFixed(2))}px`,
+			'--about-contact-form-offset-y': `${Number(((contactFormGrowth * 210) - (shortDesktopAdjustment * 34)).toFixed(2))}px`,
+		};
+	}, [viewport]);
+
 	return (
-		<main className="about-page" aria-labelledby="about-contact-title">
+		<main className="about-page" style={aboutScaleVars} aria-labelledby="about-contact-title">
 			<div className="about-page__stars" aria-hidden="true" />
 			<header className="about-page__header">
 				<h1 id="about-contact-title" className="about-page__title">About &amp; Contact</h1>
