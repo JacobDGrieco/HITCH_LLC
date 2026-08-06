@@ -11,6 +11,44 @@ const LANE_CLOUDS = {
 	middle: '/assets/throne1.webp',
 	right: '/assets/throne3.webp',
 };
+const PROJECT_TEXTURE_DENSITY = 2;
+
+function createHiDpiCanvas(width, height, density = PROJECT_TEXTURE_DENSITY) {
+	const canvas = document.createElement('canvas');
+	canvas.width = Math.round(width * density);
+	canvas.height = Math.round(height * density);
+
+	const context = canvas.getContext('2d');
+	context.scale(density, density);
+	context.imageSmoothingEnabled = true;
+	context.imageSmoothingQuality = 'high';
+
+	return { canvas, context };
+}
+
+function createCrispCanvasTexture(canvas) {
+	const texture = new THREE.CanvasTexture(canvas);
+	texture.colorSpace = THREE.SRGBColorSpace;
+	texture.anisotropy = 8;
+	texture.generateMipmaps = false;
+	texture.minFilter = THREE.LinearFilter;
+	texture.magFilter = THREE.LinearFilter;
+	texture.needsUpdate = true;
+
+	return texture;
+}
+
+function createCrispTextureClone(texture) {
+	const crispTexture = texture.clone();
+	crispTexture.colorSpace = THREE.SRGBColorSpace;
+	crispTexture.anisotropy = 8;
+	crispTexture.generateMipmaps = false;
+	crispTexture.minFilter = THREE.LinearFilter;
+	crispTexture.magFilter = THREE.LinearFilter;
+	crispTexture.needsUpdate = true;
+
+	return crispTexture;
+}
 
 // Lane templates are the single source of truth for every repeated row.
 // Edit each lane's window, backCloud, and foregroundCloud independently here.
@@ -109,11 +147,7 @@ function getGlassViewportCenterY(height) {
 }
 
 function createGlassShellTexture() {
-	const canvas = document.createElement('canvas');
-	canvas.width = GLASS_SHELL_CANVAS.width;
-	canvas.height = GLASS_SHELL_CANVAS.height;
-
-	const context = canvas.getContext('2d');
+	const { canvas, context } = createHiDpiCanvas(GLASS_SHELL_CANVAS.width, GLASS_SHELL_CANVAS.height);
 	const outer = { x: 28, y: 24, width: 968, height: 612, radius: 64 };
 	const viewport = GLASS_SHELL_VIEWPORT;
 
@@ -186,20 +220,11 @@ function createGlassShellTexture() {
 	context.stroke();
 	context.shadowBlur = 0;
 
-	const texture = new THREE.CanvasTexture(canvas);
-	texture.colorSpace = THREE.SRGBColorSpace;
-	texture.anisotropy = 4;
-	texture.needsUpdate = true;
-
-	return texture;
+	return createCrispCanvasTexture(canvas);
 }
 
 function createGlassFrameOverlayTexture() {
-	const canvas = document.createElement('canvas');
-	canvas.width = GLASS_SHELL_CANVAS.width;
-	canvas.height = GLASS_SHELL_CANVAS.height;
-
-	const context = canvas.getContext('2d');
+	const { canvas, context } = createHiDpiCanvas(GLASS_SHELL_CANVAS.width, GLASS_SHELL_CANVAS.height);
 	const outer = { x: 28, y: 24, width: 968, height: 612, radius: 64 };
 	const viewport = GLASS_SHELL_VIEWPORT;
 
@@ -235,12 +260,7 @@ function createGlassFrameOverlayTexture() {
 	context.shadowBlur = 18;
 	context.stroke();
 
-	const texture = new THREE.CanvasTexture(canvas);
-	texture.colorSpace = THREE.SRGBColorSpace;
-	texture.anisotropy = 4;
-	texture.needsUpdate = true;
-
-	return texture;
+	return createCrispCanvasTexture(canvas);
 }
 
 function createCloudForegroundMaskTexture() {
@@ -421,19 +441,15 @@ function drawOpenProjectIcon(context, hasLink) {
 }
 
 function createProjectContentTexture(project, iconImage = null) {
-	const canvas = document.createElement('canvas');
-	canvas.width = GLASS_SHELL_VIEWPORT.width;
-	canvas.height = GLASS_SHELL_VIEWPORT.height;
+	const { canvas, context } = createHiDpiCanvas(GLASS_SHELL_VIEWPORT.width, GLASS_SHELL_VIEWPORT.height);
+	context.clearRect(0, 0, GLASS_SHELL_VIEWPORT.width, GLASS_SHELL_VIEWPORT.height);
 
-	const context = canvas.getContext('2d');
-	context.clearRect(0, 0, canvas.width, canvas.height);
-
-	const bgGradient = context.createLinearGradient(0, 0, canvas.width, canvas.height);
+	const bgGradient = context.createLinearGradient(0, 0, GLASS_SHELL_VIEWPORT.width, GLASS_SHELL_VIEWPORT.height);
 	bgGradient.addColorStop(0, 'rgba(12, 20, 48, 0.99)');
 	bgGradient.addColorStop(0.54, 'rgba(17, 21, 47, 0.99)');
 	bgGradient.addColorStop(1, 'rgba(46, 33, 78, 0.98)');
 	context.fillStyle = bgGradient;
-	context.fillRect(0, 0, canvas.width, canvas.height);
+	context.fillRect(0, 0, GLASS_SHELL_VIEWPORT.width, GLASS_SHELL_VIEWPORT.height);
 
 	context.fillStyle = 'rgba(255, 179, 128, 0.13)';
 	context.beginPath();
@@ -461,12 +477,7 @@ function createProjectContentTexture(project, iconImage = null) {
 	const descStartY = Math.max(236, titleEndY + 20);
 	drawWrappedText(context, project.desc, 292, descStartY, 488, 39, 5);
 
-	const texture = new THREE.CanvasTexture(canvas);
-	texture.colorSpace = THREE.SRGBColorSpace;
-	texture.anisotropy = 4;
-	texture.needsUpdate = true;
-
-	return texture;
+	return createCrispCanvasTexture(canvas);
 }
 
 function useProjectContentTexture(project) {
@@ -525,15 +536,17 @@ function GlassFrameOverlay({ width, height }) {
 
 function CloudImage({ url, scale, position, rotation, opacity = 1, renderOrder = 1, foreground = false }) {
 	const texture = useTexture(url);
+	const crispTexture = useMemo(() => createCrispTextureClone(texture), [texture]);
 	const maskTexture = useMemo(() => (foreground ? createCloudForegroundMaskTexture() : null), [foreground]);
 
+	useEffect(() => () => crispTexture.dispose(), [crispTexture]);
 	useEffect(() => () => maskTexture?.dispose(), [maskTexture]);
 
 	return (
 		<mesh position={position} rotation={rotation} scale={scale} renderOrder={renderOrder}>
 			<planeGeometry args={[1, 1]} />
 			<meshBasicMaterial
-				map={texture}
+				map={crispTexture}
 				alphaMap={maskTexture}
 				transparent
 				opacity={opacity}
@@ -683,14 +696,14 @@ function chunkProjects(projects) {
 	return rows;
 }
 
-function ProjectWindowCard({ project, index, totalProjects, reducedMotion, sceneScale, onOpenProject }) {
+function ProjectWindowCard({ project, index, totalProjects, reducedMotion, cameraZ, sceneScale, onOpenProject }) {
 	const layout = useMemo(() => getProjectLayout(project, index, totalProjects), [index, project, totalProjects]);
 
 	return (
 		<div className={`projects-window-stage__card projects-window-stage__card--${layout.lane}`}>
 			<Canvas
-				dpr={[1, 1.75]}
-				camera={{ fov: 34, position: [0, 0, 4.5], near: 0.1, far: 30 }}
+				dpr={[1.35, 2.25]}
+				camera={{ fov: 34, position: [0, 0, cameraZ], near: 0.1, far: 30 }}
 				gl={{ alpha: true, antialias: true, powerPreference: 'high-performance' }}
 			>
 				<Suspense fallback={null}>
@@ -701,11 +714,15 @@ function ProjectWindowCard({ project, index, totalProjects, reducedMotion, scene
 	);
 }
 
-export default function ProjectsWindowStage({ projects, reducedMotion = false, sceneScale = 1, onOpenProject }) {
+export default function ProjectsWindowStage({ projects, reducedMotion = false, cardSize = null, cameraZ = 4.5, sceneScale = 1, onOpenProject }) {
 	const rows = useMemo(() => chunkProjects(projects), [projects]);
+	const stageStyle = cardSize ? {
+		'--projects-window-card-width': `${cardSize.width}px`,
+		'--projects-window-card-height': `${cardSize.height}px`,
+	} : undefined;
 
 	return (
-		<div className="projects-window-stage">
+		<div className="projects-window-stage" style={stageStyle}>
 			{rows.map((rowProjects, rowIndex) => (
 				<div key={`projects-row-${rowIndex}`} className="projects-window-stage__row">
 					{rowProjects.map((project, itemIndex) => {
@@ -718,6 +735,7 @@ export default function ProjectsWindowStage({ projects, reducedMotion = false, s
 								index={projectIndex}
 								totalProjects={projects.length}
 								reducedMotion={reducedMotion}
+								cameraZ={cameraZ}
 								sceneScale={sceneScale}
 								onOpenProject={onOpenProject}
 							/>

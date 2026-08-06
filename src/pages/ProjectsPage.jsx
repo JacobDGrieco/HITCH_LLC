@@ -1,10 +1,12 @@
-import { useEffect, useMemo, useState } from 'react';
+import { lazy, Suspense, useEffect, useMemo, useState } from 'react';
+import { ExternalLink } from 'lucide-react';
 import '../styles/shared.css';
 import '../styles/projects-page.css';
-import ProjectsWindowStage from '../components/ProjectsWindowStage';
 import { getCachedProjectsPageData, loadProjectsPageData } from '../lib/pageDataCache';
 import { getProjectLane } from '../lib/projectWindowLanes';
 import { renderTextWithDelimiterBreaks } from '../lib/textBreaks.jsx';
+
+const ProjectsWindowStage = lazy(() => import('../components/ProjectsWindowStage'));
 
 function getViewport() {
 	return {
@@ -17,6 +19,33 @@ function clampScale(scale, min, max) {
 	return Math.min(Math.max(scale, min), max);
 }
 
+function isMobileProjectsViewport(viewport) {
+	const shortSide = Math.min(viewport.width, viewport.height);
+	const longSide = Math.max(viewport.width, viewport.height);
+	const isLaptopOrDesktop = viewport.width >= 1280 && viewport.height >= 720;
+	const fitsTabletWindowLayout = shortSide <= 820 && longSide <= 1180;
+
+	return fitsTabletWindowLayout && !isLaptopOrDesktop;
+}
+
+const PROJECTS_DESKTOP_SCALE_BASE = {
+	width: 1366,
+	height: 900,
+};
+const PROJECTS_DESKTOP_MIN_LAYOUT_SCALE = 0.8;
+const PROJECTS_DESKTOP_CAMERA_BASE_Z = 4.5;
+const PROJECTS_DESKTOP_CAMERA_PULLBACK = 2.9;
+const PROJECTS_DESKTOP_CARD_LIMITS = {
+	width: {
+		min: 390,
+		max: 560,
+	},
+	height: {
+		min: 360,
+		max: 470,
+	},
+};
+
 function ProjectWindowSkeleton({ lane = 'middle', enterDelay = 0 }) {
 	return (
 		<div
@@ -28,11 +57,20 @@ function ProjectWindowSkeleton({ lane = 'middle', enterDelay = 0 }) {
 	);
 }
 
+function ProjectWindowSkeletonGrid({ isMobile = false }) {
+	return (
+		<div className={`projects-page__skeleton-grid${isMobile ? ' projects-page__skeleton-grid--mobile' : ''}`} aria-label="Loading projects">
+			{[0, 1, 2, 3, 4, 5].map((item, index) => (
+				<ProjectWindowSkeleton key={item} lane={getProjectLane(index, 6)} enterDelay={index * 90} />
+			))}
+		</div>
+	);
+}
+
 function MobileProjectWindow({ project, index, totalProjects }) {
 	const lane = getProjectLane(index, totalProjects);
 	const content = (
 		<>
-			<span className="projects-page__mobile-cloud" aria-hidden="true" />
 			<span className="projects-page__mobile-window">
 				<span className="projects-page__mobile-chrome" aria-hidden="true">
 					<span />
@@ -40,19 +78,25 @@ function MobileProjectWindow({ project, index, totalProjects }) {
 					<span />
 				</span>
 				<span className="projects-page__mobile-content">
-					{project.iconImage ? <img src={project.iconImage} alt="" className="projects-page__mobile-icon" loading="lazy" /> : null}
-					<span className="projects-page__mobile-copy">
-						<strong>{renderTextWithDelimiterBreaks(project.title)}</strong>
-						<small>{renderTextWithDelimiterBreaks(project.desc)}</small>
-					</span>
-					{Array.isArray(project.tags) && project.tags.length ? (
-						<span className="projects-page__mobile-tags">
-							{project.tags.slice(0, 4).map((tag) => (
-								<span key={tag}>{renderTextWithDelimiterBreaks(tag)}</span>
-							))}
+					<span className="projects-page__mobile-topbar">
+						{Array.isArray(project.tags) && project.tags.length ? (
+							<span className="projects-page__mobile-tags">
+								{project.tags.slice(0, 4).map((tag) => (
+									<span key={tag}>{renderTextWithDelimiterBreaks(tag)}</span>
+								))}
+							</span>
+						) : <span />}
+						<span className={`projects-page__mobile-open-icon${project.link ? '' : ' projects-page__mobile-open-icon--disabled'}`} aria-hidden="true">
+							<ExternalLink size={18} strokeWidth={3} />
 						</span>
-					) : null}
-					<span className="projects-page__mobile-link-label">{project.link ? 'Open Project' : 'View Details'}</span>
+					</span>
+					<span className="projects-page__mobile-body">
+						{project.iconImage ? <img src={project.iconImage} alt="" className="projects-page__mobile-icon" loading="lazy" /> : null}
+						<span className="projects-page__mobile-copy">
+							<strong>{renderTextWithDelimiterBreaks(project.title)}</strong>
+							<small>{renderTextWithDelimiterBreaks(project.desc)}</small>
+						</span>
+					</span>
 				</span>
 			</span>
 		</>
@@ -109,14 +153,36 @@ export default function ProjectsPage() {
 	}, []);
 
 	const sceneScale = useMemo(() => {
-		if (viewport.width <= 760) return 1;
+		return 1;
+	}, []);
 
-		return clampScale(Math.min(viewport.width / 1366, viewport.height / 780), 0.98, 1);
+	const desktopLayoutScale = useMemo(() => {
+		const viewportScale = Math.min(
+			viewport.width / PROJECTS_DESKTOP_SCALE_BASE.width,
+			viewport.height / PROJECTS_DESKTOP_SCALE_BASE.height,
+		);
+
+		return clampScale(viewportScale, PROJECTS_DESKTOP_MIN_LAYOUT_SCALE, 1);
 	}, [viewport.height, viewport.width]);
+
+	const desktopCardSize = useMemo(() => {
+		const baseCardWidth = clampScale(viewport.width * 0.33, PROJECTS_DESKTOP_CARD_LIMITS.width.min, PROJECTS_DESKTOP_CARD_LIMITS.width.max);
+		const baseCardHeight = clampScale(viewport.width * 0.285, PROJECTS_DESKTOP_CARD_LIMITS.height.min, PROJECTS_DESKTOP_CARD_LIMITS.height.max);
+
+		return {
+			width: Math.round(baseCardWidth * desktopLayoutScale),
+			height: Math.round(baseCardHeight * desktopLayoutScale),
+		};
+	}, [desktopLayoutScale, viewport.width]);
+	const desktopCameraZ = useMemo(() => {
+		return PROJECTS_DESKTOP_CAMERA_BASE_Z + ((1 - desktopLayoutScale) * PROJECTS_DESKTOP_CAMERA_PULLBACK);
+	}, [desktopLayoutScale]);
 
 	function openProjectLink(url) {
 		window.open(url, '_blank', 'noopener,noreferrer');
 	}
+
+	const shouldUseMobileWindows = isMobileProjectsViewport(viewport);
 
 	return (
 		<div className="page-section projects-page">
@@ -127,25 +193,26 @@ export default function ProjectsPage() {
 
 			<div className="projects-page__stage-wrap">
 				{projects === null ? (
-					<div className="projects-page__skeleton-grid" aria-label="Loading projects">
-						{[0, 1, 2, 3, 4, 5].map((item, index) => (
-							<ProjectWindowSkeleton key={item} lane={getProjectLane(index, 6)} enterDelay={index * 90} />
-						))}
-					</div>
+					<ProjectWindowSkeletonGrid isMobile={shouldUseMobileWindows} />
 				) : projects.length ? (
-					<>
-						<ProjectsWindowStage
-							projects={projects}
-							reducedMotion={reducedMotion}
-							sceneScale={sceneScale}
-							onOpenProject={openProjectLink}
-						/>
+					shouldUseMobileWindows ? (
 						<div className="projects-page__mobile-list" aria-label="Project links">
 							{projects.map((project, index) => (
 								<MobileProjectWindow key={project.id} project={project} index={index} totalProjects={projects.length} />
 							))}
 						</div>
-					</>
+					) : (
+						<Suspense fallback={<ProjectWindowSkeletonGrid />}>
+							<ProjectsWindowStage
+								projects={projects}
+								reducedMotion={reducedMotion}
+								cardSize={desktopCardSize}
+								cameraZ={desktopCameraZ}
+								sceneScale={sceneScale}
+								onOpenProject={openProjectLink}
+							/>
+						</Suspense>
+					)
 				) : (
 					<div className="projects-page__empty glass-card">Projects are loading from the portfolio API.</div>
 				)}

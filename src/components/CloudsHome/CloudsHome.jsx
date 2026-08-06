@@ -98,8 +98,6 @@ const MOBILE_HOME_CANVAS = {
 	buttonCloudHeight: 21,
 	portalBottom: 90,
 	portalHeight: 284,
-	railHeight: 88,
-	railOverlap: 14,
 	portalCardWidth: 414,
 	portalGap: 4,
 	portalPadTop: 18,
@@ -369,8 +367,6 @@ export default function CloudsHome() {
 				'--home-mobile-button-cloud-height': toPixelValue(Math.max(18, MOBILE_HOME_CANVAS.buttonCloudHeight * mobileStageScale)),
 				'--home-mobile-portal-bottom': toPixelValue(MOBILE_HOME_CANVAS.portalBottom * mobileHeightScale),
 				'--home-mobile-portal-height': toPixelValue(MOBILE_HOME_CANVAS.portalHeight * mobileStageScale),
-				'--home-mobile-rail-height': toPixelValue(MOBILE_HOME_CANVAS.railHeight * mobileStageScale),
-				'--home-mobile-rail-overlap': toPixelValue(MOBILE_HOME_CANVAS.railOverlap * mobileStageScale),
 				'--home-mobile-portal-card-width': toPixelValue(MOBILE_HOME_CANVAS.portalCardWidth * mobileWidthScale),
 				'--home-mobile-portal-gap': toPixelValue(Math.max(2, MOBILE_HOME_CANVAS.portalGap * mobileStageScale)),
 				'--home-mobile-portal-pad-top': toPixelValue(MOBILE_HOME_CANVAS.portalPadTop * mobileStageScale),
@@ -427,14 +423,10 @@ export default function CloudsHome() {
 				<div className="clouds-home__sky" />
 				<div className="clouds-home__haze" />
 				<div className="clouds-home__horizon" />
-				<div className="clouds-home__sun" aria-hidden="true" />
 
 				<SectionNav ariaLabel="Portfolio sections" />
 
 				<main className="clouds-home__stage">
-					<span className="clouds-home__mobile-rail clouds-home__mobile-rail--top" aria-hidden="true" />
-					<span className="clouds-home__mobile-rail clouds-home__mobile-rail--bottom" aria-hidden="true" />
-
 					<section className="clouds-home__brand-panel" aria-labelledby="home-brand-title">
 						<div className="clouds-home__logo-scene" aria-hidden="true">
 							<div className="clouds-home__logo-sparkles">

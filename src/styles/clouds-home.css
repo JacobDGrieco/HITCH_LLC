@@ -81,32 +81,6 @@
 		linear-gradient(180deg, rgba(255, 195, 100, 0) 0%, rgba(255, 195, 118, 0.08) 42%, rgba(246, 164, 96, 0.15) 70%, rgba(223, 138, 82, 0.2) 100%);
 }
 
-.clouds-home__sun {
-	position: absolute;
-	top: 80.4vh;
-	left: 64.5vw;
-	z-index: 6;
-	width: clamp(16px, 1.9vw, 28px);
-	aspect-ratio: 1;
-	border-radius: 50%;
-	background: radial-gradient(circle, rgba(255, 249, 206, 0.98) 0 28%, rgba(255, 223, 139, 0.78) 46%, rgba(255, 180, 102, 0.28) 68%, transparent 72%);
-	box-shadow:
-		0 0 22px rgba(255, 224, 144, 0.86),
-		0 0 74px rgba(255, 181, 102, 0.52),
-		0 0 130px rgba(255, 154, 113, 0.32);
-	pointer-events: none;
-	transform: translate(-50%, -50%);
-}
-
-.clouds-home__sun::before {
-	content: '';
-	position: absolute;
-	inset: -86px -140px;
-	border-radius: 50%;
-	background: radial-gradient(ellipse, rgba(255, 185, 113, 0.34), rgba(255, 173, 135, 0.13) 42%, transparent 70%);
-	filter: blur(12px);
-}
-
 .clouds-home__topbar {
 	position: fixed;
 	top: 30px;
@@ -542,10 +516,6 @@
 }
 
 .clouds-home__mobile-portals {
-	display: none;
-}
-
-.clouds-home__mobile-rail {
 	display: none;
 }
 
@@ -1684,38 +1654,12 @@
 	.clouds-home__stage {
 		--home-mobile-portal-bottom: calc(90px + env(safe-area-inset-bottom, 0px));
 		--home-mobile-portal-height: clamp(216px, 24dvh, 284px);
-		--home-mobile-rail-height: clamp(70px, 7.4dvh, 88px);
 	}
 
 	.clouds-home__portal-field {
 		bottom: var(--home-mobile-portal-bottom);
 		height: var(--home-mobile-portal-height);
 		overflow: hidden;
-	}
-
-	.clouds-home__mobile-rail {
-		display: block;
-		position: absolute;
-		right: auto;
-		left: -16vw;
-		width: 132vw;
-		z-index: 13;
-		height: var(--home-mobile-rail-height);
-		background: url('/assets/mobile-cloud-rail-straight.png') center center / 100% 100% no-repeat;
-		filter:
-			drop-shadow(0 22px 30px rgba(35, 53, 100, 0.24)) drop-shadow(0 0 24px rgba(255, 193, 188, 0.24));
-		opacity: 0.96;
-		pointer-events: none;
-	}
-
-	.clouds-home__mobile-rail--bottom {
-		bottom: calc(var(--home-mobile-portal-bottom) - 14px);
-	}
-
-	.clouds-home__mobile-rail--top {
-		top: calc(100dvh - var(--home-mobile-portal-bottom) - var(--home-mobile-portal-height));
-		transform-origin: center;
-		transform: rotate(180deg);
 	}
 
 	.clouds-home__mobile-portals {
@@ -1747,10 +1691,6 @@
 }
 
 @media (max-width: 820px) and (orientation: portrait) {
-
-	.clouds-home__mobile-rail {
-		z-index: 99;
-	}
 
 	.clouds-home__mobile-portals {
 		z-index: 3;
@@ -1791,7 +1731,6 @@
 	.clouds-home__stage {
 		--home-mobile-portal-bottom: calc(70px + env(safe-area-inset-bottom, 0px));
 		--home-mobile-portal-height: clamp(160px, 22dvh, 206px);
-		--home-mobile-rail-height: clamp(56px, 7.8dvh, 74px);
 		top: 0;
 		right: 0;
 		bottom: 0;
@@ -1907,31 +1846,6 @@
 		overflow: hidden;
 		pointer-events: auto;
 		perspective: none;
-	}
-
-	.clouds-home__mobile-rail {
-		display: block;
-		position: absolute;
-		right: auto;
-		left: -16vw;
-		width: 132vw;
-		z-index: 13;
-		height: var(--home-mobile-rail-height);
-		background: url('/assets/mobile-cloud-rail-straight.png') center center / 100% 100% no-repeat;
-		filter:
-			drop-shadow(0 16px 24px rgba(35, 53, 100, 0.24)) drop-shadow(0 0 20px rgba(255, 193, 188, 0.24));
-		opacity: 0.96;
-		pointer-events: none;
-	}
-
-	.clouds-home__mobile-rail--bottom {
-		bottom: calc(var(--home-mobile-portal-bottom) - 2px);
-	}
-
-	.clouds-home__mobile-rail--top {
-		top: calc(100dvh - var(--home-mobile-portal-bottom) - var(--home-mobile-portal-height) + 2px);
-		transform-origin: center;
-		transform: rotate(180deg);
 	}
 
 	.cloud-portal-stage {
@@ -2099,7 +2013,6 @@
 	.clouds-home__stage {
 		--home-mobile-portal-bottom: calc(68px + env(safe-area-inset-bottom, 0px));
 		--home-mobile-portal-height: clamp(150px, 22dvh, 188px);
-		--home-mobile-rail-height: clamp(52px, 7.6dvh, 70px);
 	}
 
 	.clouds-home__mobile-portals {
@@ -2134,7 +2047,6 @@
 
 	.clouds-home__stage {
 		--home-mobile-portal-height: clamp(142px, 22dvh, 166px);
-		--home-mobile-rail-height: clamp(48px, 7.4dvh, 64px);
 	}
 }
 
@@ -2230,31 +2142,6 @@
 		overflow: hidden;
 		pointer-events: auto;
 		perspective: none;
-	}
-
-	.clouds-home__mobile-rail {
-		display: block;
-		position: absolute;
-		right: auto;
-		left: -16vw;
-		width: 132vw;
-		z-index: 99;
-		height: var(--home-mobile-rail-height);
-		background: url('/assets/mobile-cloud-rail-straight.png') center center / 100% 100% no-repeat;
-		filter:
-			drop-shadow(0 16px 24px rgba(35, 53, 100, 0.24)) drop-shadow(0 0 20px rgba(255, 193, 188, 0.24));
-		opacity: 0.96;
-		pointer-events: none;
-	}
-
-	.clouds-home__mobile-rail--bottom {
-		bottom: calc(var(--home-mobile-portal-safe-bottom) - var(--home-mobile-rail-overlap));
-	}
-
-	.clouds-home__mobile-rail--top {
-		top: calc(100dvh - var(--home-mobile-portal-safe-bottom) - var(--home-mobile-portal-height));
-		transform-origin: center;
-		transform: rotate(180deg);
 	}
 
 	.clouds-home__mobile-portals {
@@ -2431,10 +2318,6 @@
 		pointer-events: auto;
 		perspective: none;
 		transform: translateY(-50%);
-	}
-
-	.clouds-home__mobile-rail {
-		display: none;
 	}
 
 	.cloud-portal-stage {
