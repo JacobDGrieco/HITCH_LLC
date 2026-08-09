@@ -1,3 +1,4 @@
+// Renders the persistent placeholder music control; future cleanup should rename das to radio.
 import { useSiteMusic } from '../audio/useSiteMusic';
 import { useSiteChrome } from './useSiteChrome';
 import '../../styles/site-das.css';

@@ -1,3 +1,4 @@
+// Shared section navigation used by the home scene and routed page shell.
 import { Link, NavLink } from 'react-router-dom';
 import '../styles/page-shell.css';
 

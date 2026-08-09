@@ -1,3 +1,4 @@
+// Home route scene with cloud navigation, project portals, and background data preloading.
 import { lazy, Suspense, useEffect, useMemo, useState } from 'react';
 import { GraduationCap, UserRound, Wrench } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -108,6 +109,7 @@ const MOBILE_HOME_CANVAS = {
 	portalRadius: 16,
 };
 
+// Landscape mobile uses its own fixed design canvas because the brand and portals share one viewport.
 const LANDSCAPE_HOME_CANVAS = {
 	width: 850,
 	height: 400,
@@ -345,6 +347,7 @@ export default function CloudsHome() {
 
 		return {
 			portalSceneScale: sceneFitScale,
+			// CSS variables keep the large responsive layout calculations out of the stylesheet.
 			scaleVars: {
 				'--home-stage-scale': desktopStageScale,
 				'--home-logo-width': `${900 * logoFitScale}px`,

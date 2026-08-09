@@ -1,3 +1,4 @@
+/* Global reset, Tailwind import, shared theme variables, and cross-page keyframes. */
 @import "tailwindcss";
 
 * {

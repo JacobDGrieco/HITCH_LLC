@@ -1,3 +1,4 @@
+// Streams private Vercel Blob music/art files through a path-restricted public API endpoint.
 import { Readable } from 'node:stream';
 import { get } from '@vercel/blob';
 
@@ -13,6 +14,7 @@ export default async function handler(request, response) {
 	const { searchParams } = requestUrl;
 	const pathname = searchParams.get('pathname');
 
+	// Keep arbitrary Blob paths private; only the music player and cover-art folders are exposed.
 	if (!pathname || (!pathname.startsWith('music/') && !pathname.startsWith('arts/'))) {
 		return response.status(400).json({ error: 'Invalid pathname' });
 	}

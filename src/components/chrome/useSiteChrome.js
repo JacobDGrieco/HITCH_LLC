@@ -1,3 +1,4 @@
+// Hook wrapper that guarantees chrome consumers are rendered under SiteChromeProvider.
 import { useContext } from 'react';
 import { SiteChromeContext } from './SiteChromeContext';
 

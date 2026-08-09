@@ -1,3 +1,4 @@
+// Desktop contact form with projected hit testing for the transformed message-paper design.
 import { useRef, useState } from 'react';
 import { Send } from 'lucide-react';
 import AboutContactFormStage from '../components/AboutContactFormStage';
@@ -114,6 +115,7 @@ function isPointInRect(point, rect) {
 function measurePanelPoint(panelElement, x, y) {
 	const probe = document.createElement('span');
 
+	// A real DOM probe captures the final CSS/3D transform instead of duplicating transform math.
 	probe.className = 'contact-page__hit-probe';
 	probe.style.left = `${x}px`;
 	probe.style.top = `${y}px`;
@@ -136,6 +138,7 @@ function getPanelLocalPoint(panelElement, pointX, pointY) {
 		{ x: 0, y: panelElement.offsetHeight },
 	];
 	const screenCorners = localCorners.map((point) => measurePanelPoint(panelElement, point.x, point.y));
+	// Convert screen coordinates back into the transformed panel's local coordinate system.
 	const screenToLocal = getHomography(screenCorners, localCorners);
 
 	return screenToLocal ? mapHomographyPoint(screenToLocal, { x: pointX, y: pointY }) : null;
@@ -167,6 +170,7 @@ export default function ContactPage({ formSceneScale = 1 }) {
 	const [status, setStatus] = useState(null);
 	const [errorMessage, setErrorMessage] = useState('');
 	const formRef = useRef(null);
+	// These refs bridge the suppressed native pointer event to the projected control click.
 	const shouldSuppressClickRef = useRef(false);
 	const shouldSubmitProjectedButtonRef = useRef(false);
 
@@ -241,6 +245,7 @@ export default function ContactPage({ formSceneScale = 1 }) {
 			return;
 		}
 
+		// The visual paper is transformed, so the native event target can differ from what the user sees.
 		e.preventDefault();
 		e.stopPropagation();
 		shouldSuppressClickRef.current = true;

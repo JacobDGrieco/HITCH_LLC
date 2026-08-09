@@ -1,3 +1,4 @@
+// Education route that loads education records and animates their droplet cards into view.
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import '../styles/shared.css';

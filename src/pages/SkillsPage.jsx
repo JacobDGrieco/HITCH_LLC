@@ -1,3 +1,4 @@
+// Skills section component; formerly standalone, now embedded by ExperiencePage.
 import { useEffect, useState } from 'react';
 import '../styles/shared.css';
 import '../styles/skills-page.css';

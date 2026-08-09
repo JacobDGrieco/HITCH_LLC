@@ -1,3 +1,4 @@
+// Legacy crystal card component retained until dead-code cleanup removes the old visual system.
 import '../styles/crystal-card.css'
 
 export default function CrystalCard({

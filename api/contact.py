@@ -1,3 +1,5 @@
+"""FastAPI contact endpoint that sends desktop contact-form submissions by SMTP."""
+
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import os
@@ -13,6 +15,7 @@ class ContactPayload(BaseModel):
     email: str
     subject: str = ""
     message: str
+    # Honeypot field: real users never fill this, so populated submissions are accepted silently.
     company: str = ""
 
 @app.get("/api/contact")
@@ -21,6 +24,7 @@ def contact_health():
 
 @app.post("/api/contact")
 def contact_send(payload: ContactPayload):
+    """Validate and forward contact submissions without exposing the honeypot to users."""
     if payload.company:
         return {"ok": True}
 

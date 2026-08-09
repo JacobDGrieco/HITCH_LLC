@@ -1,3 +1,4 @@
+// Renders content-managed text delimiters as soft or hard breaks without storing JSX in the database.
 import { Fragment } from 'react';
 
 const TEXT_BREAK_PATTERN = /(\\r\\n|\\n|\r\n|\r|\n|[/&])/g;

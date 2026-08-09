@@ -1,3 +1,4 @@
+// Three.js/Drei stage that places the contact form DOM inside the cloud-frame scene.
 import { Html } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import { Suspense } from 'react';
@@ -5,6 +6,7 @@ import { Suspense } from 'react';
 const CLOUD_FRAME_TEXTURE = '/assets/contact-frame.webp';
 
 // Transform arrays are [x, y, z]. Rotation values are radians.
+// These values are calibrated in scene/pixel space against the contact-frame artwork.
 const CONTACT_FORM_SCENE = {
 	group: {
 		position: [-0.46, -0.18, 0],

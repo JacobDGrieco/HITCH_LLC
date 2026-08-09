@@ -1,3 +1,4 @@
+// Owns site-wide playlist loading and playback across Blob audio and SoundCloud embeds.
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { SiteMusicContext } from './SiteMusicContext';
 
@@ -114,12 +115,14 @@ function scheduleIdleTask(callback) {
 		return () => window.cancelIdleCallback(idleId);
 	}
 
+	// Safari-compatible fallback keeps playlist work out of the first render path.
 	const timerId = window.setTimeout(callback, 2500);
 	return () => window.clearTimeout(timerId);
 }
 
 export function SiteMusicProvider({ children }) {
 	const audioRef = useRef(null);
+	// Tracks user intent separately from media state so route changes can resume playback.
 	const playbackRequestedRef = useRef(false);
 	const playlistRef = useRef([]);
 	const currentIndexRef = useRef(0);
@@ -127,6 +130,7 @@ export function SiteMusicProvider({ children }) {
 	const soundCloudWidgetRef = useRef(null);
 	const soundCloudReadyRef = useRef(false);
 	const soundCloudTrackUrlRef = useRef('');
+	// Incremented for each SoundCloud load so stale widget events cannot update the current track.
 	const soundCloudLoadIdRef = useRef(0);
 	const [playlist, setPlaylist] = useState([]);
 	const [currentIndex, setCurrentIndex] = useState(0);
@@ -246,6 +250,7 @@ export function SiteMusicProvider({ children }) {
 	const bindSoundCloudWidget = useCallback((widget, loadId, resolve, reject) => {
 		const events = window.SC.Widget.Events;
 
+		// SoundCloud keeps handlers on the widget instance; unbind before every track load.
 		widget.unbind(events.READY);
 		widget.unbind(events.PLAY);
 		widget.unbind(events.PAUSE);
@@ -342,6 +347,7 @@ export function SiteMusicProvider({ children }) {
 					setPlaybackState('error');
 					setErrorMessage(error instanceof Error ? error.message : 'Unable to start SoundCloud playback');
 				} else {
+					// Browser autoplay policy can block non-user-initiated starts; expose a manual opt-in state.
 					setPlaybackState('blocked');
 				}
 

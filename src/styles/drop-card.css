@@ -1,3 +1,4 @@
+/* Shared droplet card visual system used by education and experience records. */
 .drop-card {
 	--drop-w: 220px;
 	--drop-render-w: var(--drop-w);

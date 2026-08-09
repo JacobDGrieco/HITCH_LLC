@@ -1,6 +1,8 @@
+// Public playlist route that builds music metadata from SoundCloud rows or Vercel Blob assets.
 import { list } from '@vercel/blob';
 import { getMusicMetadataRows } from '../../lib/musicMetadataStore.js';
 
+// These extension lists decide which Blob objects can become playable tracks or cover art.
 const AUDIO_EXTENSIONS = new Set(['.mp3', '.wav', '.ogg', '.m4a', '.aac', '.flac']);
 const ART_EXTENSIONS = new Set(['.png', '.jpg', '.jpeg', '.webp', '.gif']);
 const DEFAULT_ARTIST = 'Head In The Clouds Haven';
@@ -88,6 +90,7 @@ export default async function handler(request, response) {
 				.map((blob) => [getStem(blob.pathname), blob.pathname]),
 		);
 
+		// SoundCloud rows are an operator-controlled switch that avoids needing MP3 files in Blob.
 		const blobTracks = soundCloudMetadataRows.length
 			? []
 			: blobs

@@ -1,111 +1,94 @@
 # HITCH LLC Portfolio Site
 
-This project is a personal portfolio site built with React and Vite. It presents the site as a navigable cloud scene: the landing page acts as a visual hub, and each floating cloud routes to a dedicated section for projects, skills, education, experience, contact, and about content.
+HITCH LLC is a React/Vite portfolio and website-consultation site for HeadInTheCloudsHaven. The frontend presents a cloud-themed visual hub, animated section pages, project windows, contact links, a desktop contact form, and an opt-in music player.
 
-## What It Does
+## Features
 
-- Renders an animated home scene with cloud-based navigation.
-- Uses route-specific page shells and transitions for each portfolio section.
-- Displays portfolio content through reusable crystal-style cards.
-- Includes a persistent `das` music control with manual opt-in playback.
-- Loads music metadata from API routes and streams tracks from the backend.
-- Includes a contact API endpoint and supporting music metadata storage utilities.
+- Cloud-themed home scene with navigation to about, projects, experience, and education.
+- Animated route shell shared by the routed section pages.
+- Database-backed portfolio content for projects, skills, education, and experience.
+- Three.js project-window scenes for desktop/tablet project presentation.
+- About page with contact links and a desktop-only contact form.
+- Global "radio" music control backed by Vercel Blob audio or SoundCloud metadata.
+- Vercel Analytics and Speed Insights instrumentation.
 
 ## Tech Stack
 
-- React 19
-- Vite
-- React Router
-- GSAP
-- Tailwind CSS v4
-- Vercel-oriented API routes
+- React 19, React Router, Vite, and Tailwind CSS v4.
+- Plain CSS files under `src/styles/` for page and component styling.
+- Three.js through `@react-three/fiber` and `@react-three/drei`.
+- GSAP for selected entry animation.
+- Vercel serverless API routes under `api/`.
+- Neon/Postgres through `@neondatabase/serverless`.
+- Vercel Blob for private music/art streaming.
+- FastAPI contact endpoint with SMTP delivery.
 
-## Running Locally
+## Requirements
 
-1. Install dependencies:
+- Node.js and npm compatible with the installed package lock.
+- Python dependencies from `requirements.txt` when running the contact endpoint locally through Vercel dev.
+- Environment variables documented in [docs/environment-variables.md](docs/environment-variables.md).
+
+## Setup
 
 ```bash
 npm install
 ```
 
-2. Start the dev server:
+Create a local `.env` with only the variables needed by the current code. Do not commit secrets.
+
+## Local Development
+
+Frontend-only Vite development:
 
 ```bash
 npm run dev
 ```
 
-3. Build for production:
+Vercel-style local API development:
 
 ```bash
-npm run build
+npm run dev:vercel
 ```
 
-4. Preview the production build:
+The Vite config proxies `/api` to `localhost:3000`, which is the expected Vercel dev server address.
+
+## Build And Checks
 
 ```bash
+npm run lint
+npm run build
 npm run preview
 ```
 
-## Project Structure
+There is no test script in `package.json` at the time of this documentation pass.
 
-```text
-.
-├─ api/
-|  ├─ db/
-│     ├─ music_track_metadata.sql
-│     └─ page_content_tables.sql
-│  ├─ contact.py
-│  └─ music/
-│     ├─ playlist.js
-│     └─ stream.js
-├─ lib/
-│  └─ musicMetadataStore.js
-├─ public/
-│  └─ static images, logos, clouds, and media assets
-├─ src/
-│  ├─ components/
-│  │  ├─ CloudsHome/
-│  │  ├─ audio/
-│  │  ├─ chrome/
-│  │  ├─ CrystalCard.jsx
-│  │  └─ PageShell.jsx
-│  ├─ pages/
-│  │  ├─ AboutPage.jsx
-│  │  ├─ ContactPage.jsx
-│  │  ├─ EducationPage.jsx
-│  │  ├─ ExperiencePage.jsx
-│  │  ├─ ProjectsPage.jsx
-│  │  └─ SkillsPage.jsx
-│  ├─ styles/
-│  ├─ App.jsx
-│  ├─ App.css
-│  ├─ index.css
-│  └─ main.jsx
-├─ vercel.json
-├─ vite.config.js
-└─ package.json
-```
+## Current Routes
 
-## Frontend Organization
+- `/`: home cloud scene.
+- `/about`: about page, contact links, and desktop contact form.
+- `/projects`: project list and Three.js project windows.
+- `/experience`: experience cards plus the moved skills section.
+- `/education`: education cards.
 
-- `src/components/CloudsHome/`: landing page scene, floating cloud navigation, and intro animation.
-- `src/components/audio/`: site-wide music state and playback control.
-- `src/components/chrome/`: persistent UI chrome such as the `das` element.
-- `src/components/CrystalCard.jsx`: shared crystal card primitive used across portfolio sections.
-- `src/components/PageShell.jsx`: shared routed-page wrapper with animated transition behavior.
-- `src/pages/`: top-level route content for each portfolio section.
-- `src/styles/`: page-specific and shared styling.
+The old `/skills` and `/contact` routes are no longer active. Cleanup work is tracked in [FUTURE_FIXES.md](FUTURE_FIXES.md).
 
-## Backend and Data
+## Documentation
 
-- `api/music/playlist.js`: returns playlist data for the site music player.
-- `api/music/stream.js`: handles music streaming access.
-- `api/contact.py`: contact endpoint.
-- `lib/musicMetadataStore.js`: music metadata access layer.
-- `db/music_track_metadata.sql`: schema/setup for music track metadata.
+- [Architecture](docs/architecture.md)
+- [Project Structure](docs/project-structure.md)
+- [Application Flows](docs/application-flows.md)
+- [API](docs/api.md)
+- [Data Model](docs/data-model.md)
+- [Environment Variables](docs/environment-variables.md)
+- [External Integrations](docs/external-integrations.md)
+- [Development](docs/development.md)
+- [Deployment](docs/deployment.md)
+- [Troubleshooting](docs/troubleshooting.md)
 
-## Notes
+## Known Limitations
 
-- Environment variables are loaded from `.env`.
-- Static visual assets are expected in `public/`.
-- The repo is structured for a frontend-first portfolio site with a small API surface for music and contact functionality.
+- Contact form rendering is intentionally omitted on mobile because the current design does not adapt cleanly to small screens.
+- Contact API email validation is intentionally minimal and relies partly on browser validation.
+- Contact API error reporting should be hardened before production exposure of detailed SMTP/config errors.
+- The music playlist intentionally shuffles; with only a few tracks, repeats can feel frequent.

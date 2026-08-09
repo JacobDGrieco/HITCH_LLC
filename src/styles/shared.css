@@ -1,3 +1,4 @@
+/* Shared section, heading, and glass-card primitives used across routed portfolio pages. */
 .page-section {
 	display: flex;
 	flex-direction: column;

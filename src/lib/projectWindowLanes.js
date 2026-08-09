@@ -1,3 +1,4 @@
+// Assigns project cards to visual lanes while centering incomplete final rows.
 export const PROJECT_WINDOW_LANES = ['left', 'middle', 'right'];
 
 export function getProjectLane(index, totalItems = 0) {

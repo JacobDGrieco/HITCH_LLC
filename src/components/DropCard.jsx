@@ -1,3 +1,4 @@
+// Shared droplet card used for education and experience records from the portfolio API.
 import '../styles/drop-card.css';
 import { resolveScaledDropSize } from '../lib/dropSizing';
 import { renderTextWithDelimiterBreaks } from '../lib/textBreaks.jsx';

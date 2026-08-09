@@ -1,7 +1,11 @@
+// Configures the Vite dev/build pipeline, including the React/Tailwind plugins
+// and a local proxy that lets the frontend call Vercel-style API routes.
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 
+// Vite's dev server can encounter imported HTML assets; this turns those imports
+// into stable public paths instead of trying to parse the HTML as JavaScript.
 function htmlImportFallback() {
 	return {
 		name: 'html-import-fallback',

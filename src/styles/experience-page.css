@@ -1,3 +1,4 @@
+/* Experience route layout styles, including the stacked experience-and-skills composition. */
 .experience-page-stack {
 	display: flex;
 	flex-direction: column;

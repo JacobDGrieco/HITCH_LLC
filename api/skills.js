@@ -1,3 +1,4 @@
+// Public Vercel API route that returns normalized skill records for the moved skills section.
 import { getDb } from '../lib/db.js';
 import { dedupeRowsByTitle } from '../lib/contentDedupe.js';
 

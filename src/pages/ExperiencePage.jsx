@@ -1,3 +1,4 @@
+// Experience route that also renders the moved skills section below the experience cards.
 import { useEffect, useState } from 'react';
 import '../styles/shared.css';
 import '../styles/experience-page.css';

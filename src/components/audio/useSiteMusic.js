@@ -1,3 +1,4 @@
+// Hook wrapper that guarantees music consumers are rendered under SiteMusicProvider.
 import { useContext } from 'react';
 import { SiteMusicContext } from './SiteMusicContext';
 

@@ -1,3 +1,4 @@
+// Droplet-style skill indicator sized from database skill percentages.
 import '../styles/skill-crystal.css';
 import { getStandardSkillDropSize, resolveScaledDropSize } from '../lib/dropSizing';
 import { renderTextWithDelimiterBreaks } from '../lib/textBreaks.jsx';

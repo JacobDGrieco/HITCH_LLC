@@ -1,3 +1,4 @@
+// Legacy Three.js sky background retained until dead-code cleanup removes the old home-scene path.
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 

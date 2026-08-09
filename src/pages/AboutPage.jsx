@@ -1,3 +1,4 @@
+// About route content, contact links, and desktop-only contact form placement.
 import '@fontsource/cormorant-garamond/500.css';
 import '@fontsource/cormorant-garamond/600.css';
 import '@fontsource/cormorant-garamond/700.css';
@@ -72,6 +73,7 @@ export default function AboutPage() {
 
 	const aboutScaleVars = useMemo(() => {
 		const usableHeight = Math.max(1, viewport.height - ABOUT_DESKTOP_CANVAS.shellTopReserve);
+		// The about scene is tuned against a fixed design canvas and emitted as CSS variables.
 		const stageScale = clampScale(Math.min(viewport.width / ABOUT_DESKTOP_CANVAS.width, usableHeight / (ABOUT_DESKTOP_CANVAS.height - ABOUT_DESKTOP_CANVAS.shellTopReserve)), 0.42, 1);
 		const shortDesktopAdjustment = clampScale((0.62 - stageScale) / 0.2, 0, 1);
 		const sceneOffsetY = -92 * shortDesktopAdjustment;
@@ -86,6 +88,7 @@ export default function AboutPage() {
 			'--about-contact-form-offset-y': `${Number(contactFormOffsetY.toFixed(2))}px`,
 		};
 	}, [viewport]);
+	// The transformed contact form is omitted on mobile because its current styling does not adapt cleanly.
 	const shouldShowContactForm = !isMobileAboutViewport(viewport);
 	const contactFormSceneScale = shouldShowContactForm ? clampScale(0.98 / Number(aboutScaleVars['--about-stage-scale']), 1, 1.58) : 1;
 

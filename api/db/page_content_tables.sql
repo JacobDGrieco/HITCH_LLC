@@ -1,5 +1,5 @@
--- Page content schema contract.
--- This matches the official page-content tables used by the application.
+-- Historical page content schema script.
+-- This file includes destructive legacy-column cleanup and should not be treated as an active migration.
 
 ALTER TABLE IF EXISTS projects
 	ADD COLUMN IF NOT EXISTS link_url TEXT,

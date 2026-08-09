@@ -1,3 +1,4 @@
+// Three.js home-page project portal scene with glass-window textures and masked clouds.
 import { Text, useTexture } from '@react-three/drei';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Suspense, useEffect, useMemo, useRef } from 'react';
@@ -8,6 +9,7 @@ const GLASS_SHELL_VIEWPORT = { x: 68, y: 82, width: 888, height: 504, radius: 28
 const DEFAULT_PREVIEW_TRANSFORM = { position: [0, 0], scale: 1 };
 
 // Transform arrays are [x, y, z]. Rotation values are radians.
+// Each portal is hand-tuned against the cloud artwork so foreground curls line up with the window.
 const PORTAL_LAYOUT = [
 	{
 		id: 'asd',
@@ -165,6 +167,7 @@ function createContainedPreviewTexture(sourceImage, viewportSize, previewTransfo
 
 	context.clearRect(0, 0, canvas.width, canvas.height);
 	context.save();
+	// Clip previews to the glass viewport so screenshots read as content inside the browser shell.
 	traceRoundedRect(context, 0, 0, canvas.width, canvas.height, GLASS_SHELL_VIEWPORT.radius);
 	context.clip();
 	context.drawImage(sourceImage, drawX, drawY, drawWidth, drawHeight);
@@ -379,6 +382,7 @@ function createCloudForegroundMaskTexture() {
 		for (let x = 0; x < canvas.width; x += 1) {
 			const normalizedX = x / (canvas.width - 1);
 			const normalizedY = y / (canvas.height - 1);
+			// Procedural grayscale mask exposes only the cloud portions meant to overlap the glass.
 			const bottom = THREE.MathUtils.smoothstep(normalizedY, 0.46, 0.72);
 			const sideHeight = THREE.MathUtils.smoothstep(normalizedY, 0.32, 0.70);
 			const left = 1 - THREE.MathUtils.smoothstep(normalizedX, 0.12, 0.30);

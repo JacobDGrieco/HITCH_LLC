@@ -1,3 +1,4 @@
+/* Legacy crystal-card visual system retained until dead-code cleanup removes it. */
 .crystal-card {
 	position: relative;
 	width: var(--crystal-size);

@@ -1,3 +1,4 @@
+// Provides mutable visibility state for the persistent placeholder music chrome.
 import { useMemo, useState } from 'react';
 import { SiteChromeContext } from './SiteChromeContext';
 

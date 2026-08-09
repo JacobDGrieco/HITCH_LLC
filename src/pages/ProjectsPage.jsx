@@ -1,3 +1,4 @@
+// Projects route that loads project API data and chooses mobile HTML cards or desktop Three.js windows.
 import { lazy, Suspense, useEffect, useMemo, useState } from 'react';
 import { ExternalLink } from 'lucide-react';
 import '../styles/shared.css';
@@ -28,6 +29,7 @@ function isMobileProjectsViewport(viewport) {
 	return fitsTabletWindowLayout && !isLaptopOrDesktop;
 }
 
+// Desktop values are calibrated against the design target used by the Three.js project cards.
 const PROJECTS_DESKTOP_SCALE_BASE = {
 	width: 1366,
 	height: 900,

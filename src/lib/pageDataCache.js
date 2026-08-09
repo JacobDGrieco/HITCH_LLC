@@ -26,6 +26,7 @@ function createCachedApiLoader({ url, field, shouldPreloadImages = false }) {
 		if (cache) return Promise.resolve(cache);
 		if (request) return request;
 
+		// Share one in-flight request per endpoint so route transitions do not duplicate API calls.
 		request = fetch(url)
 			.then((response) => {
 				if (!response.ok) throw new Error(`${field} request failed with status ${response.status}`);
@@ -37,6 +38,7 @@ function createCachedApiLoader({ url, field, shouldPreloadImages = false }) {
 				return cache;
 			})
 			.catch(() => {
+				// Page components render empty/loading states; keep API failures from crashing route transitions.
 				cache = [];
 				return cache;
 			})

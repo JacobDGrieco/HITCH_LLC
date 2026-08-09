@@ -1,3 +1,4 @@
+// Defines the public route tree and wraps all pages with site-wide music and chrome state.
 import { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import CloudsHome from './components/CloudsHome/CloudsHome';

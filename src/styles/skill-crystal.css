@@ -1,3 +1,4 @@
+/* Droplet-style skill indicator visuals sized by skill percentage. */
 .skill-crystal {
 	position: relative;
 	width: var(--skill-crystal-size);

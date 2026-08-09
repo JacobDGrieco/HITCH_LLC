@@ -1,3 +1,4 @@
+-- Current music metadata table used by lib/musicMetadataStore.js.
 CREATE TABLE IF NOT EXISTS music_track_metadata (
 	pathname TEXT PRIMARY KEY,
 	title TEXT,

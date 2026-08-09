@@ -1,3 +1,4 @@
+// Resolves legacy scale-based drop sizes and newer explicit pixel sizes for droplet components.
 const LEGACY_PIXEL_SIZE_THRESHOLD = 10;
 const SKILL_DROP_SIZE_SCALE = 0.64;
 
@@ -5,6 +6,7 @@ export function resolveScaledDropSize(size, standardSize) {
 	const numericSize = Number(size);
 	if (!Number.isFinite(numericSize) || numericSize <= 0) return standardSize;
 
+	// Older database values used small multipliers; current values above 10 are treated as pixels.
 	if (numericSize <= LEGACY_PIXEL_SIZE_THRESHOLD) {
 		return Math.round(standardSize * numericSize);
 	}

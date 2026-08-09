@@ -1,3 +1,4 @@
+// Shared routed-page wrapper that coordinates section navigation and return-home transitions.
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SectionNav from './SectionNav';
@@ -27,6 +28,7 @@ export default function PageShell({ children, section = 'default' }) {
 		setDasHidden(true);
 		setContentVisible(false);
 		setReturning(true);
+		// Stored for the earlier return-animation contract; CloudsHome currently clears it on mount.
 		window.sessionStorage.setItem(RETURN_SECTION_STORAGE_KEY, section);
 		setTimeout(() => navigate('/'), 720);
 	}

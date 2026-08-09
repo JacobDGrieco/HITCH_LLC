@@ -1,3 +1,4 @@
+// Legacy cloud button component retained until dead-code cleanup removes the old home-scene path.
 export default function Cloud({ label, onClick, imageSrc, imageWidth, imageHeight, scale, floatIndex, buttonRef, className = '', style }) {
 	return (
 		<button

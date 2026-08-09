@@ -1,3 +1,4 @@
+// Legacy contact crystal component retained until dead-code cleanup removes the old contact UI.
 import '../styles/contact-crystal.css';
 import { resolveScaledDropSize } from '../lib/dropSizing';
 import { renderTextWithDelimiterBreaks } from '../lib/textBreaks.jsx';

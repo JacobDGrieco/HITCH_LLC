@@ -1,3 +1,4 @@
+// Three.js projects-page renderer that turns database project rows into glass-window cards.
 import { Html, useTexture } from '@react-three/drei';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
@@ -52,6 +53,7 @@ function createCrispTextureClone(texture) {
 
 // Lane templates are the single source of truth for every repeated row.
 // Edit each lane's window, backCloud, and foregroundCloud independently here.
+// Values are scene units and radians, tuned to the cloud artwork rather than generated layout.
 const LANE_LAYOUT_CONTROLS = {
 	left: {
 		window: {
@@ -275,6 +277,7 @@ function createCloudForegroundMaskTexture() {
 		for (let x = 0; x < canvas.width; x += 1) {
 			const normalizedX = x / (canvas.width - 1);
 			const normalizedY = y / (canvas.height - 1);
+			// The mask lets the foreground cloud overlap the browser window without a separate asset.
 			const bottom = THREE.MathUtils.smoothstep(normalizedY, 0.47, 0.72);
 			const sideHeight = THREE.MathUtils.smoothstep(normalizedY, 0.30, 0.70);
 			const left = 1 - THREE.MathUtils.smoothstep(normalizedX, 0.09, 0.29);
@@ -367,6 +370,7 @@ function drawProjectIcon(context, project, iconImage) {
 
 		context.drawImage(iconImage, sourceX, sourceY, imageSize, imageSize, box.x, box.y, box.size, box.size);
 	} else {
+		// Keep project cards recognizable even when optional icon art is missing.
 		context.fillStyle = 'rgba(255, 210, 181, 0.94)';
 		context.font = '700 82px Georgia, serif';
 		context.textAlign = 'center';
@@ -488,6 +492,7 @@ function useProjectContentTexture(project) {
 	useEffect(() => {
 		let isActive = true;
 
+		// Icon loading is async, so the first texture may render with the initials fallback.
 		loadCanvasImage(project.iconImage)
 			.then((iconImage) => {
 				if (!isActive) return;

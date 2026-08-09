@@ -1,3 +1,4 @@
+// Public Vercel API route that returns normalized education records for EducationPage.
 import { getDb } from '../lib/db.js';
 import { dedupeRowsByTitle } from '../lib/contentDedupe.js';
 import { getOptimizedAssetPath } from '../lib/optimizedAssetPath.js';
